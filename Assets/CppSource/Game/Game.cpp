@@ -31,8 +31,8 @@ namespace MyGame
 		Transform transform = GetTransform();
 		Vector3 pos = transform.GetPosition();
 		const float speed = 0.001f;
-		const float min = -5.0f;
-		const float max = 5.0f;
+		const float min = -2.0f;
+		const float max = 2.0f;
 		float distance = Time::GetDeltaTime() * speed * gameState->BallDir;
 		Vector3 offset(distance, 0, 0);
 		Vector3 newPos = pos + offset;
