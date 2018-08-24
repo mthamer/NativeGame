@@ -28,10 +28,12 @@ namespace MyGame
 {
 	void GameScript::Update()
 	{
+#if 0
 		String name = GetName();
 		String message("GameScript::Update:");
 		Debug::Log(message);
 		Debug::Log(name);
+#endif
 		if (GetGameObject().CompareTag(Game::GetName()))
 		{
 			// Game is updating
@@ -40,9 +42,7 @@ namespace MyGame
 		if ( GetGameObject().CompareTag(PlayerShip::GetName()))
 		{
 			// Player ship is updating
-			Vector3 pos = GetTransform().GetPosition();
-			pos.x = pos.x - .001f;
-			GetTransform().SetPosition(pos);
+			PlayerShip::Update(GetGameObject(), GetTransform());
 			return;
 		}
 	}

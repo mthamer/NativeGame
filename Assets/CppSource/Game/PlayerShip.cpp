@@ -24,3 +24,10 @@ void PlayerShip::SetPosition(Vector3 &pos)
 	mGo.GetTransform().SetPosition(pos);
 	//mGo.GetComponent<SpriteRenderer>().GetTransform().SetPosition(pos);
 }
+
+void PlayerShip::Update(GameObject &gameOb, Transform &transform)
+{
+	Vector3 pos = transform.GetPosition();
+	pos.x = pos.x - .001f;
+	transform.SetPosition(pos);
+}

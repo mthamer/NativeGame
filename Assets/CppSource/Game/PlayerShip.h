@@ -26,7 +26,10 @@ private:
 
 public:
 	PlayerShip() {}
+
 	static String GetName() { return String("PlayerShip"); }
+	static void Update(GameObject &gameOb, Transform &transform);
+
 	int Init();
 	void SetPosition(Vector3 &pos);
 };
