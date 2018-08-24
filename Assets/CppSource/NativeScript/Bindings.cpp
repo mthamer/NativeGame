@@ -81,6 +81,9 @@ namespace Plugin
 	int32_t (*UnityEngineGameObjectMethodCompareTagSystemString)(int32_t thisHandle, int32_t tagHandle);
 	int32_t (*UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType)(UnityEngine::PrimitiveType type);
 	void (*UnityEngineDebugMethodLogSystemObject)(int32_t messageHandle);
+	System::Single (*UnityEngineInputMethodGetAxisSystemString)(int32_t axisNameHandle);
+	System::Single (*UnityEngineInputMethodGetAxisRawSystemString)(int32_t axisNameHandle);
+	int32_t (*UnityEngineInputMethodGetKeySystemString)(int32_t nameHandle);
 	int32_t (*UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString)(int32_t pathHandle);
 	int32_t (*UnityEngineMonoBehaviourPropertyGetTransform)(int32_t thisHandle);
 	int32_t (*SystemExceptionConstructorSystemString)(int32_t messageHandle);
@@ -4907,6 +4910,126 @@ namespace UnityEngine
 
 namespace UnityEngine
 {
+	Input::Input(decltype(nullptr))
+	{
+	}
+	
+	Input::Input(Plugin::InternalUse, int32_t handle)
+	{
+		Handle = handle;
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+		}
+	}
+	
+	Input::Input(const Input& other)
+		: Input(Plugin::InternalUse::Only, other.Handle)
+	{
+	}
+	
+	Input::Input(Input&& other)
+		: Input(Plugin::InternalUse::Only, other.Handle)
+	{
+		other.Handle = 0;
+	}
+	
+	Input::~Input()
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+	}
+	
+	Input& Input::operator=(const Input& other)
+	{
+		if (this->Handle)
+		{
+			Plugin::DereferenceManagedClass(this->Handle);
+		}
+		this->Handle = other.Handle;
+		if (this->Handle)
+		{
+			Plugin::ReferenceManagedClass(this->Handle);
+		}
+		return *this;
+	}
+	
+	Input& Input::operator=(decltype(nullptr))
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+		return *this;
+	}
+	
+	Input& Input::operator=(Input&& other)
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+		}
+		Handle = other.Handle;
+		other.Handle = 0;
+		return *this;
+	}
+	
+	bool Input::operator==(const Input& other) const
+	{
+		return Handle == other.Handle;
+	}
+	
+	bool Input::operator!=(const Input& other) const
+	{
+		return Handle != other.Handle;
+	}
+	
+	System::Single UnityEngine::Input::GetAxis(System::String& axisName)
+	{
+		auto returnValue = Plugin::UnityEngineInputMethodGetAxisSystemString(axisName.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	System::Single UnityEngine::Input::GetAxisRaw(System::String& axisName)
+	{
+		auto returnValue = Plugin::UnityEngineInputMethodGetAxisRawSystemString(axisName.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	System::Boolean UnityEngine::Input::GetKey(System::String& name)
+	{
+		auto returnValue = Plugin::UnityEngineInputMethodGetKeySystemString(name.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+}
+
+namespace UnityEngine
+{
 	Resources::Resources(decltype(nullptr))
 	{
 	}
@@ -6639,6 +6762,12 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType);
 	Plugin::UnityEngineDebugMethodLogSystemObject = *(void (**)(int32_t messageHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineDebugMethodLogSystemObject);
+	Plugin::UnityEngineInputMethodGetAxisSystemString = *(System::Single (**)(int32_t axisNameHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineInputMethodGetAxisSystemString);
+	Plugin::UnityEngineInputMethodGetAxisRawSystemString = *(System::Single (**)(int32_t axisNameHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineInputMethodGetAxisRawSystemString);
+	Plugin::UnityEngineInputMethodGetKeySystemString = *(int32_t (**)(int32_t nameHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineInputMethodGetKeySystemString);
 	Plugin::UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString = *(int32_t (**)(int32_t pathHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString);
 	Plugin::UnityEngineMonoBehaviourPropertyGetTransform = *(int32_t (**)(int32_t thisHandle))curMemory;

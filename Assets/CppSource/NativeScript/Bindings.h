@@ -379,6 +379,11 @@ namespace UnityEngine
 
 namespace UnityEngine
 {
+	struct Input;
+}
+
+namespace UnityEngine
+{
 	struct Resources;
 }
 
@@ -1404,6 +1409,26 @@ namespace UnityEngine
 		bool operator==(const Debug& other) const;
 		bool operator!=(const Debug& other) const;
 		static void Log(System::Object& message);
+	};
+}
+
+namespace UnityEngine
+{
+	struct Input : virtual System::Object
+	{
+		Input(decltype(nullptr));
+		Input(Plugin::InternalUse, int32_t handle);
+		Input(const Input& other);
+		Input(Input&& other);
+		virtual ~Input();
+		Input& operator=(const Input& other);
+		Input& operator=(decltype(nullptr));
+		Input& operator=(Input&& other);
+		bool operator==(const Input& other) const;
+		bool operator!=(const Input& other) const;
+		static System::Single GetAxis(System::String& axisName);
+		static System::Single GetAxisRaw(System::String& axisName);
+		static System::Boolean GetKey(System::String& name);
 	};
 }
 

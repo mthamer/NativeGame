@@ -496,6 +496,9 @@ namespace NativeScript
 		delegate bool UnityEngineGameObjectMethodCompareTagSystemStringDelegateType(int thisHandle, int tagHandle);
 		delegate int UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType(UnityEngine.PrimitiveType type);
 		delegate void UnityEngineDebugMethodLogSystemObjectDelegateType(int messageHandle);
+		delegate float UnityEngineInputMethodGetAxisSystemStringDelegateType(int axisNameHandle);
+		delegate float UnityEngineInputMethodGetAxisRawSystemStringDelegateType(int axisNameHandle);
+		delegate bool UnityEngineInputMethodGetKeySystemStringDelegateType(int nameHandle);
 		delegate int UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType(int pathHandle);
 		delegate int UnityEngineMonoBehaviourPropertyGetTransformDelegateType(int thisHandle);
 		delegate int SystemExceptionConstructorSystemStringDelegateType(int messageHandle);
@@ -585,6 +588,9 @@ namespace NativeScript
 		static readonly UnityEngineGameObjectMethodCompareTagSystemStringDelegateType UnityEngineGameObjectMethodCompareTagSystemStringDelegate = new UnityEngineGameObjectMethodCompareTagSystemStringDelegateType(UnityEngineGameObjectMethodCompareTagSystemString);
 		static readonly UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegate = new UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType(UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType);
 		static readonly UnityEngineDebugMethodLogSystemObjectDelegateType UnityEngineDebugMethodLogSystemObjectDelegate = new UnityEngineDebugMethodLogSystemObjectDelegateType(UnityEngineDebugMethodLogSystemObject);
+		static readonly UnityEngineInputMethodGetAxisSystemStringDelegateType UnityEngineInputMethodGetAxisSystemStringDelegate = new UnityEngineInputMethodGetAxisSystemStringDelegateType(UnityEngineInputMethodGetAxisSystemString);
+		static readonly UnityEngineInputMethodGetAxisRawSystemStringDelegateType UnityEngineInputMethodGetAxisRawSystemStringDelegate = new UnityEngineInputMethodGetAxisRawSystemStringDelegateType(UnityEngineInputMethodGetAxisRawSystemString);
+		static readonly UnityEngineInputMethodGetKeySystemStringDelegateType UnityEngineInputMethodGetKeySystemStringDelegate = new UnityEngineInputMethodGetKeySystemStringDelegateType(UnityEngineInputMethodGetKeySystemString);
 		static readonly UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegate = new UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType(UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString);
 		static readonly UnityEngineMonoBehaviourPropertyGetTransformDelegateType UnityEngineMonoBehaviourPropertyGetTransformDelegate = new UnityEngineMonoBehaviourPropertyGetTransformDelegateType(UnityEngineMonoBehaviourPropertyGetTransform);
 		static readonly SystemExceptionConstructorSystemStringDelegateType SystemExceptionConstructorSystemStringDelegate = new SystemExceptionConstructorSystemStringDelegateType(SystemExceptionConstructorSystemString);
@@ -819,6 +825,12 @@ namespace NativeScript
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineDebugMethodLogSystemObjectDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineInputMethodGetAxisSystemStringDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineInputMethodGetAxisRawSystemStringDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineInputMethodGetKeySystemStringDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegate));
 			curMemory += IntPtr.Size;
@@ -1648,6 +1660,75 @@ namespace NativeScript
 			{
 				UnityEngine.Debug.LogException(ex);
 				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineInputMethodGetAxisSystemStringDelegateType))]
+		static float UnityEngineInputMethodGetAxisSystemString(int axisNameHandle)
+		{
+			try
+			{
+				var axisName = (string)NativeScript.Bindings.ObjectStore.Get(axisNameHandle);
+				var returnValue = UnityEngine.Input.GetAxis(axisName);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(float);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(float);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineInputMethodGetAxisRawSystemStringDelegateType))]
+		static float UnityEngineInputMethodGetAxisRawSystemString(int axisNameHandle)
+		{
+			try
+			{
+				var axisName = (string)NativeScript.Bindings.ObjectStore.Get(axisNameHandle);
+				var returnValue = UnityEngine.Input.GetAxisRaw(axisName);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(float);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(float);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineInputMethodGetKeySystemStringDelegateType))]
+		static bool UnityEngineInputMethodGetKeySystemString(int nameHandle)
+		{
+			try
+			{
+				var name = (string)NativeScript.Bindings.ObjectStore.Get(nameHandle);
+				var returnValue = UnityEngine.Input.GetKey(name);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
 			}
 		}
 		

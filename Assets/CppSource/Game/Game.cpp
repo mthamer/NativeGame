@@ -1,60 +1,14 @@
-/// <summary>
-/// Game-specific code for the native plugin
-/// </summary>
-/// <author>
-/// Jackson Dunstan, 2017, http://JacksonDunstan.com
-/// </author>
-/// <license>
-/// MIT
-/// </license>
-
 #include "Bindings.h"
 #include "Game.h"
 
 using namespace System;
 using namespace UnityEngine;
 
-namespace
-{
-	struct GameState
-	{
-		float BallDir;
-	};
-	
-	GameState* gameState;
-}
-
-namespace MyGame
-{
-	void GameScript::Update()
-	{
-#if 0
-		String name = GetName();
-		String message("GameScript::Update:");
-		Debug::Log(message);
-		Debug::Log(name);
-#endif
-		if (GetGameObject().CompareTag(Game::GetName()))
-		{
-			// Game is updating
-			return;
-		}
-		if ( GetGameObject().CompareTag(PlayerShip::GetName()))
-		{
-			// Player ship is updating
-			PlayerShip::Update(GetGameObject(), GetTransform());
-			return;
-		}
-	}
-}
-
-//////////////////////////////////////
-
 int Game::Init()
 {
 	int ret = 0;	// ok
 
-					// attach main game script to Game object
+	// attach main game script to Game object
 	mGo.SetName(GetName());
 	mGo.SetTag(GetName());
 	mGo.AddComponent<MyGame::BaseGameScript>();
@@ -64,6 +18,11 @@ int Game::Init()
 		return ret;
 
 	return ret;
+}
+
+void Game::Update(Single deltaTime, GameObject &gameOb, Transform &transform)
+{
+
 }
 
 // Called when the plugin is initialized
@@ -79,9 +38,6 @@ void PluginMain(
 	{
 		String message("NativeGame Plugin Begin");
 		Debug::Log(message);
-
-		// The ball initially goes right
-		gameState->BallDir = 1.0f;
 
 		Game::GetInstance()->Init();
 		delete Game::GetInstance();

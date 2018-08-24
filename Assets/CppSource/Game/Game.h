@@ -5,18 +5,17 @@
 #pragma once
 
 #include "Bindings.h"
+#include "GameScript.h"
 #include "PlayerShip.h"
 
-//
-// Interface to Main Unity game script
-//
-namespace MyGame
+namespace
 {
-	struct GameScript : MyGame::BaseGameScript
+	struct GameState
 	{
-		MY_GAME_GAME_SCRIPT_DEFAULT_CONSTRUCTOR
-		void Update() override;
+		float data;
 	};
+
+	GameState* gameState;
 }
 
 //
@@ -24,7 +23,7 @@ namespace MyGame
 //
 class Game
 {
-	friend struct MyGame::GameScript;
+//	friend struct MyGame::GameScript;
 private:
 	GameObject mGo;
 	PlayerShip mPlayerShip;
@@ -39,7 +38,10 @@ public:
 		return theInstance;
 	}
 
-	Game() {}
 	static String GetName() { return String("GameObject"); }
+	static void Update(Single deltaTime, GameObject &gameOb, Transform &transform);
+
+	Game() {}
 	int Init();
+	PlayerShip &GetPlayerShip() { return mPlayerShip;  }
 };

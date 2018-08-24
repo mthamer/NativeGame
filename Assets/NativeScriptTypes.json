@@ -330,6 +330,29 @@
       ]
     },
     {
+      "Name": "UnityEngine.Input",
+      "Methods": [
+        {
+          "Name": "GetAxis",
+          "ParamTypes": [
+            "System.String"
+          ]
+        },
+        {
+          "Name": "GetAxisRaw",
+          "ParamTypes": [
+            "System.String"
+          ]
+        },
+        {
+          "Name": "GetKey",
+          "ParamTypes": [
+            "System.String"
+          ]
+        }
+      ]
+    },
+    {
       "Name": "UnityEngine.Resources",
       "Methods": [
         {
