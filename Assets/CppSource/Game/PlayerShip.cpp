@@ -1,14 +1,14 @@
 #include "PlayerShip.h"
 #include "Game.h"
 
-float PlayerShip::Speed = 0.0002f;
-
 //
 // load sprites
 // set up game object
 //
 int PlayerShip::Init()
 {
+	mSpeed = 0.0002f;
+
 	mSpriteLeft = Resources::Load<Sprite>(mSpriteLeftPath);
 	mSpriteRight = Resources::Load<Sprite>(mSpriteRightPath);
 	mSpriteCenter = Resources::Load<Sprite>(mSpriteCenterPath);

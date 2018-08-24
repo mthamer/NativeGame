@@ -35,7 +35,7 @@ namespace MyGame
 		if (GetGameObject().CompareTag(PlayerShip::GetName()))
 		{
 			// Player ship is updating
-			PlayerShip::Update(Time::GetDeltaTime(), GetGameObject(), GetTransform());
+			Game::GetInstance()->GetPlayerShip().Update(Time::GetDeltaTime(), GetGameObject(), GetTransform());
 			return;
 		}
 	}

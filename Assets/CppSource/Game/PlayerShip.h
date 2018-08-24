@@ -24,17 +24,17 @@ private:
 	Sprite mSpriteRight;	// for turning right
 	Sprite mSpriteCenter;	// for going stright
 
-	static float Speed;
+	float mSpeed;
 
 public:
 	static String GetName() { return String("PlayerShip"); }
-	static void Update(Single deltaTime, GameObject &gameOb, Transform &transform);
-	static void SetSpeed(float s) { Speed = s; }
-	static float GetSpeed() { return Speed; }
 
 	PlayerShip() {}
 
 	int Init();
 	void SetPosition(Vector3 &pos);
+	void Update(Single deltaTime, GameObject &gameOb, Transform &transform);
+	void SetSpeed(float s) { mSpeed = s; }
+	float GetSpeed() { return mSpeed; }
 
 };

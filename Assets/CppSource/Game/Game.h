@@ -34,10 +34,8 @@ public:
 	// singleton
 	static Game *GetInstance() 
 	{
-		static Game *theInstance = nullptr;
-		if (theInstance == nullptr)
-			theInstance = new Game;
-		return theInstance;
+		static Game theInstance;
+		return &theInstance;
 	}
 
 	static String GetName() { return String("GameObject"); }

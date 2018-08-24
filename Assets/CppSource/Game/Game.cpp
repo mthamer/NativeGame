@@ -46,7 +46,6 @@ void PluginMain(
 		Debug::Log(message);
 
 		Game::GetInstance()->Init();
-		delete Game::GetInstance();
 
 		message = String("NativeGame Plugin End");
 		Debug::Log(message);
