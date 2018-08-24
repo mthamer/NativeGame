@@ -1,5 +1,7 @@
 #include "PlayerShip.h"
 #include "Game.h"
+#include "Missile.h"
+#include <assert.h>
 
 //
 // load sprites
@@ -27,37 +29,82 @@ int PlayerShip::Init()
 void PlayerShip::SetPosition(Vector3 &pos)
 {
 	mGo.GetTransform().SetPosition(pos);
-	//mGo.GetComponent<SpriteRenderer>().GetTransform().SetPosition(pos);
+}
+
+void PlayerShip::FireMissile()
+{
+	Missile *missile = new Missile();
+	missile->Init(mGo.GetTransform().GetPosition());
+	mMissiles.push_back(missile);
+}
+
+bool PlayerShip::RemoveMissile(Missile *missile)
+{
+	int i;
+	for (i = 0; i < mMissiles.size(); i++)
+	{
+		if (mMissiles[i] == missile)
+		{
+			mMissiles.erase(mMissiles.begin() + i);
+			delete missile;
+			return true;
+		}
+	}
+
+	assert(false);
+	return false;
+}
+
+
+void PlayerShip::UpdateMissiles(Single deltaTime)
+{
+	int i;
+	for (i = (int)mMissiles.size()-1; i>=0; i--)
+	{
+		mMissiles[i]->Update(deltaTime);
+	}
 }
 
 void PlayerShip::Update(Single deltaTime)
 {
+	const float maxX = 1.1f;
+	const float minX = -1.1f;
+	const float maxY = 0.f;
+	const float minY = -1.5f;
+
+	UpdateMissiles(deltaTime);
+
 	Vector3 pos = mGo.GetTransform().GetPosition();
-	float speed = GetSpeed();
 	bool dirty = false;
 
-	if (Input::GetKey(String("a")))
+	if (Input::GetKey(String("space")))
+	{
+		FireMissile();
+	}
+
+	if (Input::GetKey(String("left")) && pos.x >= minX)
 	{
 		// left
-		pos.x = pos.x - speed * deltaTime;
+		pos.x = pos.x - mSpeed * deltaTime;
 		dirty = true;
 	}
-	if (Input::GetKey(String("d")))
+	if (Input::GetKey(String("right")) && pos.x <= maxX)
 	{
 		// right
-		pos.x = pos.x + speed * deltaTime;
+		pos.x = pos.x + mSpeed * deltaTime;
 		dirty = true;
 	}
-	if (Input::GetKey(String("w")))
+	
+	if (Input::GetKey(String("up")) && pos.y <= maxY)
 	{
 		// up
-		pos.y = pos.y + speed * deltaTime;
+		pos.y = pos.y + mSpeed * deltaTime;
 		dirty = true;
 	}
-	if (Input::GetKey(String("s")))
+	if (Input::GetKey(String("down")) && pos.y >= minY)
 	{
 		// down
-		pos.y = pos.y - speed * deltaTime;
+		pos.y = pos.y - mSpeed * deltaTime;
 		dirty = true;
 	}
 

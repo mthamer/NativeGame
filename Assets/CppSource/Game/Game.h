@@ -23,7 +23,6 @@ namespace
 //
 class Game
 {
-//	friend struct MyGame::GameScript;
 private:
 	GameObject mGo;
 	PlayerShip mPlayerShip;

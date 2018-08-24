@@ -27,11 +27,13 @@
 // For memset(), etc.
 #include <string.h>
 
+#ifndef __PLACEMENT_NEW_INLINE
 // Support placement new
 void* operator new(size_t, void* p)
 {
 	return p;
 }
+#endif
 
 // Macro to put before functions that need to be exposed to C#
 #ifdef _WIN32
