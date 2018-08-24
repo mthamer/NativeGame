@@ -13509,6 +13509,10 @@ namespace NativeScript.Editor
 				int beginIndex = contents.IndexOf(beginMarker, startIndex);
 				if (beginIndex < 0)
 				{
+                    if (startIndex == 0)
+                    {
+                        Debug.Log("InjectIntoString: Nothing injected, failed to find beginMarker:" + beginMarker);
+                    }
 					return contents;
 				}
 				int afterBeginIndex = beginIndex + beginMarker.Length;

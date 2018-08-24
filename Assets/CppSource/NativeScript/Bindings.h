@@ -379,6 +379,11 @@ namespace UnityEngine
 
 namespace UnityEngine
 {
+	struct Resources;
+}
+
+namespace UnityEngine
+{
 	struct Behaviour;
 }
 
@@ -405,6 +410,21 @@ namespace System
 namespace UnityEngine
 {
 	struct PrimitiveType;
+}
+
+namespace UnityEngine
+{
+	struct Renderer;
+}
+
+namespace UnityEngine
+{
+	struct Sprite;
+}
+
+namespace UnityEngine
+{
+	struct SpriteRenderer;
 }
 
 namespace UnityEngine
@@ -1356,7 +1376,10 @@ namespace UnityEngine
 		GameObject& operator=(GameObject&& other);
 		bool operator==(const GameObject& other) const;
 		bool operator!=(const GameObject& other) const;
+		GameObject();
+		GameObject(System::String& name);
 		template<typename MT0> MT0 AddComponent();
+		template<typename MT0> MT0 GetComponent();
 		static UnityEngine::GameObject CreatePrimitive(UnityEngine::PrimitiveType type);
 	};
 }
@@ -1376,6 +1399,24 @@ namespace UnityEngine
 		bool operator==(const Debug& other) const;
 		bool operator!=(const Debug& other) const;
 		static void Log(System::Object& message);
+	};
+}
+
+namespace UnityEngine
+{
+	struct Resources : virtual System::Object
+	{
+		Resources(decltype(nullptr));
+		Resources(Plugin::InternalUse, int32_t handle);
+		Resources(const Resources& other);
+		Resources(Resources&& other);
+		virtual ~Resources();
+		Resources& operator=(const Resources& other);
+		Resources& operator=(decltype(nullptr));
+		Resources& operator=(Resources&& other);
+		bool operator==(const Resources& other) const;
+		bool operator!=(const Resources& other) const;
+		template<typename MT0> static MT0 Load(System::String& path);
 	};
 }
 
@@ -1487,6 +1528,59 @@ namespace UnityEngine
 		explicit operator System::IFormattable();
 		explicit operator System::IConvertible();
 		explicit operator System::IComparable();
+	};
+}
+
+namespace UnityEngine
+{
+	struct Renderer : virtual UnityEngine::Component
+	{
+		Renderer(decltype(nullptr));
+		Renderer(Plugin::InternalUse, int32_t handle);
+		Renderer(const Renderer& other);
+		Renderer(Renderer&& other);
+		virtual ~Renderer();
+		Renderer& operator=(const Renderer& other);
+		Renderer& operator=(decltype(nullptr));
+		Renderer& operator=(Renderer&& other);
+		bool operator==(const Renderer& other) const;
+		bool operator!=(const Renderer& other) const;
+	};
+}
+
+namespace UnityEngine
+{
+	struct Sprite : virtual UnityEngine::Object
+	{
+		Sprite(decltype(nullptr));
+		Sprite(Plugin::InternalUse, int32_t handle);
+		Sprite(const Sprite& other);
+		Sprite(Sprite&& other);
+		virtual ~Sprite();
+		Sprite& operator=(const Sprite& other);
+		Sprite& operator=(decltype(nullptr));
+		Sprite& operator=(Sprite&& other);
+		bool operator==(const Sprite& other) const;
+		bool operator!=(const Sprite& other) const;
+	};
+}
+
+namespace UnityEngine
+{
+	struct SpriteRenderer : virtual UnityEngine::Renderer
+	{
+		SpriteRenderer(decltype(nullptr));
+		SpriteRenderer(Plugin::InternalUse, int32_t handle);
+		SpriteRenderer(const SpriteRenderer& other);
+		SpriteRenderer(SpriteRenderer&& other);
+		virtual ~SpriteRenderer();
+		SpriteRenderer& operator=(const SpriteRenderer& other);
+		SpriteRenderer& operator=(decltype(nullptr));
+		SpriteRenderer& operator=(SpriteRenderer&& other);
+		bool operator==(const SpriteRenderer& other) const;
+		bool operator!=(const SpriteRenderer& other) const;
+		UnityEngine::Sprite GetSprite();
+		void SetSprite(UnityEngine::Sprite& value);
 	};
 }
 

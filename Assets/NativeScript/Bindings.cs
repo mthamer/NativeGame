@@ -484,13 +484,20 @@ namespace NativeScript
 		delegate void UnityEngineTransformPropertySetPositionDelegateType(int thisHandle, ref UnityEngine.Vector3 value);
 		delegate int SystemCollectionsIEnumeratorPropertyGetCurrentDelegateType(int thisHandle);
 		delegate bool SystemCollectionsIEnumeratorMethodMoveNextDelegateType(int thisHandle);
+		delegate int UnityEngineGameObjectConstructorDelegateType();
+		delegate int UnityEngineGameObjectConstructorSystemStringDelegateType(int nameHandle);
 		delegate int UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegateType(int thisHandle);
+		delegate int UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRendererDelegateType(int thisHandle);
+		delegate int UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRendererDelegateType(int thisHandle);
 		delegate int UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType(UnityEngine.PrimitiveType type);
 		delegate void UnityEngineDebugMethodLogSystemObjectDelegateType(int messageHandle);
+		delegate int UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType(int pathHandle);
 		delegate int UnityEngineMonoBehaviourPropertyGetTransformDelegateType(int thisHandle);
 		delegate int SystemExceptionConstructorSystemStringDelegateType(int messageHandle);
 		delegate int BoxPrimitiveTypeDelegateType(UnityEngine.PrimitiveType val);
 		delegate UnityEngine.PrimitiveType UnboxPrimitiveTypeDelegateType(int valHandle);
+		delegate int UnityEngineSpriteRendererPropertyGetSpriteDelegateType(int thisHandle);
+		delegate void UnityEngineSpriteRendererPropertySetSpriteDelegateType(int thisHandle, int valueHandle);
 		delegate float UnityEngineTimePropertyGetDeltaTimeDelegateType();
 		delegate void BaseBallScriptConstructorDelegateType(int cppHandle, ref int handle);
 		delegate void ReleaseBaseBallScriptDelegateType(int handle);
@@ -560,13 +567,20 @@ namespace NativeScript
 		static readonly UnityEngineTransformPropertySetPositionDelegateType UnityEngineTransformPropertySetPositionDelegate = new UnityEngineTransformPropertySetPositionDelegateType(UnityEngineTransformPropertySetPosition);
 		static readonly SystemCollectionsIEnumeratorPropertyGetCurrentDelegateType SystemCollectionsIEnumeratorPropertyGetCurrentDelegate = new SystemCollectionsIEnumeratorPropertyGetCurrentDelegateType(SystemCollectionsIEnumeratorPropertyGetCurrent);
 		static readonly SystemCollectionsIEnumeratorMethodMoveNextDelegateType SystemCollectionsIEnumeratorMethodMoveNextDelegate = new SystemCollectionsIEnumeratorMethodMoveNextDelegateType(SystemCollectionsIEnumeratorMethodMoveNext);
+		static readonly UnityEngineGameObjectConstructorDelegateType UnityEngineGameObjectConstructorDelegate = new UnityEngineGameObjectConstructorDelegateType(UnityEngineGameObjectConstructor);
+		static readonly UnityEngineGameObjectConstructorSystemStringDelegateType UnityEngineGameObjectConstructorSystemStringDelegate = new UnityEngineGameObjectConstructorSystemStringDelegateType(UnityEngineGameObjectConstructorSystemString);
 		static readonly UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegateType UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegate = new UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegateType(UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript);
+		static readonly UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRendererDelegateType UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRendererDelegate = new UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRendererDelegateType(UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRenderer);
+		static readonly UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRendererDelegateType UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRendererDelegate = new UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRendererDelegateType(UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRenderer);
 		static readonly UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegate = new UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType(UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType);
 		static readonly UnityEngineDebugMethodLogSystemObjectDelegateType UnityEngineDebugMethodLogSystemObjectDelegate = new UnityEngineDebugMethodLogSystemObjectDelegateType(UnityEngineDebugMethodLogSystemObject);
+		static readonly UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegate = new UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType(UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString);
 		static readonly UnityEngineMonoBehaviourPropertyGetTransformDelegateType UnityEngineMonoBehaviourPropertyGetTransformDelegate = new UnityEngineMonoBehaviourPropertyGetTransformDelegateType(UnityEngineMonoBehaviourPropertyGetTransform);
 		static readonly SystemExceptionConstructorSystemStringDelegateType SystemExceptionConstructorSystemStringDelegate = new SystemExceptionConstructorSystemStringDelegateType(SystemExceptionConstructorSystemString);
 		static readonly BoxPrimitiveTypeDelegateType BoxPrimitiveTypeDelegate = new BoxPrimitiveTypeDelegateType(BoxPrimitiveType);
 		static readonly UnboxPrimitiveTypeDelegateType UnboxPrimitiveTypeDelegate = new UnboxPrimitiveTypeDelegateType(UnboxPrimitiveType);
+		static readonly UnityEngineSpriteRendererPropertyGetSpriteDelegateType UnityEngineSpriteRendererPropertyGetSpriteDelegate = new UnityEngineSpriteRendererPropertyGetSpriteDelegateType(UnityEngineSpriteRendererPropertyGetSprite);
+		static readonly UnityEngineSpriteRendererPropertySetSpriteDelegateType UnityEngineSpriteRendererPropertySetSpriteDelegate = new UnityEngineSpriteRendererPropertySetSpriteDelegateType(UnityEngineSpriteRendererPropertySetSprite);
 		static readonly UnityEngineTimePropertyGetDeltaTimeDelegateType UnityEngineTimePropertyGetDeltaTimeDelegate = new UnityEngineTimePropertyGetDeltaTimeDelegateType(UnityEngineTimePropertyGetDeltaTime);
 		static readonly ReleaseBaseBallScriptDelegateType ReleaseBaseBallScriptDelegate = new ReleaseBaseBallScriptDelegateType(ReleaseBaseBallScript);
 		static readonly BaseBallScriptConstructorDelegateType BaseBallScriptConstructorDelegate = new BaseBallScriptConstructorDelegateType(BaseBallScriptConstructor);
@@ -762,11 +776,21 @@ namespace NativeScript
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(SystemCollectionsIEnumeratorMethodMoveNextDelegate));
 			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectConstructorDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectConstructorSystemStringDelegate));
+			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRendererDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRendererDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineDebugMethodLogSystemObjectDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineMonoBehaviourPropertyGetTransformDelegate));
 			curMemory += IntPtr.Size;
@@ -775,6 +799,10 @@ namespace NativeScript
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(BoxPrimitiveTypeDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnboxPrimitiveTypeDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineSpriteRendererPropertyGetSpriteDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineSpriteRendererPropertySetSpriteDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineTimePropertyGetDeltaTimeDelegate));
 			curMemory += IntPtr.Size;
@@ -1318,6 +1346,51 @@ namespace NativeScript
 			}
 		}
 		
+		[MonoPInvokeCallback(typeof(UnityEngineGameObjectConstructorDelegateType))]
+		static int UnityEngineGameObjectConstructor()
+		{
+			try
+			{
+				var returnValue = NativeScript.Bindings.ObjectStore.Store(new UnityEngine.GameObject());
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineGameObjectConstructorSystemStringDelegateType))]
+		static int UnityEngineGameObjectConstructorSystemString(int nameHandle)
+		{
+			try
+			{
+				var name = (string)NativeScript.Bindings.ObjectStore.Get(nameHandle);
+				var returnValue = NativeScript.Bindings.ObjectStore.Store(new UnityEngine.GameObject(name));
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
 		[MonoPInvokeCallback(typeof(UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegateType))]
 		static int UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript(int thisHandle)
 		{
@@ -1325,6 +1398,52 @@ namespace NativeScript
 			{
 				var thiz = (UnityEngine.GameObject)NativeScript.Bindings.ObjectStore.Get(thisHandle);
 				var returnValue = thiz.AddComponent<MyGame.BaseBallScript>();
+				return NativeScript.Bindings.ObjectStore.GetHandle(returnValue);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRendererDelegateType))]
+		static int UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRenderer(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.GameObject)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var returnValue = thiz.AddComponent<UnityEngine.SpriteRenderer>();
+				return NativeScript.Bindings.ObjectStore.GetHandle(returnValue);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRendererDelegateType))]
+		static int UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRenderer(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.GameObject)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var returnValue = thiz.GetComponent<UnityEngine.SpriteRenderer>();
 				return NativeScript.Bindings.ObjectStore.GetHandle(returnValue);
 			}
 			catch (System.NullReferenceException ex)
@@ -1380,6 +1499,29 @@ namespace NativeScript
 			{
 				UnityEngine.Debug.LogException(ex);
 				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType))]
+		static int UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString(int pathHandle)
+		{
+			try
+			{
+				var path = (string)NativeScript.Bindings.ObjectStore.Get(pathHandle);
+				var returnValue = UnityEngine.Resources.Load<UnityEngine.Sprite>(path);
+				return NativeScript.Bindings.ObjectStore.GetHandle(returnValue);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
 			}
 		}
 		
@@ -1471,6 +1613,50 @@ namespace NativeScript
 				UnityEngine.Debug.LogException(ex);
 				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
 				return default(UnityEngine.PrimitiveType);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineSpriteRendererPropertyGetSpriteDelegateType))]
+		static int UnityEngineSpriteRendererPropertyGetSprite(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.SpriteRenderer)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var returnValue = thiz.sprite;
+				return NativeScript.Bindings.ObjectStore.GetHandle(returnValue);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineSpriteRendererPropertySetSpriteDelegateType))]
+		static void UnityEngineSpriteRendererPropertySetSprite(int thisHandle, int valueHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.SpriteRenderer)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var value = (UnityEngine.Sprite)NativeScript.Bindings.ObjectStore.Get(valueHandle);
+				thiz.sprite = value;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
 			}
 		}
 		

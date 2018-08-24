@@ -69,13 +69,20 @@ namespace Plugin
 	void (*UnityEngineTransformPropertySetPosition)(int32_t thisHandle, UnityEngine::Vector3& value);
 	int32_t (*SystemCollectionsIEnumeratorPropertyGetCurrent)(int32_t thisHandle);
 	int32_t (*SystemCollectionsIEnumeratorMethodMoveNext)(int32_t thisHandle);
+	int32_t (*UnityEngineGameObjectConstructor)();
+	int32_t (*UnityEngineGameObjectConstructorSystemString)(int32_t nameHandle);
 	int32_t (*UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript)(int32_t thisHandle);
+	int32_t (*UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRenderer)(int32_t thisHandle);
+	int32_t (*UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRenderer)(int32_t thisHandle);
 	int32_t (*UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType)(UnityEngine::PrimitiveType type);
 	void (*UnityEngineDebugMethodLogSystemObject)(int32_t messageHandle);
+	int32_t (*UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString)(int32_t pathHandle);
 	int32_t (*UnityEngineMonoBehaviourPropertyGetTransform)(int32_t thisHandle);
 	int32_t (*SystemExceptionConstructorSystemString)(int32_t messageHandle);
 	int32_t (*BoxPrimitiveType)(UnityEngine::PrimitiveType val);
 	UnityEngine::PrimitiveType (*UnboxPrimitiveType)(int32_t valHandle);
+	int32_t (*UnityEngineSpriteRendererPropertyGetSprite)(int32_t thisHandle);
+	void (*UnityEngineSpriteRendererPropertySetSprite)(int32_t thisHandle, int32_t valueHandle);
 	System::Single (*UnityEngineTimePropertyGetDeltaTime)();
 	void (*ReleaseBaseBallScript)(int32_t handle);
 	void (*BaseBallScriptConstructor)(int32_t cppHandle, int32_t* handle);
@@ -4646,6 +4653,42 @@ namespace UnityEngine
 		return Handle != other.Handle;
 	}
 	
+	UnityEngine::GameObject::GameObject()
+		: UnityEngine::Object(nullptr)
+	{
+		auto returnValue = Plugin::UnityEngineGameObjectConstructor();
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		Handle = returnValue;
+		if (returnValue)
+		{
+			Plugin::ReferenceManagedClass(returnValue);
+		}
+	}
+	
+	UnityEngine::GameObject::GameObject(System::String& name)
+		: UnityEngine::Object(nullptr)
+	{
+		auto returnValue = Plugin::UnityEngineGameObjectConstructorSystemString(name.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		Handle = returnValue;
+		if (returnValue)
+		{
+			Plugin::ReferenceManagedClass(returnValue);
+		}
+	}
+	
 	template<> MyGame::BaseBallScript UnityEngine::GameObject::AddComponent<MyGame::BaseBallScript>()
 	{
 		auto returnValue = Plugin::UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript(Handle);
@@ -4657,6 +4700,32 @@ namespace UnityEngine
 			delete ex;
 		}
 		return MyGame::BaseBallScript(Plugin::InternalUse::Only, returnValue);
+	}
+	
+	template<> UnityEngine::SpriteRenderer UnityEngine::GameObject::AddComponent<UnityEngine::SpriteRenderer>()
+	{
+		auto returnValue = Plugin::UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRenderer(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return UnityEngine::SpriteRenderer(Plugin::InternalUse::Only, returnValue);
+	}
+	
+	template<> UnityEngine::SpriteRenderer UnityEngine::GameObject::GetComponent<UnityEngine::SpriteRenderer>()
+	{
+		auto returnValue = Plugin::UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRenderer(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return UnityEngine::SpriteRenderer(Plugin::InternalUse::Only, returnValue);
 	}
 	
 	UnityEngine::GameObject UnityEngine::GameObject::CreatePrimitive(UnityEngine::PrimitiveType type)
@@ -4763,6 +4832,100 @@ namespace UnityEngine
 			ex->ThrowReferenceToThis();
 			delete ex;
 		}
+	}
+}
+
+namespace UnityEngine
+{
+	Resources::Resources(decltype(nullptr))
+	{
+	}
+	
+	Resources::Resources(Plugin::InternalUse, int32_t handle)
+	{
+		Handle = handle;
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+		}
+	}
+	
+	Resources::Resources(const Resources& other)
+		: Resources(Plugin::InternalUse::Only, other.Handle)
+	{
+	}
+	
+	Resources::Resources(Resources&& other)
+		: Resources(Plugin::InternalUse::Only, other.Handle)
+	{
+		other.Handle = 0;
+	}
+	
+	Resources::~Resources()
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+	}
+	
+	Resources& Resources::operator=(const Resources& other)
+	{
+		if (this->Handle)
+		{
+			Plugin::DereferenceManagedClass(this->Handle);
+		}
+		this->Handle = other.Handle;
+		if (this->Handle)
+		{
+			Plugin::ReferenceManagedClass(this->Handle);
+		}
+		return *this;
+	}
+	
+	Resources& Resources::operator=(decltype(nullptr))
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+		return *this;
+	}
+	
+	Resources& Resources::operator=(Resources&& other)
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+		}
+		Handle = other.Handle;
+		other.Handle = 0;
+		return *this;
+	}
+	
+	bool Resources::operator==(const Resources& other) const
+	{
+		return Handle == other.Handle;
+	}
+	
+	bool Resources::operator!=(const Resources& other) const
+	{
+		return Handle != other.Handle;
+	}
+	
+	template<> UnityEngine::Sprite UnityEngine::Resources::Load<UnityEngine::Sprite>(System::String& path)
+	{
+		auto returnValue = Plugin::UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString(path.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return UnityEngine::Sprite(Plugin::InternalUse::Only, returnValue);
 	}
 }
 
@@ -5382,6 +5545,286 @@ namespace System
 			delete ex;
 		}
 		return returnVal;
+	}
+}
+
+namespace UnityEngine
+{
+	Renderer::Renderer(decltype(nullptr))
+		: UnityEngine::Object(nullptr)
+		, UnityEngine::Component(nullptr)
+	{
+	}
+	
+	Renderer::Renderer(Plugin::InternalUse, int32_t handle)
+		: UnityEngine::Object(nullptr)
+		, UnityEngine::Component(nullptr)
+	{
+		Handle = handle;
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+		}
+	}
+	
+	Renderer::Renderer(const Renderer& other)
+		: Renderer(Plugin::InternalUse::Only, other.Handle)
+	{
+	}
+	
+	Renderer::Renderer(Renderer&& other)
+		: Renderer(Plugin::InternalUse::Only, other.Handle)
+	{
+		other.Handle = 0;
+	}
+	
+	Renderer::~Renderer()
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+	}
+	
+	Renderer& Renderer::operator=(const Renderer& other)
+	{
+		if (this->Handle)
+		{
+			Plugin::DereferenceManagedClass(this->Handle);
+		}
+		this->Handle = other.Handle;
+		if (this->Handle)
+		{
+			Plugin::ReferenceManagedClass(this->Handle);
+		}
+		return *this;
+	}
+	
+	Renderer& Renderer::operator=(decltype(nullptr))
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+		return *this;
+	}
+	
+	Renderer& Renderer::operator=(Renderer&& other)
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+		}
+		Handle = other.Handle;
+		other.Handle = 0;
+		return *this;
+	}
+	
+	bool Renderer::operator==(const Renderer& other) const
+	{
+		return Handle == other.Handle;
+	}
+	
+	bool Renderer::operator!=(const Renderer& other) const
+	{
+		return Handle != other.Handle;
+	}
+}
+
+namespace UnityEngine
+{
+	Sprite::Sprite(decltype(nullptr))
+		: UnityEngine::Object(nullptr)
+	{
+	}
+	
+	Sprite::Sprite(Plugin::InternalUse, int32_t handle)
+		: UnityEngine::Object(nullptr)
+	{
+		Handle = handle;
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+		}
+	}
+	
+	Sprite::Sprite(const Sprite& other)
+		: Sprite(Plugin::InternalUse::Only, other.Handle)
+	{
+	}
+	
+	Sprite::Sprite(Sprite&& other)
+		: Sprite(Plugin::InternalUse::Only, other.Handle)
+	{
+		other.Handle = 0;
+	}
+	
+	Sprite::~Sprite()
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+	}
+	
+	Sprite& Sprite::operator=(const Sprite& other)
+	{
+		if (this->Handle)
+		{
+			Plugin::DereferenceManagedClass(this->Handle);
+		}
+		this->Handle = other.Handle;
+		if (this->Handle)
+		{
+			Plugin::ReferenceManagedClass(this->Handle);
+		}
+		return *this;
+	}
+	
+	Sprite& Sprite::operator=(decltype(nullptr))
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+		return *this;
+	}
+	
+	Sprite& Sprite::operator=(Sprite&& other)
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+		}
+		Handle = other.Handle;
+		other.Handle = 0;
+		return *this;
+	}
+	
+	bool Sprite::operator==(const Sprite& other) const
+	{
+		return Handle == other.Handle;
+	}
+	
+	bool Sprite::operator!=(const Sprite& other) const
+	{
+		return Handle != other.Handle;
+	}
+}
+
+namespace UnityEngine
+{
+	SpriteRenderer::SpriteRenderer(decltype(nullptr))
+		: UnityEngine::Object(nullptr)
+		, UnityEngine::Component(nullptr)
+		, UnityEngine::Renderer(nullptr)
+	{
+	}
+	
+	SpriteRenderer::SpriteRenderer(Plugin::InternalUse, int32_t handle)
+		: UnityEngine::Object(nullptr)
+		, UnityEngine::Component(nullptr)
+		, UnityEngine::Renderer(nullptr)
+	{
+		Handle = handle;
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+		}
+	}
+	
+	SpriteRenderer::SpriteRenderer(const SpriteRenderer& other)
+		: SpriteRenderer(Plugin::InternalUse::Only, other.Handle)
+	{
+	}
+	
+	SpriteRenderer::SpriteRenderer(SpriteRenderer&& other)
+		: SpriteRenderer(Plugin::InternalUse::Only, other.Handle)
+	{
+		other.Handle = 0;
+	}
+	
+	SpriteRenderer::~SpriteRenderer()
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+	}
+	
+	SpriteRenderer& SpriteRenderer::operator=(const SpriteRenderer& other)
+	{
+		if (this->Handle)
+		{
+			Plugin::DereferenceManagedClass(this->Handle);
+		}
+		this->Handle = other.Handle;
+		if (this->Handle)
+		{
+			Plugin::ReferenceManagedClass(this->Handle);
+		}
+		return *this;
+	}
+	
+	SpriteRenderer& SpriteRenderer::operator=(decltype(nullptr))
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+		return *this;
+	}
+	
+	SpriteRenderer& SpriteRenderer::operator=(SpriteRenderer&& other)
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+		}
+		Handle = other.Handle;
+		other.Handle = 0;
+		return *this;
+	}
+	
+	bool SpriteRenderer::operator==(const SpriteRenderer& other) const
+	{
+		return Handle == other.Handle;
+	}
+	
+	bool SpriteRenderer::operator!=(const SpriteRenderer& other) const
+	{
+		return Handle != other.Handle;
+	}
+	
+	UnityEngine::Sprite UnityEngine::SpriteRenderer::GetSprite()
+	{
+		auto returnValue = Plugin::UnityEngineSpriteRendererPropertyGetSprite(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return UnityEngine::Sprite(Plugin::InternalUse::Only, returnValue);
+	}
+	
+	void UnityEngine::SpriteRenderer::SetSprite(UnityEngine::Sprite& value)
+	{
+		Plugin::UnityEngineSpriteRendererPropertySetSprite(Handle, value.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
 	}
 }
 
@@ -6084,12 +6527,22 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::SystemCollectionsIEnumeratorPropertyGetCurrent);
 	Plugin::SystemCollectionsIEnumeratorMethodMoveNext = *(int32_t (**)(int32_t thisHandle))curMemory;
 	curMemory += sizeof(Plugin::SystemCollectionsIEnumeratorMethodMoveNext);
+	Plugin::UnityEngineGameObjectConstructor = *(int32_t (**)())curMemory;
+	curMemory += sizeof(Plugin::UnityEngineGameObjectConstructor);
+	Plugin::UnityEngineGameObjectConstructorSystemString = *(int32_t (**)(int32_t nameHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineGameObjectConstructorSystemString);
 	Plugin::UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript = *(int32_t (**)(int32_t thisHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript);
+	Plugin::UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRenderer = *(int32_t (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRenderer);
+	Plugin::UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRenderer = *(int32_t (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRenderer);
 	Plugin::UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType = *(int32_t (**)(UnityEngine::PrimitiveType type))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType);
 	Plugin::UnityEngineDebugMethodLogSystemObject = *(void (**)(int32_t messageHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineDebugMethodLogSystemObject);
+	Plugin::UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString = *(int32_t (**)(int32_t pathHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString);
 	Plugin::UnityEngineMonoBehaviourPropertyGetTransform = *(int32_t (**)(int32_t thisHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineMonoBehaviourPropertyGetTransform);
 	Plugin::SystemExceptionConstructorSystemString = *(int32_t (**)(int32_t messageHandle))curMemory;
@@ -6098,6 +6551,10 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::BoxPrimitiveType);
 	Plugin::UnboxPrimitiveType = *(UnityEngine::PrimitiveType (**)(int32_t valHandle))curMemory;
 	curMemory += sizeof(Plugin::UnboxPrimitiveType);
+	Plugin::UnityEngineSpriteRendererPropertyGetSprite = *(int32_t (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineSpriteRendererPropertyGetSprite);
+	Plugin::UnityEngineSpriteRendererPropertySetSprite = *(void (**)(int32_t thisHandle, int32_t valueHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineSpriteRendererPropertySetSprite);
 	Plugin::UnityEngineTimePropertyGetDeltaTime = *(System::Single (**)())curMemory;
 	curMemory += sizeof(Plugin::UnityEngineTimePropertyGetDeltaTime);
 	Plugin::ReleaseBaseBallScript = *(void (**)(int32_t handle))curMemory;

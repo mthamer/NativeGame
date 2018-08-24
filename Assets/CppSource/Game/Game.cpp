@@ -30,7 +30,7 @@ namespace MyGame
 	{
 		Transform transform = GetTransform();
 		Vector3 pos = transform.GetPosition();
-		const float speed = 0.001f;
+		const float speed = 0.0001f;
 		const float min = -2.0f;
 		const float max = 2.0f;
 		float distance = Time::GetDeltaTime() * speed * gameState->BallDir;
@@ -68,17 +68,28 @@ void PluginMain(
 	gameState = (GameState*)memory;
 	if (isFirstBoot)
 	{
-		String message("Game booted up 2");
+		String message("Native Plugin Begin");
 		Debug::Log(message);
 		
 		// The ball initially goes right
 		gameState->BallDir = 1.0f;
 		
 		// Create the ball game object out of a sphere primitive
-		GameObject go = GameObject::CreatePrimitive(PrimitiveType::Sphere);
-		String name("GameObject with a BallScript");
-		go.SetName(name);
-		
+		String name("PlayerShip gameObject");
+		GameObject go(name);
+
+		go.AddComponent<SpriteRenderer>();
+
+		String spriteLeftPath("spaceship_high_left");
+		String spriteRightPath("spaceship_high_right");
+		String spriteCenterPath("spaceship_high_center");
+		Sprite spriteLeft = Resources::Load<Sprite>(spriteLeftPath);		
+		Sprite spriteRight = Resources::Load<Sprite>(spriteRightPath);		
+		Sprite spriteCenter = Resources::Load<Sprite>(spriteCenterPath);	
+		String rock1Path("tile000");
+		Sprite rock1 = Resources::Load<Sprite>(rock1Path);
+		go.GetComponent<SpriteRenderer>().SetSprite(rock1);
+
 		// Attach the ball script to make it bounce back and forth
 		go.AddComponent<MyGame::BaseBallScript>();
 	}
