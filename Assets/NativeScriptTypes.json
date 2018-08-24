@@ -208,6 +208,10 @@
         {
           "Name": "transform",
           "Get": {}
+        },
+        {
+          "Name": "gameObject",
+          "Get": {}
         }
       ]
     },
@@ -260,6 +264,18 @@
         }
 
       ],
+      "Properties": [
+        {
+          "Name": "transform",
+          "Get": {},
+          "Set": {}
+        },
+        {
+          "Name": "tag",
+          "Get": {},
+          "Set": {}
+        }
+      ],
       "Methods": [
         {
           "Name": "AddComponent",
@@ -267,7 +283,7 @@
           "GenericParams": [
             {
               "Types": [
-                "MyGame.BaseBallScript"
+                "MyGame.BaseGameScript"
               ]
             },
             {
@@ -286,6 +302,12 @@
                 "UnityEngine.SpriteRenderer"
               ]
             }
+          ]
+        },
+        {
+          "Name": "CompareTag",
+          "ParamTypes": [
+            "System.String"
           ]
         },
         {
@@ -361,7 +383,12 @@
       "Name": "UnityEngine.Renderer"
     },
     {
-      "Name": "UnityEngine.Sprite"
+      "Name": "UnityEngine.Sprite",
+      "Constructors": [
+        {
+          "ParamTypes": []
+        }
+      ]
     },
     {
       "Name": "UnityEngine.SpriteRenderer",
@@ -384,11 +411,11 @@
       ]
     },
     {
-      "Name": "MyGame.AbstractBaseBallScript",
+      "Name": "MyGame.AbstractBaseGameScript",
       "BaseTypes": [
         {
-          "BaseName": "MyGame.BaseBallScript",
-          "DerivedName": "MyGame.BallScript"
+          "BaseName": "MyGame.BaseGameScript",
+          "DerivedName": "MyGame.GameScript"
         }
       ]
     }

@@ -1,22 +1,45 @@
-/// <summary>
-/// Declaration of the game types the bindings layer needs to know about
-/// </summary>
-/// <author>
-/// Jackson Dunstan, 2018, http://JacksonDunstan.com
-/// </author>
-/// <license>
-/// MIT
-/// </license>
+//
+// Main game class
+//
 
 #pragma once
 
 #include "Bindings.h"
+#include "PlayerShip.h"
 
+//
+// Interface to Main Unity game script
+//
 namespace MyGame
 {
-	struct BallScript : MyGame::BaseBallScript
+	struct GameScript : MyGame::BaseGameScript
 	{
-		MY_GAME_BALL_SCRIPT_DEFAULT_CONSTRUCTOR
+		MY_GAME_GAME_SCRIPT_DEFAULT_CONSTRUCTOR
 		void Update() override;
 	};
 }
+
+//
+// main game class
+//
+class Game
+{
+	friend struct MyGame::GameScript;
+private:
+	GameObject mGo;
+	PlayerShip mPlayerShip;
+
+public:
+	// singleton
+	static Game *GetInstance() 
+	{
+		static Game *theInstance = nullptr;
+		if (theInstance == nullptr)
+			theInstance = new Game;
+		return theInstance;
+	}
+
+	Game() {}
+	static String GetName() { return String("GameObject"); }
+	int Init();
+};

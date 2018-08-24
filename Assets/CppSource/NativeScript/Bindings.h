@@ -434,12 +434,12 @@ namespace UnityEngine
 
 namespace MyGame
 {
-	struct AbstractBaseBallScript;
+	struct AbstractBaseGameScript;
 }
 
 namespace MyGame
 {
-	struct BaseBallScript;
+	struct BaseGameScript;
 }
 /*END TYPE DECLARATIONS*/
 
@@ -1272,6 +1272,7 @@ namespace UnityEngine
 		bool operator==(const Component& other) const;
 		bool operator!=(const Component& other) const;
 		UnityEngine::Transform GetTransform();
+		UnityEngine::GameObject GetGameObject();
 	};
 }
 
@@ -1378,8 +1379,12 @@ namespace UnityEngine
 		bool operator!=(const GameObject& other) const;
 		GameObject();
 		GameObject(System::String& name);
+		UnityEngine::Transform GetTransform();
+		System::String GetTag();
+		void SetTag(System::String& value);
 		template<typename MT0> MT0 AddComponent();
 		template<typename MT0> MT0 GetComponent();
+		System::Boolean CompareTag(System::String& tag);
 		static UnityEngine::GameObject CreatePrimitive(UnityEngine::PrimitiveType type);
 	};
 }
@@ -1562,6 +1567,7 @@ namespace UnityEngine
 		Sprite& operator=(Sprite&& other);
 		bool operator==(const Sprite& other) const;
 		bool operator!=(const Sprite& other) const;
+		Sprite();
 	};
 }
 
@@ -1604,62 +1610,62 @@ namespace UnityEngine
 
 namespace MyGame
 {
-	struct AbstractBaseBallScript : virtual UnityEngine::MonoBehaviour
+	struct AbstractBaseGameScript : virtual UnityEngine::MonoBehaviour
 	{
-		AbstractBaseBallScript(decltype(nullptr));
-		AbstractBaseBallScript(Plugin::InternalUse, int32_t handle);
-		AbstractBaseBallScript(const AbstractBaseBallScript& other);
-		AbstractBaseBallScript(AbstractBaseBallScript&& other);
-		virtual ~AbstractBaseBallScript();
-		AbstractBaseBallScript& operator=(const AbstractBaseBallScript& other);
-		AbstractBaseBallScript& operator=(decltype(nullptr));
-		AbstractBaseBallScript& operator=(AbstractBaseBallScript&& other);
-		bool operator==(const AbstractBaseBallScript& other) const;
-		bool operator!=(const AbstractBaseBallScript& other) const;
+		AbstractBaseGameScript(decltype(nullptr));
+		AbstractBaseGameScript(Plugin::InternalUse, int32_t handle);
+		AbstractBaseGameScript(const AbstractBaseGameScript& other);
+		AbstractBaseGameScript(AbstractBaseGameScript&& other);
+		virtual ~AbstractBaseGameScript();
+		AbstractBaseGameScript& operator=(const AbstractBaseGameScript& other);
+		AbstractBaseGameScript& operator=(decltype(nullptr));
+		AbstractBaseGameScript& operator=(AbstractBaseGameScript&& other);
+		bool operator==(const AbstractBaseGameScript& other) const;
+		bool operator!=(const AbstractBaseGameScript& other) const;
 	};
 }
 
 namespace MyGame
 {
-	struct BaseBallScript : virtual MyGame::AbstractBaseBallScript
+	struct BaseGameScript : virtual MyGame::AbstractBaseGameScript
 	{
-		BaseBallScript(decltype(nullptr));
-		BaseBallScript(Plugin::InternalUse, int32_t handle);
-		BaseBallScript(const BaseBallScript& other);
-		BaseBallScript(BaseBallScript&& other);
-		virtual ~BaseBallScript();
-		BaseBallScript& operator=(const BaseBallScript& other);
-		BaseBallScript& operator=(decltype(nullptr));
-		BaseBallScript& operator=(BaseBallScript&& other);
-		bool operator==(const BaseBallScript& other) const;
-		bool operator!=(const BaseBallScript& other) const;
+		BaseGameScript(decltype(nullptr));
+		BaseGameScript(Plugin::InternalUse, int32_t handle);
+		BaseGameScript(const BaseGameScript& other);
+		BaseGameScript(BaseGameScript&& other);
+		virtual ~BaseGameScript();
+		BaseGameScript& operator=(const BaseGameScript& other);
+		BaseGameScript& operator=(decltype(nullptr));
+		BaseGameScript& operator=(BaseGameScript&& other);
+		bool operator==(const BaseGameScript& other) const;
+		bool operator!=(const BaseGameScript& other) const;
 		int32_t CppHandle;
-		BaseBallScript();
+		BaseGameScript();
 		virtual void Update();
 	};
 }
 /*END TYPE DEFINITIONS*/
 
 /*BEGIN MACROS*/
-#define MY_GAME_BALL_SCRIPT_DEFAULT_CONSTRUCTOR_DECLARATION \
-	BallScript(Plugin::InternalUse iu, int32_t handle);
+#define MY_GAME_GAME_SCRIPT_DEFAULT_CONSTRUCTOR_DECLARATION \
+	GameScript(Plugin::InternalUse iu, int32_t handle);
 
-#define MY_GAME_BALL_SCRIPT_DEFAULT_CONSTRUCTOR_DEFINITION \
-	BallScript::BallScript(Plugin::InternalUse iu, int32_t handle) \
+#define MY_GAME_GAME_SCRIPT_DEFAULT_CONSTRUCTOR_DEFINITION \
+	GameScript::GameScript(Plugin::InternalUse iu, int32_t handle) \
 		: UnityEngine::Object(nullptr) \
 		, UnityEngine::Component(nullptr) \
 		, UnityEngine::Behaviour(nullptr) \
 		, UnityEngine::MonoBehaviour(nullptr) \
-		, MyGame::AbstractBaseBallScript(nullptr) \
-		, MyGame::BaseBallScript(iu, handle)
-#define MY_GAME_BALL_SCRIPT_DEFAULT_CONSTRUCTOR \
-	BallScript(Plugin::InternalUse iu, int32_t handle) \
+		, MyGame::AbstractBaseGameScript(nullptr) \
+		, MyGame::BaseGameScript(iu, handle)
+#define MY_GAME_GAME_SCRIPT_DEFAULT_CONSTRUCTOR \
+	GameScript(Plugin::InternalUse iu, int32_t handle) \
 		: UnityEngine::Object(nullptr) \
 		, UnityEngine::Component(nullptr) \
 		, UnityEngine::Behaviour(nullptr) \
 		, UnityEngine::MonoBehaviour(nullptr) \
-		, MyGame::AbstractBaseBallScript(nullptr) \
-		, MyGame::BaseBallScript(iu, handle) \
+		, MyGame::AbstractBaseGameScript(nullptr) \
+		, MyGame::BaseGameScript(iu, handle) \
 	{ \
 	} \
 /*END MACROS*/

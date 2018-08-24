@@ -29,6 +29,7 @@ namespace NativeScript
 		
 		void Awake()
 		{
+            Debug.Log("BootScript - Awake");
 #if UNITY_EDITOR
 			lastAutoReloadPollTime = AutoReloadPollTime;
 #endif
@@ -39,7 +40,7 @@ namespace NativeScript
 #if UNITY_EDITOR
 		void Update()
 		{
-			Bindings.Update();
+            Bindings.Update();
 
 			if (AutoReload)
 			{
@@ -78,7 +79,9 @@ namespace NativeScript
 		
 		void OnApplicationQuit()
 		{
-			Bindings.Close();
+            Debug.Log("BootScript - Quit");
+
+            Bindings.Close();
 		}
 	}
 }

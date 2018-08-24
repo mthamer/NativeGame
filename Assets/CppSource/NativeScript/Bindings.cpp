@@ -65,15 +65,20 @@ namespace Plugin
 	int32_t (*UnityEngineObjectPropertyGetName)(int32_t thisHandle);
 	void (*UnityEngineObjectPropertySetName)(int32_t thisHandle, int32_t valueHandle);
 	int32_t (*UnityEngineComponentPropertyGetTransform)(int32_t thisHandle);
+	int32_t (*UnityEngineComponentPropertyGetGameObject)(int32_t thisHandle);
 	UnityEngine::Vector3 (*UnityEngineTransformPropertyGetPosition)(int32_t thisHandle);
 	void (*UnityEngineTransformPropertySetPosition)(int32_t thisHandle, UnityEngine::Vector3& value);
 	int32_t (*SystemCollectionsIEnumeratorPropertyGetCurrent)(int32_t thisHandle);
 	int32_t (*SystemCollectionsIEnumeratorMethodMoveNext)(int32_t thisHandle);
 	int32_t (*UnityEngineGameObjectConstructor)();
 	int32_t (*UnityEngineGameObjectConstructorSystemString)(int32_t nameHandle);
-	int32_t (*UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript)(int32_t thisHandle);
+	int32_t (*UnityEngineGameObjectPropertyGetTransform)(int32_t thisHandle);
+	int32_t (*UnityEngineGameObjectPropertyGetTag)(int32_t thisHandle);
+	void (*UnityEngineGameObjectPropertySetTag)(int32_t thisHandle, int32_t valueHandle);
+	int32_t (*UnityEngineGameObjectMethodAddComponentMyGameBaseGameScript)(int32_t thisHandle);
 	int32_t (*UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRenderer)(int32_t thisHandle);
 	int32_t (*UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRenderer)(int32_t thisHandle);
+	int32_t (*UnityEngineGameObjectMethodCompareTagSystemString)(int32_t thisHandle, int32_t tagHandle);
 	int32_t (*UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType)(UnityEngine::PrimitiveType type);
 	void (*UnityEngineDebugMethodLogSystemObject)(int32_t messageHandle);
 	int32_t (*UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString)(int32_t pathHandle);
@@ -81,11 +86,12 @@ namespace Plugin
 	int32_t (*SystemExceptionConstructorSystemString)(int32_t messageHandle);
 	int32_t (*BoxPrimitiveType)(UnityEngine::PrimitiveType val);
 	UnityEngine::PrimitiveType (*UnboxPrimitiveType)(int32_t valHandle);
+	int32_t (*UnityEngineSpriteConstructor)();
 	int32_t (*UnityEngineSpriteRendererPropertyGetSprite)(int32_t thisHandle);
 	void (*UnityEngineSpriteRendererPropertySetSprite)(int32_t thisHandle, int32_t valueHandle);
 	System::Single (*UnityEngineTimePropertyGetDeltaTime)();
-	void (*ReleaseBaseBallScript)(int32_t handle);
-	void (*BaseBallScriptConstructor)(int32_t cppHandle, int32_t* handle);
+	void (*ReleaseBaseGameScript)(int32_t handle);
+	void (*BaseGameScriptConstructor)(int32_t cppHandle, int32_t* handle);
 	int32_t (*BoxBoolean)(uint32_t val);
 	int32_t (*UnboxBoolean)(int32_t valHandle);
 	int32_t (*BoxSByte)(int8_t val);
@@ -899,60 +905,60 @@ namespace Plugin
 		}
 	}
 	
-	// Free list for MyGame::BaseBallScript pointers
+	// Free list for MyGame::BaseGameScript pointers
 	
-	int32_t BaseBallScriptFreeListSize;
-	MyGame::BaseBallScript** BaseBallScriptFreeList;
-	MyGame::BaseBallScript** NextFreeBaseBallScript;
+	int32_t BaseGameScriptFreeListSize;
+	MyGame::BaseGameScript** BaseGameScriptFreeList;
+	MyGame::BaseGameScript** NextFreeBaseGameScript;
 	
-	int32_t StoreBaseBallScript(MyGame::BaseBallScript* del)
+	int32_t StoreBaseGameScript(MyGame::BaseGameScript* del)
 	{
-		assert(NextFreeBaseBallScript != nullptr);
-		MyGame::BaseBallScript** pNext = NextFreeBaseBallScript;
-		NextFreeBaseBallScript = (MyGame::BaseBallScript**)*pNext;
+		assert(NextFreeBaseGameScript != nullptr);
+		MyGame::BaseGameScript** pNext = NextFreeBaseGameScript;
+		NextFreeBaseGameScript = (MyGame::BaseGameScript**)*pNext;
 		*pNext = del;
-		return (int32_t)(pNext - BaseBallScriptFreeList);
+		return (int32_t)(pNext - BaseGameScriptFreeList);
 	}
 	
-	MyGame::BaseBallScript* GetBaseBallScript(int32_t handle)
+	MyGame::BaseGameScript* GetBaseGameScript(int32_t handle)
 	{
-		assert(handle >= 0 && handle < BaseBallScriptFreeListSize);
-		return BaseBallScriptFreeList[handle];
+		assert(handle >= 0 && handle < BaseGameScriptFreeListSize);
+		return BaseGameScriptFreeList[handle];
 	}
 	
-	void RemoveBaseBallScript(int32_t handle)
+	void RemoveBaseGameScript(int32_t handle)
 	{
-		MyGame::BaseBallScript** pRelease = BaseBallScriptFreeList + handle;
-		*pRelease = (MyGame::BaseBallScript*)NextFreeBaseBallScript;
-		NextFreeBaseBallScript = pRelease;
+		MyGame::BaseGameScript** pRelease = BaseGameScriptFreeList + handle;
+		*pRelease = (MyGame::BaseGameScript*)NextFreeBaseGameScript;
+		NextFreeBaseGameScript = pRelease;
 	}
 	
-	// Free list for whole MyGame::BaseBallScript objects
+	// Free list for whole MyGame::BaseGameScript objects
 	
-	union BaseBallScriptFreeWholeListEntry
+	union BaseGameScriptFreeWholeListEntry
 	{
-		BaseBallScriptFreeWholeListEntry* Next;
-		MyGame::BaseBallScript Value;
+		BaseGameScriptFreeWholeListEntry* Next;
+		MyGame::BaseGameScript Value;
 	};
-	int32_t BaseBallScriptFreeWholeListSize;
-	BaseBallScriptFreeWholeListEntry* BaseBallScriptFreeWholeList;
-	BaseBallScriptFreeWholeListEntry* NextFreeWholeBaseBallScript;
+	int32_t BaseGameScriptFreeWholeListSize;
+	BaseGameScriptFreeWholeListEntry* BaseGameScriptFreeWholeList;
+	BaseGameScriptFreeWholeListEntry* NextFreeWholeBaseGameScript;
 	
-	MyGame::BaseBallScript* StoreWholeBaseBallScript()
+	MyGame::BaseGameScript* StoreWholeBaseGameScript()
 	{
-		assert(NextFreeWholeBaseBallScript != nullptr);
-		BaseBallScriptFreeWholeListEntry* pNext = NextFreeWholeBaseBallScript;
-		NextFreeWholeBaseBallScript = pNext->Next;
+		assert(NextFreeWholeBaseGameScript != nullptr);
+		BaseGameScriptFreeWholeListEntry* pNext = NextFreeWholeBaseGameScript;
+		NextFreeWholeBaseGameScript = pNext->Next;
 		return &pNext->Value;
 	}
 	
-	void RemoveWholeBaseBallScript(MyGame::BaseBallScript* instance)
+	void RemoveWholeBaseGameScript(MyGame::BaseGameScript* instance)
 	{
-		BaseBallScriptFreeWholeListEntry* pRelease = (BaseBallScriptFreeWholeListEntry*)instance;
-		if (pRelease >= BaseBallScriptFreeWholeList && pRelease < BaseBallScriptFreeWholeList + (BaseBallScriptFreeWholeListSize - 1))
+		BaseGameScriptFreeWholeListEntry* pRelease = (BaseGameScriptFreeWholeListEntry*)instance;
+		if (pRelease >= BaseGameScriptFreeWholeList && pRelease < BaseGameScriptFreeWholeList + (BaseGameScriptFreeWholeListSize - 1))
 		{
-			pRelease->Next = NextFreeWholeBaseBallScript;
-			NextFreeWholeBaseBallScript = pRelease->Next;
+			pRelease->Next = NextFreeWholeBaseGameScript;
+			NextFreeWholeBaseGameScript = pRelease->Next;
 		}
 	}
 	/*END GLOBAL STATE AND FUNCTIONS*/
@@ -4173,6 +4179,19 @@ namespace UnityEngine
 		}
 		return UnityEngine::Transform(Plugin::InternalUse::Only, returnValue);
 	}
+	
+	UnityEngine::GameObject UnityEngine::Component::GetGameObject()
+	{
+		auto returnValue = Plugin::UnityEngineComponentPropertyGetGameObject(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return UnityEngine::GameObject(Plugin::InternalUse::Only, returnValue);
+	}
 }
 
 namespace UnityEngine
@@ -4689,9 +4708,9 @@ namespace UnityEngine
 		}
 	}
 	
-	template<> MyGame::BaseBallScript UnityEngine::GameObject::AddComponent<MyGame::BaseBallScript>()
+	UnityEngine::Transform UnityEngine::GameObject::GetTransform()
 	{
-		auto returnValue = Plugin::UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript(Handle);
+		auto returnValue = Plugin::UnityEngineGameObjectPropertyGetTransform(Handle);
 		if (Plugin::unhandledCsharpException)
 		{
 			System::Exception* ex = Plugin::unhandledCsharpException;
@@ -4699,7 +4718,45 @@ namespace UnityEngine
 			ex->ThrowReferenceToThis();
 			delete ex;
 		}
-		return MyGame::BaseBallScript(Plugin::InternalUse::Only, returnValue);
+		return UnityEngine::Transform(Plugin::InternalUse::Only, returnValue);
+	}
+	
+	System::String UnityEngine::GameObject::GetTag()
+	{
+		auto returnValue = Plugin::UnityEngineGameObjectPropertyGetTag(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return System::String(Plugin::InternalUse::Only, returnValue);
+	}
+	
+	void UnityEngine::GameObject::SetTag(System::String& value)
+	{
+		Plugin::UnityEngineGameObjectPropertySetTag(Handle, value.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+	}
+	
+	template<> MyGame::BaseGameScript UnityEngine::GameObject::AddComponent<MyGame::BaseGameScript>()
+	{
+		auto returnValue = Plugin::UnityEngineGameObjectMethodAddComponentMyGameBaseGameScript(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return MyGame::BaseGameScript(Plugin::InternalUse::Only, returnValue);
 	}
 	
 	template<> UnityEngine::SpriteRenderer UnityEngine::GameObject::AddComponent<UnityEngine::SpriteRenderer>()
@@ -4726,6 +4783,19 @@ namespace UnityEngine
 			delete ex;
 		}
 		return UnityEngine::SpriteRenderer(Plugin::InternalUse::Only, returnValue);
+	}
+	
+	System::Boolean UnityEngine::GameObject::CompareTag(System::String& tag)
+	{
+		auto returnValue = Plugin::UnityEngineGameObjectMethodCompareTagSystemString(Handle, tag.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
 	}
 	
 	UnityEngine::GameObject UnityEngine::GameObject::CreatePrimitive(UnityEngine::PrimitiveType type)
@@ -5714,6 +5784,24 @@ namespace UnityEngine
 	{
 		return Handle != other.Handle;
 	}
+	
+	UnityEngine::Sprite::Sprite()
+		: UnityEngine::Object(nullptr)
+	{
+		auto returnValue = Plugin::UnityEngineSpriteConstructor();
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		Handle = returnValue;
+		if (returnValue)
+		{
+			Plugin::ReferenceManagedClass(returnValue);
+		}
+	}
 }
 
 namespace UnityEngine
@@ -5924,7 +6012,7 @@ namespace UnityEngine
 
 namespace MyGame
 {
-	AbstractBaseBallScript::AbstractBaseBallScript(decltype(nullptr))
+	AbstractBaseGameScript::AbstractBaseGameScript(decltype(nullptr))
 		: UnityEngine::Object(nullptr)
 		, UnityEngine::Component(nullptr)
 		, UnityEngine::Behaviour(nullptr)
@@ -5932,7 +6020,7 @@ namespace MyGame
 	{
 	}
 	
-	AbstractBaseBallScript::AbstractBaseBallScript(Plugin::InternalUse, int32_t handle)
+	AbstractBaseGameScript::AbstractBaseGameScript(Plugin::InternalUse, int32_t handle)
 		: UnityEngine::Object(nullptr)
 		, UnityEngine::Component(nullptr)
 		, UnityEngine::Behaviour(nullptr)
@@ -5945,18 +6033,18 @@ namespace MyGame
 		}
 	}
 	
-	AbstractBaseBallScript::AbstractBaseBallScript(const AbstractBaseBallScript& other)
-		: AbstractBaseBallScript(Plugin::InternalUse::Only, other.Handle)
+	AbstractBaseGameScript::AbstractBaseGameScript(const AbstractBaseGameScript& other)
+		: AbstractBaseGameScript(Plugin::InternalUse::Only, other.Handle)
 	{
 	}
 	
-	AbstractBaseBallScript::AbstractBaseBallScript(AbstractBaseBallScript&& other)
-		: AbstractBaseBallScript(Plugin::InternalUse::Only, other.Handle)
+	AbstractBaseGameScript::AbstractBaseGameScript(AbstractBaseGameScript&& other)
+		: AbstractBaseGameScript(Plugin::InternalUse::Only, other.Handle)
 	{
 		other.Handle = 0;
 	}
 	
-	AbstractBaseBallScript::~AbstractBaseBallScript()
+	AbstractBaseGameScript::~AbstractBaseGameScript()
 	{
 		if (Handle)
 		{
@@ -5965,7 +6053,7 @@ namespace MyGame
 		}
 	}
 	
-	AbstractBaseBallScript& AbstractBaseBallScript::operator=(const AbstractBaseBallScript& other)
+	AbstractBaseGameScript& AbstractBaseGameScript::operator=(const AbstractBaseGameScript& other)
 	{
 		if (this->Handle)
 		{
@@ -5979,7 +6067,7 @@ namespace MyGame
 		return *this;
 	}
 	
-	AbstractBaseBallScript& AbstractBaseBallScript::operator=(decltype(nullptr))
+	AbstractBaseGameScript& AbstractBaseGameScript::operator=(decltype(nullptr))
 	{
 		if (Handle)
 		{
@@ -5989,7 +6077,7 @@ namespace MyGame
 		return *this;
 	}
 	
-	AbstractBaseBallScript& AbstractBaseBallScript::operator=(AbstractBaseBallScript&& other)
+	AbstractBaseGameScript& AbstractBaseGameScript::operator=(AbstractBaseGameScript&& other)
 	{
 		if (Handle)
 		{
@@ -6000,12 +6088,12 @@ namespace MyGame
 		return *this;
 	}
 	
-	bool AbstractBaseBallScript::operator==(const AbstractBaseBallScript& other) const
+	bool AbstractBaseGameScript::operator==(const AbstractBaseGameScript& other) const
 	{
 		return Handle == other.Handle;
 	}
 	
-	bool AbstractBaseBallScript::operator!=(const AbstractBaseBallScript& other) const
+	bool AbstractBaseGameScript::operator!=(const AbstractBaseGameScript& other) const
 	{
 		return Handle != other.Handle;
 	}
@@ -6013,17 +6101,17 @@ namespace MyGame
 
 namespace MyGame
 {
-	MyGame::BaseBallScript::BaseBallScript()
+	MyGame::BaseGameScript::BaseGameScript()
 		: UnityEngine::Object(nullptr)
 		, UnityEngine::Component(nullptr)
 		, UnityEngine::Behaviour(nullptr)
 		, UnityEngine::MonoBehaviour(nullptr)
-		, MyGame::AbstractBaseBallScript(nullptr)
+		, MyGame::AbstractBaseGameScript(nullptr)
 	{
-		CppHandle = Plugin::StoreBaseBallScript(this);
+		CppHandle = Plugin::StoreBaseGameScript(this);
 		System::Int32* handle = (System::Int32*)&Handle;
 		int32_t cppHandle = CppHandle;
-		Plugin::BaseBallScriptConstructor(cppHandle, &handle->Value);
+		Plugin::BaseGameScriptConstructor(cppHandle, &handle->Value);
 		if (Plugin::unhandledCsharpException)
 		{
 			System::Exception* ex = Plugin::unhandledCsharpException;
@@ -6037,7 +6125,7 @@ namespace MyGame
 		}
 		else
 		{
-			Plugin::RemoveBaseBallScript(CppHandle);
+			Plugin::RemoveBaseGameScript(CppHandle);
 			CppHandle = 0;
 		}
 		if (Plugin::unhandledCsharpException)
@@ -6049,37 +6137,37 @@ namespace MyGame
 		}
 	}
 	
-	BaseBallScript::BaseBallScript(decltype(nullptr))
+	BaseGameScript::BaseGameScript(decltype(nullptr))
 		: UnityEngine::Object(nullptr)
 		, UnityEngine::Component(nullptr)
 		, UnityEngine::Behaviour(nullptr)
 		, UnityEngine::MonoBehaviour(nullptr)
-		, MyGame::AbstractBaseBallScript(nullptr)
+		, MyGame::AbstractBaseGameScript(nullptr)
 	{
-		CppHandle = Plugin::StoreBaseBallScript(this);
+		CppHandle = Plugin::StoreBaseGameScript(this);
 	}
 	
-	MyGame::BaseBallScript::BaseBallScript(const MyGame::BaseBallScript& other)
+	MyGame::BaseGameScript::BaseGameScript(const MyGame::BaseGameScript& other)
 		: UnityEngine::Object(nullptr)
 		, UnityEngine::Component(nullptr)
 		, UnityEngine::Behaviour(nullptr)
 		, UnityEngine::MonoBehaviour(nullptr)
-		, MyGame::AbstractBaseBallScript(nullptr)
+		, MyGame::AbstractBaseGameScript(nullptr)
 	{
 		Handle = other.Handle;
-		CppHandle = Plugin::StoreBaseBallScript(this);
+		CppHandle = Plugin::StoreBaseGameScript(this);
 		if (Handle)
 		{
 			Plugin::ReferenceManagedClass(Handle);
 		}
 	}
 	
-	MyGame::BaseBallScript::BaseBallScript(MyGame::BaseBallScript&& other)
+	MyGame::BaseGameScript::BaseGameScript(MyGame::BaseGameScript&& other)
 		: UnityEngine::Object(nullptr)
 		, UnityEngine::Component(nullptr)
 		, UnityEngine::Behaviour(nullptr)
 		, UnityEngine::MonoBehaviour(nullptr)
-		, MyGame::AbstractBaseBallScript(nullptr)
+		, MyGame::AbstractBaseGameScript(nullptr)
 	{
 		Handle = other.Handle;
 		CppHandle = other.CppHandle;
@@ -6087,25 +6175,25 @@ namespace MyGame
 		other.CppHandle = 0;
 	}
 	
-	MyGame::BaseBallScript::BaseBallScript(Plugin::InternalUse, int32_t handle)
+	MyGame::BaseGameScript::BaseGameScript(Plugin::InternalUse, int32_t handle)
 		: UnityEngine::Object(nullptr)
 		, UnityEngine::Component(nullptr)
 		, UnityEngine::Behaviour(nullptr)
 		, UnityEngine::MonoBehaviour(nullptr)
-		, MyGame::AbstractBaseBallScript(nullptr)
+		, MyGame::AbstractBaseGameScript(nullptr)
 	{
 		Handle = handle;
-		CppHandle = Plugin::StoreBaseBallScript(this);
+		CppHandle = Plugin::StoreBaseGameScript(this);
 		if (Handle)
 		{
 			Plugin::ReferenceManagedClass(Handle);
 		}
 	}
 	
-	MyGame::BaseBallScript::~BaseBallScript()
+	MyGame::BaseGameScript::~BaseGameScript()
 	{
-		Plugin::RemoveWholeBaseBallScript(this);
-		Plugin::RemoveBaseBallScript(CppHandle);
+		Plugin::RemoveWholeBaseGameScript(this);
+		Plugin::RemoveBaseGameScript(CppHandle);
 		CppHandle = 0;
 		if (Handle)
 		{
@@ -6113,7 +6201,7 @@ namespace MyGame
 			Handle = 0;
 			if (Plugin::DereferenceManagedClassNoRelease(handle))
 			{
-				Plugin::ReleaseBaseBallScript(handle);
+				Plugin::ReleaseBaseGameScript(handle);
 				if (Plugin::unhandledCsharpException)
 				{
 					System::Exception* ex = Plugin::unhandledCsharpException;
@@ -6125,7 +6213,7 @@ namespace MyGame
 		}
 	}
 	
-	MyGame::BaseBallScript& MyGame::BaseBallScript::operator=(const MyGame::BaseBallScript& other)
+	MyGame::BaseGameScript& MyGame::BaseGameScript::operator=(const MyGame::BaseGameScript& other)
 	{
 		if (this->Handle)
 		{
@@ -6139,7 +6227,7 @@ namespace MyGame
 		return *this;
 	}
 	
-	MyGame::BaseBallScript& MyGame::BaseBallScript::operator=(decltype(nullptr))
+	MyGame::BaseGameScript& MyGame::BaseGameScript::operator=(decltype(nullptr))
 	{
 		if (Handle)
 		{
@@ -6147,7 +6235,7 @@ namespace MyGame
 			Handle = 0;
 			if (Plugin::DereferenceManagedClassNoRelease(handle))
 			{
-				Plugin::ReleaseBaseBallScript(handle);
+				Plugin::ReleaseBaseGameScript(handle);
 				if (Plugin::unhandledCsharpException)
 				{
 					System::Exception* ex = Plugin::unhandledCsharpException;
@@ -6161,9 +6249,9 @@ namespace MyGame
 		return *this;
 	}
 	
-	MyGame::BaseBallScript& MyGame::BaseBallScript::operator=(MyGame::BaseBallScript&& other)
+	MyGame::BaseGameScript& MyGame::BaseGameScript::operator=(MyGame::BaseGameScript&& other)
 	{
-		Plugin::RemoveBaseBallScript(CppHandle);
+		Plugin::RemoveBaseGameScript(CppHandle);
 		CppHandle = 0;
 		if (Handle)
 		{
@@ -6171,7 +6259,7 @@ namespace MyGame
 			Handle = 0;
 			if (Plugin::DereferenceManagedClassNoRelease(handle))
 			{
-				Plugin::ReleaseBaseBallScript(handle);
+				Plugin::ReleaseBaseGameScript(handle);
 				if (Plugin::unhandledCsharpException)
 				{
 					System::Exception* ex = Plugin::unhandledCsharpException;
@@ -6186,38 +6274,38 @@ namespace MyGame
 		return *this;
 	}
 	
-	bool MyGame::BaseBallScript::operator==(const MyGame::BaseBallScript& other) const
+	bool MyGame::BaseGameScript::operator==(const MyGame::BaseGameScript& other) const
 	{
 		return Handle == other.Handle;
 	}
 	
-	bool MyGame::BaseBallScript::operator!=(const MyGame::BaseBallScript& other) const
+	bool MyGame::BaseGameScript::operator!=(const MyGame::BaseGameScript& other) const
 	{
 		return Handle != other.Handle;
 	}
 	
-	DLLEXPORT int32_t NewBaseBallScript(int32_t handle)
+	DLLEXPORT int32_t NewBaseGameScript(int32_t handle)
 	{
-		MyGame::BaseBallScript* memory = Plugin::StoreWholeBaseBallScript();
-		MyGame::BallScript* thiz = new (memory) MyGame::BallScript(Plugin::InternalUse::Only, handle);
+		MyGame::BaseGameScript* memory = Plugin::StoreWholeBaseGameScript();
+		MyGame::GameScript* thiz = new (memory) MyGame::GameScript(Plugin::InternalUse::Only, handle);
 		return thiz->CppHandle;
 	}
 
-	DLLEXPORT void DestroyBaseBallScript(int32_t cppHandle)
+	DLLEXPORT void DestroyBaseGameScript(int32_t cppHandle)
 	{
-		MyGame::BaseBallScript* instance = Plugin::GetBaseBallScript(cppHandle);
-		instance->~BaseBallScript();
+		MyGame::BaseGameScript* instance = Plugin::GetBaseGameScript(cppHandle);
+		instance->~BaseGameScript();
 	}
 
-	void MyGame::BaseBallScript::Update()
+	void MyGame::BaseGameScript::Update()
 	{
 	}
 	
-	DLLEXPORT void MyGameAbstractBaseBallScriptUpdate(int32_t cppHandle)
+	DLLEXPORT void MyGameAbstractBaseGameScriptUpdate(int32_t cppHandle)
 	{
 		try
 		{
-			Plugin::GetBaseBallScript(cppHandle)->Update();
+			Plugin::GetBaseGameScript(cppHandle)->Update();
 		}
 		catch (System::Exception ex)
 		{
@@ -6225,7 +6313,7 @@ namespace MyGame
 		}
 		catch (...)
 		{
-			System::String msg = "Unhandled exception invoking MyGame::AbstractBaseBallScript";
+			System::String msg = "Unhandled exception invoking MyGame::AbstractBaseGameScript";
 			System::Exception ex(msg);
 			Plugin::SetException(ex.Handle);
 		}
@@ -6519,6 +6607,8 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::UnityEngineObjectPropertySetName);
 	Plugin::UnityEngineComponentPropertyGetTransform = *(int32_t (**)(int32_t thisHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineComponentPropertyGetTransform);
+	Plugin::UnityEngineComponentPropertyGetGameObject = *(int32_t (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineComponentPropertyGetGameObject);
 	Plugin::UnityEngineTransformPropertyGetPosition = *(UnityEngine::Vector3 (**)(int32_t thisHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineTransformPropertyGetPosition);
 	Plugin::UnityEngineTransformPropertySetPosition = *(void (**)(int32_t thisHandle, UnityEngine::Vector3& value))curMemory;
@@ -6531,12 +6621,20 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::UnityEngineGameObjectConstructor);
 	Plugin::UnityEngineGameObjectConstructorSystemString = *(int32_t (**)(int32_t nameHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineGameObjectConstructorSystemString);
-	Plugin::UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript = *(int32_t (**)(int32_t thisHandle))curMemory;
-	curMemory += sizeof(Plugin::UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript);
+	Plugin::UnityEngineGameObjectPropertyGetTransform = *(int32_t (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineGameObjectPropertyGetTransform);
+	Plugin::UnityEngineGameObjectPropertyGetTag = *(int32_t (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineGameObjectPropertyGetTag);
+	Plugin::UnityEngineGameObjectPropertySetTag = *(void (**)(int32_t thisHandle, int32_t valueHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineGameObjectPropertySetTag);
+	Plugin::UnityEngineGameObjectMethodAddComponentMyGameBaseGameScript = *(int32_t (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineGameObjectMethodAddComponentMyGameBaseGameScript);
 	Plugin::UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRenderer = *(int32_t (**)(int32_t thisHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRenderer);
 	Plugin::UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRenderer = *(int32_t (**)(int32_t thisHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRenderer);
+	Plugin::UnityEngineGameObjectMethodCompareTagSystemString = *(int32_t (**)(int32_t thisHandle, int32_t tagHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineGameObjectMethodCompareTagSystemString);
 	Plugin::UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType = *(int32_t (**)(UnityEngine::PrimitiveType type))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType);
 	Plugin::UnityEngineDebugMethodLogSystemObject = *(void (**)(int32_t messageHandle))curMemory;
@@ -6551,16 +6649,18 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::BoxPrimitiveType);
 	Plugin::UnboxPrimitiveType = *(UnityEngine::PrimitiveType (**)(int32_t valHandle))curMemory;
 	curMemory += sizeof(Plugin::UnboxPrimitiveType);
+	Plugin::UnityEngineSpriteConstructor = *(int32_t (**)())curMemory;
+	curMemory += sizeof(Plugin::UnityEngineSpriteConstructor);
 	Plugin::UnityEngineSpriteRendererPropertyGetSprite = *(int32_t (**)(int32_t thisHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineSpriteRendererPropertyGetSprite);
 	Plugin::UnityEngineSpriteRendererPropertySetSprite = *(void (**)(int32_t thisHandle, int32_t valueHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineSpriteRendererPropertySetSprite);
 	Plugin::UnityEngineTimePropertyGetDeltaTime = *(System::Single (**)())curMemory;
 	curMemory += sizeof(Plugin::UnityEngineTimePropertyGetDeltaTime);
-	Plugin::ReleaseBaseBallScript = *(void (**)(int32_t handle))curMemory;
-	curMemory += sizeof(Plugin::ReleaseBaseBallScript);
-	Plugin::BaseBallScriptConstructor = *(void (**)(int32_t cppHandle, int32_t* handle))curMemory;
-	curMemory += sizeof(Plugin::BaseBallScriptConstructor);
+	Plugin::ReleaseBaseGameScript = *(void (**)(int32_t handle))curMemory;
+	curMemory += sizeof(Plugin::ReleaseBaseGameScript);
+	Plugin::BaseGameScriptConstructor = *(void (**)(int32_t cppHandle, int32_t* handle))curMemory;
+	curMemory += sizeof(Plugin::BaseGameScriptConstructor);
 	Plugin::BoxBoolean = *(int32_t (**)(uint32_t val))curMemory;
 	curMemory += sizeof(Plugin::BoxBoolean);
 	Plugin::UnboxBoolean = *(int32_t (**)(int32_t valHandle))curMemory;
@@ -6621,13 +6721,13 @@ DLLEXPORT void Init(
 	curMemory += 1000 * sizeof(int32_t);
 	Plugin::RefCountsLenSystemDecimal = 1000;
 	
-	Plugin::BaseBallScriptFreeListSize = 1000;
-	Plugin::BaseBallScriptFreeList = (MyGame::BaseBallScript**)curMemory;
-	curMemory += 1000 * sizeof(MyGame::BaseBallScript*);
+	Plugin::BaseGameScriptFreeListSize = 1000;
+	Plugin::BaseGameScriptFreeList = (MyGame::BaseGameScript**)curMemory;
+	curMemory += 1000 * sizeof(MyGame::BaseGameScript*);
 	
-	Plugin::BaseBallScriptFreeWholeListSize = 1000;
-	Plugin::BaseBallScriptFreeWholeList = (Plugin::BaseBallScriptFreeWholeListEntry*)curMemory;
-	curMemory += 1000 * sizeof(Plugin::BaseBallScriptFreeWholeListEntry);
+	Plugin::BaseGameScriptFreeWholeListSize = 1000;
+	Plugin::BaseGameScriptFreeWholeList = (Plugin::BaseGameScriptFreeWholeListEntry*)curMemory;
+	curMemory += 1000 * sizeof(Plugin::BaseGameScriptFreeWholeListEntry);
 	/*END INIT BODY ARRAYS*/
 	
 	// Make sure there was enough memory
@@ -6646,19 +6746,19 @@ DLLEXPORT void Init(
 		memset(memory, 0, memorySize);
 		
 		/*BEGIN INIT BODY FIRST BOOT*/
-		for (int32_t i = 0, end = Plugin::BaseBallScriptFreeListSize - 1; i < end; ++i)
+		for (int32_t i = 0, end = Plugin::BaseGameScriptFreeListSize - 1; i < end; ++i)
 		{
-			Plugin::BaseBallScriptFreeList[i] = (MyGame::BaseBallScript*)(Plugin::BaseBallScriptFreeList + i + 1);
+			Plugin::BaseGameScriptFreeList[i] = (MyGame::BaseGameScript*)(Plugin::BaseGameScriptFreeList + i + 1);
 		}
-		Plugin::BaseBallScriptFreeList[Plugin::BaseBallScriptFreeListSize - 1] = nullptr;
-		Plugin::NextFreeBaseBallScript = Plugin::BaseBallScriptFreeList + 1;
+		Plugin::BaseGameScriptFreeList[Plugin::BaseGameScriptFreeListSize - 1] = nullptr;
+		Plugin::NextFreeBaseGameScript = Plugin::BaseGameScriptFreeList + 1;
 		
-		for (int32_t i = 0, end = Plugin::BaseBallScriptFreeWholeListSize - 1; i < end; ++i)
+		for (int32_t i = 0, end = Plugin::BaseGameScriptFreeWholeListSize - 1; i < end; ++i)
 		{
-			Plugin::BaseBallScriptFreeWholeList[i].Next = Plugin::BaseBallScriptFreeWholeList + i + 1;
+			Plugin::BaseGameScriptFreeWholeList[i].Next = Plugin::BaseGameScriptFreeWholeList + i + 1;
 		}
-		Plugin::BaseBallScriptFreeWholeList[Plugin::BaseBallScriptFreeWholeListSize - 1].Next = nullptr;
-		Plugin::NextFreeWholeBaseBallScript = Plugin::BaseBallScriptFreeWholeList + 1;
+		Plugin::BaseGameScriptFreeWholeList[Plugin::BaseGameScriptFreeWholeListSize - 1].Next = nullptr;
+		Plugin::NextFreeWholeBaseGameScript = Plugin::BaseGameScriptFreeWholeList + 1;
 		/*END INIT BODY FIRST BOOT*/
 	}
 	

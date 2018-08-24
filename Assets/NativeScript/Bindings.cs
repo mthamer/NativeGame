@@ -284,7 +284,7 @@ namespace NativeScript
 		public enum DestroyFunction
 		{
 			/*BEGIN DESTROY FUNCTION ENUMERATORS*/
-			BaseBallScript
+			BaseGameScript
 			/*END DESTROY FUNCTION ENUMERATORS*/
 		}
 
@@ -335,14 +335,14 @@ namespace NativeScript
 		public delegate void SetCsharpExceptionDelegate(int handle);
 		
 		/*BEGIN CPP DELEGATES*/
-		public delegate int NewBaseBallScriptDelegateType(int param0);
-		public static NewBaseBallScriptDelegateType NewBaseBallScript;
+		public delegate int NewBaseGameScriptDelegateType(int param0);
+		public static NewBaseGameScriptDelegateType NewBaseGameScript;
 		
-		public delegate void DestroyBaseBallScriptDelegateType(int param0);
-		public static DestroyBaseBallScriptDelegateType DestroyBaseBallScript;
+		public delegate void DestroyBaseGameScriptDelegateType(int param0);
+		public static DestroyBaseGameScriptDelegateType DestroyBaseGameScript;
 		
-		public delegate void MyGameAbstractBaseBallScriptUpdateDelegateType(int thisHandle);
-		public static MyGameAbstractBaseBallScriptUpdateDelegateType MyGameAbstractBaseBallScriptUpdate;
+		public delegate void MyGameAbstractBaseGameScriptUpdateDelegateType(int thisHandle);
+		public static MyGameAbstractBaseGameScriptUpdateDelegateType MyGameAbstractBaseGameScriptUpdate;
 		
 		public delegate void SetCsharpExceptionSystemNullReferenceExceptionDelegateType(int param0);
 		public static SetCsharpExceptionSystemNullReferenceExceptionDelegateType SetCsharpExceptionSystemNullReferenceException;
@@ -448,13 +448,13 @@ namespace NativeScript
 		
 		/*BEGIN IMPORTS*/
 		[DllImport(PLUGIN_NAME)]
-		public static extern int NewBaseBallScript(int thisHandle);
+		public static extern int NewBaseGameScript(int thisHandle);
 		
 		[DllImport(PLUGIN_NAME)]
-		public static extern void DestroyBaseBallScript(int thisHandle);
+		public static extern void DestroyBaseGameScript(int thisHandle);
 		
 		[DllImport(PLUGIN_NAME)]
-		public static extern void MyGameAbstractBaseBallScriptUpdate(int thisHandle);
+		public static extern void MyGameAbstractBaseGameScriptUpdate(int thisHandle);
 		
 		[DllImport(PLUGIN_NAME)]
 		public static extern void SetCsharpExceptionSystemNullReferenceException(int thisHandle);
@@ -480,15 +480,20 @@ namespace NativeScript
 		delegate int UnityEngineObjectPropertyGetNameDelegateType(int thisHandle);
 		delegate void UnityEngineObjectPropertySetNameDelegateType(int thisHandle, int valueHandle);
 		delegate int UnityEngineComponentPropertyGetTransformDelegateType(int thisHandle);
+		delegate int UnityEngineComponentPropertyGetGameObjectDelegateType(int thisHandle);
 		delegate UnityEngine.Vector3 UnityEngineTransformPropertyGetPositionDelegateType(int thisHandle);
 		delegate void UnityEngineTransformPropertySetPositionDelegateType(int thisHandle, ref UnityEngine.Vector3 value);
 		delegate int SystemCollectionsIEnumeratorPropertyGetCurrentDelegateType(int thisHandle);
 		delegate bool SystemCollectionsIEnumeratorMethodMoveNextDelegateType(int thisHandle);
 		delegate int UnityEngineGameObjectConstructorDelegateType();
 		delegate int UnityEngineGameObjectConstructorSystemStringDelegateType(int nameHandle);
-		delegate int UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegateType(int thisHandle);
+		delegate int UnityEngineGameObjectPropertyGetTransformDelegateType(int thisHandle);
+		delegate int UnityEngineGameObjectPropertyGetTagDelegateType(int thisHandle);
+		delegate void UnityEngineGameObjectPropertySetTagDelegateType(int thisHandle, int valueHandle);
+		delegate int UnityEngineGameObjectMethodAddComponentMyGameBaseGameScriptDelegateType(int thisHandle);
 		delegate int UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRendererDelegateType(int thisHandle);
 		delegate int UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRendererDelegateType(int thisHandle);
+		delegate bool UnityEngineGameObjectMethodCompareTagSystemStringDelegateType(int thisHandle, int tagHandle);
 		delegate int UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType(UnityEngine.PrimitiveType type);
 		delegate void UnityEngineDebugMethodLogSystemObjectDelegateType(int messageHandle);
 		delegate int UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType(int pathHandle);
@@ -496,11 +501,12 @@ namespace NativeScript
 		delegate int SystemExceptionConstructorSystemStringDelegateType(int messageHandle);
 		delegate int BoxPrimitiveTypeDelegateType(UnityEngine.PrimitiveType val);
 		delegate UnityEngine.PrimitiveType UnboxPrimitiveTypeDelegateType(int valHandle);
+		delegate int UnityEngineSpriteConstructorDelegateType();
 		delegate int UnityEngineSpriteRendererPropertyGetSpriteDelegateType(int thisHandle);
 		delegate void UnityEngineSpriteRendererPropertySetSpriteDelegateType(int thisHandle, int valueHandle);
 		delegate float UnityEngineTimePropertyGetDeltaTimeDelegateType();
-		delegate void BaseBallScriptConstructorDelegateType(int cppHandle, ref int handle);
-		delegate void ReleaseBaseBallScriptDelegateType(int handle);
+		delegate void BaseGameScriptConstructorDelegateType(int cppHandle, ref int handle);
+		delegate void ReleaseBaseGameScriptDelegateType(int handle);
 		delegate int BoxBooleanDelegateType(bool val);
 		delegate bool UnboxBooleanDelegateType(int valHandle);
 		delegate int BoxSByteDelegateType(sbyte val);
@@ -563,15 +569,20 @@ namespace NativeScript
 		static readonly UnityEngineObjectPropertyGetNameDelegateType UnityEngineObjectPropertyGetNameDelegate = new UnityEngineObjectPropertyGetNameDelegateType(UnityEngineObjectPropertyGetName);
 		static readonly UnityEngineObjectPropertySetNameDelegateType UnityEngineObjectPropertySetNameDelegate = new UnityEngineObjectPropertySetNameDelegateType(UnityEngineObjectPropertySetName);
 		static readonly UnityEngineComponentPropertyGetTransformDelegateType UnityEngineComponentPropertyGetTransformDelegate = new UnityEngineComponentPropertyGetTransformDelegateType(UnityEngineComponentPropertyGetTransform);
+		static readonly UnityEngineComponentPropertyGetGameObjectDelegateType UnityEngineComponentPropertyGetGameObjectDelegate = new UnityEngineComponentPropertyGetGameObjectDelegateType(UnityEngineComponentPropertyGetGameObject);
 		static readonly UnityEngineTransformPropertyGetPositionDelegateType UnityEngineTransformPropertyGetPositionDelegate = new UnityEngineTransformPropertyGetPositionDelegateType(UnityEngineTransformPropertyGetPosition);
 		static readonly UnityEngineTransformPropertySetPositionDelegateType UnityEngineTransformPropertySetPositionDelegate = new UnityEngineTransformPropertySetPositionDelegateType(UnityEngineTransformPropertySetPosition);
 		static readonly SystemCollectionsIEnumeratorPropertyGetCurrentDelegateType SystemCollectionsIEnumeratorPropertyGetCurrentDelegate = new SystemCollectionsIEnumeratorPropertyGetCurrentDelegateType(SystemCollectionsIEnumeratorPropertyGetCurrent);
 		static readonly SystemCollectionsIEnumeratorMethodMoveNextDelegateType SystemCollectionsIEnumeratorMethodMoveNextDelegate = new SystemCollectionsIEnumeratorMethodMoveNextDelegateType(SystemCollectionsIEnumeratorMethodMoveNext);
 		static readonly UnityEngineGameObjectConstructorDelegateType UnityEngineGameObjectConstructorDelegate = new UnityEngineGameObjectConstructorDelegateType(UnityEngineGameObjectConstructor);
 		static readonly UnityEngineGameObjectConstructorSystemStringDelegateType UnityEngineGameObjectConstructorSystemStringDelegate = new UnityEngineGameObjectConstructorSystemStringDelegateType(UnityEngineGameObjectConstructorSystemString);
-		static readonly UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegateType UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegate = new UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegateType(UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript);
+		static readonly UnityEngineGameObjectPropertyGetTransformDelegateType UnityEngineGameObjectPropertyGetTransformDelegate = new UnityEngineGameObjectPropertyGetTransformDelegateType(UnityEngineGameObjectPropertyGetTransform);
+		static readonly UnityEngineGameObjectPropertyGetTagDelegateType UnityEngineGameObjectPropertyGetTagDelegate = new UnityEngineGameObjectPropertyGetTagDelegateType(UnityEngineGameObjectPropertyGetTag);
+		static readonly UnityEngineGameObjectPropertySetTagDelegateType UnityEngineGameObjectPropertySetTagDelegate = new UnityEngineGameObjectPropertySetTagDelegateType(UnityEngineGameObjectPropertySetTag);
+		static readonly UnityEngineGameObjectMethodAddComponentMyGameBaseGameScriptDelegateType UnityEngineGameObjectMethodAddComponentMyGameBaseGameScriptDelegate = new UnityEngineGameObjectMethodAddComponentMyGameBaseGameScriptDelegateType(UnityEngineGameObjectMethodAddComponentMyGameBaseGameScript);
 		static readonly UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRendererDelegateType UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRendererDelegate = new UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRendererDelegateType(UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRenderer);
 		static readonly UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRendererDelegateType UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRendererDelegate = new UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRendererDelegateType(UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRenderer);
+		static readonly UnityEngineGameObjectMethodCompareTagSystemStringDelegateType UnityEngineGameObjectMethodCompareTagSystemStringDelegate = new UnityEngineGameObjectMethodCompareTagSystemStringDelegateType(UnityEngineGameObjectMethodCompareTagSystemString);
 		static readonly UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegate = new UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType(UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType);
 		static readonly UnityEngineDebugMethodLogSystemObjectDelegateType UnityEngineDebugMethodLogSystemObjectDelegate = new UnityEngineDebugMethodLogSystemObjectDelegateType(UnityEngineDebugMethodLogSystemObject);
 		static readonly UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegate = new UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType(UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString);
@@ -579,11 +590,12 @@ namespace NativeScript
 		static readonly SystemExceptionConstructorSystemStringDelegateType SystemExceptionConstructorSystemStringDelegate = new SystemExceptionConstructorSystemStringDelegateType(SystemExceptionConstructorSystemString);
 		static readonly BoxPrimitiveTypeDelegateType BoxPrimitiveTypeDelegate = new BoxPrimitiveTypeDelegateType(BoxPrimitiveType);
 		static readonly UnboxPrimitiveTypeDelegateType UnboxPrimitiveTypeDelegate = new UnboxPrimitiveTypeDelegateType(UnboxPrimitiveType);
+		static readonly UnityEngineSpriteConstructorDelegateType UnityEngineSpriteConstructorDelegate = new UnityEngineSpriteConstructorDelegateType(UnityEngineSpriteConstructor);
 		static readonly UnityEngineSpriteRendererPropertyGetSpriteDelegateType UnityEngineSpriteRendererPropertyGetSpriteDelegate = new UnityEngineSpriteRendererPropertyGetSpriteDelegateType(UnityEngineSpriteRendererPropertyGetSprite);
 		static readonly UnityEngineSpriteRendererPropertySetSpriteDelegateType UnityEngineSpriteRendererPropertySetSpriteDelegate = new UnityEngineSpriteRendererPropertySetSpriteDelegateType(UnityEngineSpriteRendererPropertySetSprite);
 		static readonly UnityEngineTimePropertyGetDeltaTimeDelegateType UnityEngineTimePropertyGetDeltaTimeDelegate = new UnityEngineTimePropertyGetDeltaTimeDelegateType(UnityEngineTimePropertyGetDeltaTime);
-		static readonly ReleaseBaseBallScriptDelegateType ReleaseBaseBallScriptDelegate = new ReleaseBaseBallScriptDelegateType(ReleaseBaseBallScript);
-		static readonly BaseBallScriptConstructorDelegateType BaseBallScriptConstructorDelegate = new BaseBallScriptConstructorDelegateType(BaseBallScriptConstructor);
+		static readonly ReleaseBaseGameScriptDelegateType ReleaseBaseGameScriptDelegate = new ReleaseBaseGameScriptDelegateType(ReleaseBaseGameScript);
+		static readonly BaseGameScriptConstructorDelegateType BaseGameScriptConstructorDelegate = new BaseGameScriptConstructorDelegateType(BaseGameScriptConstructor);
 		static readonly BoxBooleanDelegateType BoxBooleanDelegate = new BoxBooleanDelegateType(BoxBoolean);
 		static readonly UnboxBooleanDelegateType UnboxBooleanDelegate = new UnboxBooleanDelegateType(UnboxBoolean);
 		static readonly BoxSByteDelegateType BoxSByteDelegate = new BoxSByteDelegateType(BoxSByte);
@@ -645,10 +657,18 @@ namespace NativeScript
 		/// </summary>
 		public static void Reload()
 		{
+            Debug.Log("Reloading Plugin - begin");
+
+            Debug.Log("DestroyAll");
 			DestroyAll();
-			ClosePlugin();
+
+            Debug.Log("ClosePlugin");
+            ClosePlugin();
+
+            Debug.Log("Open Plugin");
 			OpenPlugin(InitMode.Reload);
-		}
+            Debug.Log("Reloading Plugin - done");
+		} 
 		
 		/// <summary>
 		/// Poll the plugin for changes and reload if any are found.
@@ -707,9 +727,9 @@ namespace NativeScript
 				libraryHandle,
 				"SetCsharpException");
 			/*BEGIN GETDELEGATE CALLS*/
-			NewBaseBallScript = GetDelegate<NewBaseBallScriptDelegateType>(libraryHandle, "NewBaseBallScript");
-			DestroyBaseBallScript = GetDelegate<DestroyBaseBallScriptDelegateType>(libraryHandle, "DestroyBaseBallScript");
-			MyGameAbstractBaseBallScriptUpdate = GetDelegate<MyGameAbstractBaseBallScriptUpdateDelegateType>(libraryHandle, "MyGameAbstractBaseBallScriptUpdate");
+			NewBaseGameScript = GetDelegate<NewBaseGameScriptDelegateType>(libraryHandle, "NewBaseGameScript");
+			DestroyBaseGameScript = GetDelegate<DestroyBaseGameScriptDelegateType>(libraryHandle, "DestroyBaseGameScript");
+			MyGameAbstractBaseGameScriptUpdate = GetDelegate<MyGameAbstractBaseGameScriptUpdateDelegateType>(libraryHandle, "MyGameAbstractBaseGameScriptUpdate");
 			SetCsharpExceptionSystemNullReferenceException = GetDelegate<SetCsharpExceptionSystemNullReferenceExceptionDelegateType>(libraryHandle, "SetCsharpExceptionSystemNullReferenceException");
 			/*END GETDELEGATE CALLS*/
 #endif
@@ -768,6 +788,8 @@ namespace NativeScript
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineComponentPropertyGetTransformDelegate));
 			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineComponentPropertyGetGameObjectDelegate));
+			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineTransformPropertyGetPositionDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineTransformPropertySetPositionDelegate));
@@ -780,11 +802,19 @@ namespace NativeScript
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectConstructorSystemStringDelegate));
 			curMemory += IntPtr.Size;
-			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegate));
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectPropertyGetTransformDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectPropertyGetTagDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectPropertySetTagDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectMethodAddComponentMyGameBaseGameScriptDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectMethodAddComponentUnityEngineSpriteRendererDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectMethodGetComponentUnityEngineSpriteRendererDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectMethodCompareTagSystemStringDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegate));
 			curMemory += IntPtr.Size;
@@ -800,15 +830,17 @@ namespace NativeScript
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnboxPrimitiveTypeDelegate));
 			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineSpriteConstructorDelegate));
+			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineSpriteRendererPropertyGetSpriteDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineSpriteRendererPropertySetSpriteDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineTimePropertyGetDeltaTimeDelegate));
 			curMemory += IntPtr.Size;
-			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(ReleaseBaseBallScriptDelegate));
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(ReleaseBaseGameScriptDelegate));
 			curMemory += IntPtr.Size;
-			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(BaseBallScriptConstructorDelegate));
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(BaseGameScriptConstructorDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(BoxBooleanDelegate));
 			curMemory += IntPtr.Size;
@@ -928,7 +960,10 @@ namespace NativeScript
 
 		static void DestroyAll()
 		{
-			lock (destroyQueueLockObj)
+            if (destroyQueueLockObj == null)
+                return;
+
+            lock (destroyQueueLockObj)
 			{
 				int count = destroyQueueCount;
 				DestroyEntry[] queue = destroyQueue;
@@ -938,8 +973,8 @@ namespace NativeScript
 					switch (entry.Function)
 					{
 						/*BEGIN DESTROY QUEUE CASES*/
-						case DestroyFunction.BaseBallScript:
-							DestroyBaseBallScript(entry.CppHandle);
+						case DestroyFunction.BaseGameScript:
+							DestroyBaseGameScript(entry.CppHandle);
 							break;
 						/*END DESTROY QUEUE CASES*/
 					}
@@ -1257,6 +1292,29 @@ namespace NativeScript
 			}
 		}
 		
+		[MonoPInvokeCallback(typeof(UnityEngineComponentPropertyGetGameObjectDelegateType))]
+		static int UnityEngineComponentPropertyGetGameObject(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.Component)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var returnValue = thiz.gameObject;
+				return NativeScript.Bindings.ObjectStore.GetHandle(returnValue);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
 		[MonoPInvokeCallback(typeof(UnityEngineTransformPropertyGetPositionDelegateType))]
 		static UnityEngine.Vector3 UnityEngineTransformPropertyGetPosition(int thisHandle)
 		{
@@ -1391,13 +1449,80 @@ namespace NativeScript
 			}
 		}
 		
-		[MonoPInvokeCallback(typeof(UnityEngineGameObjectMethodAddComponentMyGameBaseBallScriptDelegateType))]
-		static int UnityEngineGameObjectMethodAddComponentMyGameBaseBallScript(int thisHandle)
+		[MonoPInvokeCallback(typeof(UnityEngineGameObjectPropertyGetTransformDelegateType))]
+		static int UnityEngineGameObjectPropertyGetTransform(int thisHandle)
 		{
 			try
 			{
 				var thiz = (UnityEngine.GameObject)NativeScript.Bindings.ObjectStore.Get(thisHandle);
-				var returnValue = thiz.AddComponent<MyGame.BaseBallScript>();
+				var returnValue = thiz.transform;
+				return NativeScript.Bindings.ObjectStore.GetHandle(returnValue);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineGameObjectPropertyGetTagDelegateType))]
+		static int UnityEngineGameObjectPropertyGetTag(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.GameObject)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var returnValue = thiz.tag;
+				return NativeScript.Bindings.ObjectStore.GetHandle(returnValue);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineGameObjectPropertySetTagDelegateType))]
+		static void UnityEngineGameObjectPropertySetTag(int thisHandle, int valueHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.GameObject)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var value = (string)NativeScript.Bindings.ObjectStore.Get(valueHandle);
+				thiz.tag = value;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineGameObjectMethodAddComponentMyGameBaseGameScriptDelegateType))]
+		static int UnityEngineGameObjectMethodAddComponentMyGameBaseGameScript(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.GameObject)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var returnValue = thiz.AddComponent<MyGame.BaseGameScript>();
 				return NativeScript.Bindings.ObjectStore.GetHandle(returnValue);
 			}
 			catch (System.NullReferenceException ex)
@@ -1457,6 +1582,30 @@ namespace NativeScript
 				UnityEngine.Debug.LogException(ex);
 				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
 				return default(int);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineGameObjectMethodCompareTagSystemStringDelegateType))]
+		static bool UnityEngineGameObjectMethodCompareTagSystemString(int thisHandle, int tagHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.GameObject)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var tag = (string)NativeScript.Bindings.ObjectStore.Get(tagHandle);
+				var returnValue = thiz.CompareTag(tag);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
 			}
 		}
 		
@@ -1616,6 +1765,28 @@ namespace NativeScript
 			}
 		}
 		
+		[MonoPInvokeCallback(typeof(UnityEngineSpriteConstructorDelegateType))]
+		static int UnityEngineSpriteConstructor()
+		{
+			try
+			{
+				var returnValue = NativeScript.Bindings.ObjectStore.Store(new UnityEngine.Sprite());
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
 		[MonoPInvokeCallback(typeof(UnityEngineSpriteRendererPropertyGetSpriteDelegateType))]
 		static int UnityEngineSpriteRendererPropertyGetSprite(int thisHandle)
 		{
@@ -1682,12 +1853,12 @@ namespace NativeScript
 			}
 		}
 		
-		[MonoPInvokeCallback(typeof(BaseBallScriptConstructorDelegateType))]
-		static void BaseBallScriptConstructor(int cppHandle, ref int handle)
+		[MonoPInvokeCallback(typeof(BaseGameScriptConstructorDelegateType))]
+		static void BaseGameScriptConstructor(int cppHandle, ref int handle)
 		{
 			try
 			{
-				var thiz = new MyGame.BaseBallScript(cppHandle);
+				var thiz = new MyGame.BaseGameScript(cppHandle);
 				handle = NativeScript.Bindings.ObjectStore.Store(thiz);
 			}
 			catch (System.NullReferenceException ex)
@@ -1704,16 +1875,16 @@ namespace NativeScript
 			}
 		}
 		
-		[MonoPInvokeCallback(typeof(ReleaseBaseBallScriptDelegateType))]
-		static void ReleaseBaseBallScript(int handle)
+		[MonoPInvokeCallback(typeof(ReleaseBaseGameScriptDelegateType))]
+		static void ReleaseBaseGameScript(int handle)
 		{
 			try
 			{
-				MyGame.BaseBallScript thiz;
-				thiz = (MyGame.BaseBallScript)ObjectStore.Get(handle);
+				MyGame.BaseGameScript thiz;
+				thiz = (MyGame.BaseGameScript)ObjectStore.Get(handle);
 				int cppHandle = thiz.CppHandle;
 				thiz.CppHandle = 0;
-				QueueDestroy(DestroyFunction.BaseBallScript, cppHandle);
+				QueueDestroy(DestroyFunction.BaseGameScript, cppHandle);
 				ObjectStore.Remove(handle);
 			}
 			catch (System.NullReferenceException ex)
@@ -2274,26 +2445,26 @@ namespace NativeScript
 /*BEGIN BASE TYPES*/
 namespace MyGame
 {
-	class BaseBallScript : MyGame.AbstractBaseBallScript
+	class BaseGameScript : MyGame.AbstractBaseGameScript
 	{
 		public int CppHandle;
 		
-		public BaseBallScript()
+		public BaseGameScript()
 		{
 			int handle = NativeScript.Bindings.ObjectStore.Store(this);
-			CppHandle = NativeScript.Bindings.NewBaseBallScript(handle);
+			CppHandle = NativeScript.Bindings.NewBaseGameScript(handle);
 		}
 		
-		~BaseBallScript()
+		~BaseGameScript()
 		{
 			if (CppHandle != 0)
 			{
-				NativeScript.Bindings.QueueDestroy(NativeScript.Bindings.DestroyFunction.BaseBallScript, CppHandle);
+				NativeScript.Bindings.QueueDestroy(NativeScript.Bindings.DestroyFunction.BaseGameScript, CppHandle);
 				CppHandle = 0;
 			}
 		}
 		
-		public BaseBallScript(int cppHandle)
+		public BaseGameScript(int cppHandle)
 			: base()
 		{
 			CppHandle = cppHandle;
@@ -2304,7 +2475,7 @@ namespace MyGame
 			if (CppHandle != 0)
 			{
 				int thisHandle = CppHandle;
-				NativeScript.Bindings.MyGameAbstractBaseBallScriptUpdate(thisHandle);
+				NativeScript.Bindings.MyGameAbstractBaseGameScriptUpdate(thisHandle);
 				if (NativeScript.Bindings.UnhandledCppException != null)
 				{
 					Exception ex = NativeScript.Bindings.UnhandledCppException;

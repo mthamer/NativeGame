@@ -26,36 +26,44 @@ namespace
 
 namespace MyGame
 {
-	void BallScript::Update()
+	void GameScript::Update()
 	{
-		Transform transform = GetTransform();
-		Vector3 pos = transform.GetPosition();
-		const float speed = 0.0001f;
-		const float min = -2.0f;
-		const float max = 2.0f;
-		float distance = Time::GetDeltaTime() * speed * gameState->BallDir;
-		Vector3 offset(distance, 0, 0);
-		Vector3 newPos = pos + offset;
-		if (newPos.x > max)
+		String name = GetName();
+		String message("GameScript::Update:");
+		Debug::Log(message);
+		Debug::Log(name);
+		if (GetGameObject().CompareTag(Game::GetName()))
 		{
-			gameState->BallDir *= -1.0f;
-			newPos.x = max - (newPos.x - max);
-			if (newPos.x < min)
-			{
-				newPos.x = min;
-			}
+			// Game is updating
+			return;
 		}
-		else if (newPos.x < min)
+		if ( GetGameObject().CompareTag(PlayerShip::GetName()))
 		{
-			gameState->BallDir *= -1.0f;
-			newPos.x = min + (min - newPos.x);
-			if (newPos.x > max)
-			{
-				newPos.x = max;
-			}
+			// Player ship is updating
+			Vector3 pos = GetTransform().GetPosition();
+			pos.x = pos.x - .001f;
+			GetTransform().SetPosition(pos);
+			return;
 		}
-		transform.SetPosition(newPos);
 	}
+}
+
+//////////////////////////////////////
+
+int Game::Init()
+{
+	int ret = 0;	// ok
+
+					// attach main game script to Game object
+	mGo.SetName(GetName());
+	mGo.SetTag(GetName());
+	mGo.AddComponent<MyGame::BaseGameScript>();
+
+	ret = mPlayerShip.Init();
+	if (ret != 0)
+		return ret;
+
+	return ret;
 }
 
 // Called when the plugin is initialized
@@ -65,32 +73,20 @@ void PluginMain(
 	int32_t memorySize,
 	bool isFirstBoot)
 {
-	gameState = (GameState*)memory;
-	if (isFirstBoot)
+	gameState = (GameState*)memory;		// shared between C# and Native
+
+	if (isFirstBoot) 
 	{
-		String message("Native Plugin Begin");
+		String message("NativeGame Plugin Begin");
 		Debug::Log(message);
-		
+
 		// The ball initially goes right
 		gameState->BallDir = 1.0f;
-		
-		// Create the ball game object out of a sphere primitive
-		String name("PlayerShip gameObject");
-		GameObject go(name);
 
-		go.AddComponent<SpriteRenderer>();
+		Game::GetInstance()->Init();
+		delete Game::GetInstance();
 
-		String spriteLeftPath("spaceship_high_left");
-		String spriteRightPath("spaceship_high_right");
-		String spriteCenterPath("spaceship_high_center");
-		Sprite spriteLeft = Resources::Load<Sprite>(spriteLeftPath);		
-		Sprite spriteRight = Resources::Load<Sprite>(spriteRightPath);		
-		Sprite spriteCenter = Resources::Load<Sprite>(spriteCenterPath);	
-		String rock1Path("tile000");
-		Sprite rock1 = Resources::Load<Sprite>(rock1Path);
-		go.GetComponent<SpriteRenderer>().SetSprite(rock1);
-
-		// Attach the ball script to make it bounce back and forth
-		go.AddComponent<MyGame::BaseBallScript>();
+		message = String("NativeGame Plugin End");
+		Debug::Log(message);
 	}
 }
