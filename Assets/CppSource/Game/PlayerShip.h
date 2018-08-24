@@ -33,7 +33,7 @@ public:
 
 	int Init();
 	void SetPosition(Vector3 &pos);
-	void Update(Single deltaTime, GameObject &gameOb, Transform &transform);
+	void Update(Single deltaTime);
 	void SetSpeed(float s) { mSpeed = s; }
 	float GetSpeed() { return mSpeed; }
 

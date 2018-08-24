@@ -29,13 +29,13 @@ namespace MyGame
 		if (GetGameObject().CompareTag(Game::GetName()))
 		{
 			// Game is updating
-			Game::Update(Time::GetDeltaTime(), GetGameObject(), GetTransform());
+			Game::GetInstance()->Update(Time::GetDeltaTime());
 			return;
 		}
 		if (GetGameObject().CompareTag(PlayerShip::GetName()))
 		{
 			// Player ship is updating
-			Game::GetInstance()->GetPlayerShip().Update(Time::GetDeltaTime(), GetGameObject(), GetTransform());
+			Game::GetInstance()->GetPlayerShip().Update(Time::GetDeltaTime());
 			return;
 		}
 	}

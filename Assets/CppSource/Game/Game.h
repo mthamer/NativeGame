@@ -39,9 +39,9 @@ public:
 	}
 
 	static String GetName() { return String("GameObject"); }
-	static void Update(Single deltaTime, GameObject &gameOb, Transform &transform);
 
 	Game() {}
 	int Init();
 	PlayerShip &GetPlayerShip() { return mPlayerShip;  }
+	void Update(Single deltaTime);
 };

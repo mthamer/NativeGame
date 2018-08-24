@@ -26,7 +26,7 @@ int Game::Init()
 	return ret;
 }
 
-void Game::Update(Single deltaTime, GameObject &gameOb, Transform &transform)
+void Game::Update(Single deltaTime)
 {
 
 }

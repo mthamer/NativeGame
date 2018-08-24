@@ -30,9 +30,9 @@ void PlayerShip::SetPosition(Vector3 &pos)
 	//mGo.GetComponent<SpriteRenderer>().GetTransform().SetPosition(pos);
 }
 
-void PlayerShip::Update(Single deltaTime, GameObject &gameOb, Transform &transform)
+void PlayerShip::Update(Single deltaTime)
 {
-	Vector3 pos = transform.GetPosition();
+	Vector3 pos = mGo.GetTransform().GetPosition();
 	float speed = GetSpeed();
 	bool dirty = false;
 
@@ -63,6 +63,6 @@ void PlayerShip::Update(Single deltaTime, GameObject &gameOb, Transform &transfo
 
 	if (dirty)
 	{
-		transform.SetPosition(pos);
+		mGo.GetTransform().SetPosition(pos);
 	}
 }
