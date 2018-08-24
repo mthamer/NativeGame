@@ -12,6 +12,12 @@ int Game::Init()
 	mGo.SetName(GetName());
 	mGo.SetTag(GetName());
 	mGo.AddComponent<MyGame::BaseGameScript>();
+	
+	// add bacvkground image
+	mBGSprite = Resources::Load<Sprite>(mBGSpritePath);
+	mGo.AddComponent<SpriteRenderer>();
+	mGo.GetComponent<SpriteRenderer>().SetSprite(mBGSprite);
+	mGo.GetTransform().SetPosition(Vector3(0, 0, 5));	// move back in Z
 
 	ret = mPlayerShip.Init();
 	if (ret != 0)

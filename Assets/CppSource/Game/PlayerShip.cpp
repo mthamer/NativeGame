@@ -1,7 +1,7 @@
 #include "PlayerShip.h"
 #include "Game.h"
 
-float PlayerShip::Speed = 0.0001f;
+float PlayerShip::Speed = 0.0002f;
 
 //
 // load sprites
@@ -19,6 +19,8 @@ int PlayerShip::Init()
 	mGo.GetComponent<SpriteRenderer>().SetSprite(mSpriteCenter);
 	mGo.AddComponent<MyGame::BaseGameScript>();
 
+	mGo.GetTransform().SetPosition(Vector3(0, -1.5, 0));	// start near the bottom
+
 	return 0;	// ok
 }
 
@@ -32,27 +34,35 @@ void PlayerShip::Update(Single deltaTime, GameObject &gameOb, Transform &transfo
 {
 	Vector3 pos = transform.GetPosition();
 	float speed = GetSpeed();
+	bool dirty = false;
 
 	if (Input::GetKey(String("a")))
 	{
 		// left
 		pos.x = pos.x - speed * deltaTime;
+		dirty = true;
 	}
 	if (Input::GetKey(String("d")))
 	{
 		// right
 		pos.x = pos.x + speed * deltaTime;
+		dirty = true;
 	}
 	if (Input::GetKey(String("w")))
 	{
 		// up
 		pos.y = pos.y + speed * deltaTime;
+		dirty = true;
 	}
 	if (Input::GetKey(String("s")))
 	{
 		// down
 		pos.y = pos.y - speed * deltaTime;
+		dirty = true;
 	}
 
-	transform.SetPosition(pos);
+	if (dirty)
+	{
+		transform.SetPosition(pos);
+	}
 }

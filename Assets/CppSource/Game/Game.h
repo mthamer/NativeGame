@@ -27,6 +27,8 @@ class Game
 private:
 	GameObject mGo;
 	PlayerShip mPlayerShip;
+	String mBGSpritePath = { "background600x1024" };
+	Sprite mBGSprite;		// background sprite
 
 public:
 	// singleton
