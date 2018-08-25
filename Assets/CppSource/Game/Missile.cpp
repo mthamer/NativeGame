@@ -1,6 +1,8 @@
 #include "Missile.h"
 #include "Game.h"
 
+Sprite Missile::MissileSprite = nullptr;
+
 Missile::~Missile() 
 { 
 	UnityEngine::Object::Destroy(mGo); 
@@ -17,10 +19,15 @@ int Missile::Init(const Vector3 &shipPos)
 	mGo.SetTag(GetName());
 	mGo.AddComponent<MyGame::BaseGameScript>();
 
-	// add background image
-	mSprite = Resources::Load<Sprite>(mSpritePath);
+	// add missile image
+	if (MissileSprite == nullptr)
+	{
+		String spritePath = { "missile" };
+		MissileSprite = Resources::Load<Sprite>(spritePath);
+	}
+
 	mGo.AddComponent<SpriteRenderer>();
-	mGo.GetComponent<SpriteRenderer>().SetSprite(mSprite);
+	mGo.GetComponent<SpriteRenderer>().SetSprite(MissileSprite);
 
 	const float shipYOffset = .27f;
 	const float shipXOffset = -.005f;

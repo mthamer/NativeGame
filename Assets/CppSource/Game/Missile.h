@@ -14,10 +14,9 @@ class Missile
 	//	friend struct MyGame::GameScript;
 private:
 	GameObject mGo;
-	String mSpritePath = { "missile" };
-	Sprite mSprite;		// background sprite
+	static Sprite MissileSprite;		// missile sprite
 	float mSpeed;
-	bool mDead;			// set true to remove this
+	bool mDead;					// set true to remove this
 
 public:
 	static String GetName() { return String("Missile"); }
