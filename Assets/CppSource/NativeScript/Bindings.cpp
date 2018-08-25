@@ -91,6 +91,8 @@ namespace Plugin
 	System::Single (*UnityEngineInputMethodGetAxisSystemString)(int32_t axisNameHandle);
 	System::Single (*UnityEngineInputMethodGetAxisRawSystemString)(int32_t axisNameHandle);
 	int32_t (*UnityEngineInputMethodGetKeySystemString)(int32_t nameHandle);
+	int32_t (*UnityEngineInputMethodGetKeyUpSystemString)(int32_t nameHandle);
+	int32_t (*UnityEngineInputMethodGetKeyDownSystemString)(int32_t nameHandle);
 	int32_t (*UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString)(int32_t pathHandle);
 	int32_t (*UnityEngineResourcesMethodLoadUnityEngineAudioClipSystemString)(int32_t pathHandle);
 	int32_t (*UnityEngineMonoBehaviourPropertyGetTransform)(int32_t thisHandle);
@@ -5357,6 +5359,32 @@ namespace UnityEngine
 		}
 		return returnValue;
 	}
+	
+	System::Boolean UnityEngine::Input::GetKeyUp(System::String& name)
+	{
+		auto returnValue = Plugin::UnityEngineInputMethodGetKeyUpSystemString(name.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	System::Boolean UnityEngine::Input::GetKeyDown(System::String& name)
+	{
+		auto returnValue = Plugin::UnityEngineInputMethodGetKeyDownSystemString(name.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
 }
 
 namespace UnityEngine
@@ -7037,6 +7065,10 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::UnityEngineInputMethodGetAxisRawSystemString);
 	Plugin::UnityEngineInputMethodGetKeySystemString = *(int32_t (**)(int32_t nameHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineInputMethodGetKeySystemString);
+	Plugin::UnityEngineInputMethodGetKeyUpSystemString = *(int32_t (**)(int32_t nameHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineInputMethodGetKeyUpSystemString);
+	Plugin::UnityEngineInputMethodGetKeyDownSystemString = *(int32_t (**)(int32_t nameHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineInputMethodGetKeyDownSystemString);
 	Plugin::UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString = *(int32_t (**)(int32_t pathHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString);
 	Plugin::UnityEngineResourcesMethodLoadUnityEngineAudioClipSystemString = *(int32_t (**)(int32_t pathHandle))curMemory;

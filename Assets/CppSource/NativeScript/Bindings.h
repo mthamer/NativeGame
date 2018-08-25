@@ -1493,6 +1493,8 @@ namespace UnityEngine
 		static System::Single GetAxis(System::String& axisName);
 		static System::Single GetAxisRaw(System::String& axisName);
 		static System::Boolean GetKey(System::String& name);
+		static System::Boolean GetKeyUp(System::String& name);
+		static System::Boolean GetKeyDown(System::String& name);
 	};
 }
 

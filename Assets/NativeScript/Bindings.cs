@@ -504,6 +504,8 @@ namespace NativeScript
 		delegate float UnityEngineInputMethodGetAxisSystemStringDelegateType(int axisNameHandle);
 		delegate float UnityEngineInputMethodGetAxisRawSystemStringDelegateType(int axisNameHandle);
 		delegate bool UnityEngineInputMethodGetKeySystemStringDelegateType(int nameHandle);
+		delegate bool UnityEngineInputMethodGetKeyUpSystemStringDelegateType(int nameHandle);
+		delegate bool UnityEngineInputMethodGetKeyDownSystemStringDelegateType(int nameHandle);
 		delegate int UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType(int pathHandle);
 		delegate int UnityEngineResourcesMethodLoadUnityEngineAudioClipSystemStringDelegateType(int pathHandle);
 		delegate int UnityEngineMonoBehaviourPropertyGetTransformDelegateType(int thisHandle);
@@ -602,6 +604,8 @@ namespace NativeScript
 		static readonly UnityEngineInputMethodGetAxisSystemStringDelegateType UnityEngineInputMethodGetAxisSystemStringDelegate = new UnityEngineInputMethodGetAxisSystemStringDelegateType(UnityEngineInputMethodGetAxisSystemString);
 		static readonly UnityEngineInputMethodGetAxisRawSystemStringDelegateType UnityEngineInputMethodGetAxisRawSystemStringDelegate = new UnityEngineInputMethodGetAxisRawSystemStringDelegateType(UnityEngineInputMethodGetAxisRawSystemString);
 		static readonly UnityEngineInputMethodGetKeySystemStringDelegateType UnityEngineInputMethodGetKeySystemStringDelegate = new UnityEngineInputMethodGetKeySystemStringDelegateType(UnityEngineInputMethodGetKeySystemString);
+		static readonly UnityEngineInputMethodGetKeyUpSystemStringDelegateType UnityEngineInputMethodGetKeyUpSystemStringDelegate = new UnityEngineInputMethodGetKeyUpSystemStringDelegateType(UnityEngineInputMethodGetKeyUpSystemString);
+		static readonly UnityEngineInputMethodGetKeyDownSystemStringDelegateType UnityEngineInputMethodGetKeyDownSystemStringDelegate = new UnityEngineInputMethodGetKeyDownSystemStringDelegateType(UnityEngineInputMethodGetKeyDownSystemString);
 		static readonly UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegate = new UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegateType(UnityEngineResourcesMethodLoadUnityEngineSpriteSystemString);
 		static readonly UnityEngineResourcesMethodLoadUnityEngineAudioClipSystemStringDelegateType UnityEngineResourcesMethodLoadUnityEngineAudioClipSystemStringDelegate = new UnityEngineResourcesMethodLoadUnityEngineAudioClipSystemStringDelegateType(UnityEngineResourcesMethodLoadUnityEngineAudioClipSystemString);
 		static readonly UnityEngineMonoBehaviourPropertyGetTransformDelegateType UnityEngineMonoBehaviourPropertyGetTransformDelegate = new UnityEngineMonoBehaviourPropertyGetTransformDelegateType(UnityEngineMonoBehaviourPropertyGetTransform);
@@ -853,6 +857,10 @@ namespace NativeScript
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineInputMethodGetAxisRawSystemStringDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineInputMethodGetKeySystemStringDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineInputMethodGetKeyUpSystemStringDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineInputMethodGetKeyDownSystemStringDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineResourcesMethodLoadUnityEngineSpriteSystemStringDelegate));
 			curMemory += IntPtr.Size;
@@ -1849,6 +1857,52 @@ namespace NativeScript
 			{
 				var name = (string)NativeScript.Bindings.ObjectStore.Get(nameHandle);
 				var returnValue = UnityEngine.Input.GetKey(name);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineInputMethodGetKeyUpSystemStringDelegateType))]
+		static bool UnityEngineInputMethodGetKeyUpSystemString(int nameHandle)
+		{
+			try
+			{
+				var name = (string)NativeScript.Bindings.ObjectStore.Get(nameHandle);
+				var returnValue = UnityEngine.Input.GetKeyUp(name);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineInputMethodGetKeyDownSystemStringDelegateType))]
+		static bool UnityEngineInputMethodGetKeyDownSystemString(int nameHandle)
+		{
+			try
+			{
+				var name = (string)NativeScript.Bindings.ObjectStore.Get(nameHandle);
+				var returnValue = UnityEngine.Input.GetKeyDown(name);
 				return returnValue;
 			}
 			catch (System.NullReferenceException ex)

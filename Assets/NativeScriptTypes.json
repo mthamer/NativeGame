@@ -389,6 +389,18 @@
           "ParamTypes": [
             "System.String"
           ]
+        },
+        {
+          "Name": "GetKeyUp",
+          "ParamTypes": [
+            "System.String"
+          ]
+        },
+        {
+          "Name": "GetKeyDown",
+          "ParamTypes": [
+            "System.String"
+          ]
         }
       ]
     },

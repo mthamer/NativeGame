@@ -101,6 +101,22 @@ void PlayerShip::Update(Single deltaTime)
 		FireMissile();
 	}
 
+	if ( (Input::GetKeyUp(String("left")) || Input::GetKeyUp(String("right"))) &&
+		! (Input::GetKey(String("left")) || Input::GetKey(String("right"))) )
+	{
+		mGo.GetComponent<SpriteRenderer>().SetSprite(mSpriteCenter);
+	}
+
+	if (Input::GetKeyDown(String("left")))
+	{
+		mGo.GetComponent<SpriteRenderer>().SetSprite(mSpriteLeft);
+	}
+
+	if (Input::GetKeyDown(String("right")))
+	{
+		mGo.GetComponent<SpriteRenderer>().SetSprite(mSpriteRight);
+	}
+
 	if (Input::GetKey(String("left")) && pos.x >= minX)
 	{
 		// left
