@@ -1259,6 +1259,7 @@ namespace UnityEngine
 		bool operator!=(const Object& other) const;
 		System::String GetName();
 		void SetName(System::String& value);
+		static void Destroy(UnityEngine::Object& obj);
 	};
 }
 

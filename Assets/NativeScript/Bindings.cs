@@ -479,6 +479,7 @@ namespace NativeScript
 		delegate UnityEngine.Vector3 UnboxVector3DelegateType(int valHandle);
 		delegate int UnityEngineObjectPropertyGetNameDelegateType(int thisHandle);
 		delegate void UnityEngineObjectPropertySetNameDelegateType(int thisHandle, int valueHandle);
+		delegate void UnityEngineObjectMethodDestroyUnityEngineObjectDelegateType(int objHandle);
 		delegate int UnityEngineComponentPropertyGetTransformDelegateType(int thisHandle);
 		delegate int UnityEngineComponentPropertyGetGameObjectDelegateType(int thisHandle);
 		delegate UnityEngine.Vector3 UnityEngineTransformPropertyGetPositionDelegateType(int thisHandle);
@@ -571,6 +572,7 @@ namespace NativeScript
 		static readonly UnboxVector3DelegateType UnboxVector3Delegate = new UnboxVector3DelegateType(UnboxVector3);
 		static readonly UnityEngineObjectPropertyGetNameDelegateType UnityEngineObjectPropertyGetNameDelegate = new UnityEngineObjectPropertyGetNameDelegateType(UnityEngineObjectPropertyGetName);
 		static readonly UnityEngineObjectPropertySetNameDelegateType UnityEngineObjectPropertySetNameDelegate = new UnityEngineObjectPropertySetNameDelegateType(UnityEngineObjectPropertySetName);
+		static readonly UnityEngineObjectMethodDestroyUnityEngineObjectDelegateType UnityEngineObjectMethodDestroyUnityEngineObjectDelegate = new UnityEngineObjectMethodDestroyUnityEngineObjectDelegateType(UnityEngineObjectMethodDestroyUnityEngineObject);
 		static readonly UnityEngineComponentPropertyGetTransformDelegateType UnityEngineComponentPropertyGetTransformDelegate = new UnityEngineComponentPropertyGetTransformDelegateType(UnityEngineComponentPropertyGetTransform);
 		static readonly UnityEngineComponentPropertyGetGameObjectDelegateType UnityEngineComponentPropertyGetGameObjectDelegate = new UnityEngineComponentPropertyGetGameObjectDelegateType(UnityEngineComponentPropertyGetGameObject);
 		static readonly UnityEngineTransformPropertyGetPositionDelegateType UnityEngineTransformPropertyGetPositionDelegate = new UnityEngineTransformPropertyGetPositionDelegateType(UnityEngineTransformPropertyGetPosition);
@@ -791,6 +793,8 @@ namespace NativeScript
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineObjectPropertyGetNameDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineObjectPropertySetNameDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineObjectMethodDestroyUnityEngineObjectDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineComponentPropertyGetTransformDelegate));
 			curMemory += IntPtr.Size;
@@ -1268,6 +1272,26 @@ namespace NativeScript
 				var thiz = (UnityEngine.Object)NativeScript.Bindings.ObjectStore.Get(thisHandle);
 				var value = (string)NativeScript.Bindings.ObjectStore.Get(valueHandle);
 				thiz.name = value;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineObjectMethodDestroyUnityEngineObjectDelegateType))]
+		static void UnityEngineObjectMethodDestroyUnityEngineObject(int objHandle)
+		{
+			try
+			{
+				var obj = (UnityEngine.Object)NativeScript.Bindings.ObjectStore.Get(objHandle);
+				UnityEngine.Object.Destroy(obj);
 			}
 			catch (System.NullReferenceException ex)
 			{

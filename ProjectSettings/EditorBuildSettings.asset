@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/NativeScript/BootScene.unity
+    guid: e0fcf17822c8c4b4f91d4e8427f62804

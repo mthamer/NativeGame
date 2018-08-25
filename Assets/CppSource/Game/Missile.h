@@ -23,6 +23,7 @@ public:
 	static String GetName() { return String("Missile"); }
 
 	Missile() { }
+	~Missile();
 	int Init(const Vector3 &shipPos);
 	void Update(Single deltaTime);
 };

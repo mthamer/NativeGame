@@ -16,6 +16,8 @@ class PlayerShip
 private:
 	GameObject mGo;
 	float mSpeed;
+	float mTimeBetweenShots;
+	int mLastShotTime;	// in ms
 
 	// Path of sprites within the Unity Assets/Resources folder
 	String mSpriteLeftPath = { "spaceship_high_left" };

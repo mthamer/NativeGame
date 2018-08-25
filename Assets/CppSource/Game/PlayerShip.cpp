@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Missile.h"
 #include <assert.h>
+#include <windows.h>
 
 //
 // load sprites
@@ -10,6 +11,8 @@
 int PlayerShip::Init()
 {
 	mSpeed = 0.0002f;
+	mTimeBetweenShots = 0.2f;	// 5 shots per sec
+	mLastShotTime = 0;
 
 	mSpriteLeft = Resources::Load<Sprite>(mSpriteLeftPath);
 	mSpriteRight = Resources::Load<Sprite>(mSpriteRightPath);
@@ -33,9 +36,14 @@ void PlayerShip::SetPosition(Vector3 &pos)
 
 void PlayerShip::FireMissile()
 {
-	Missile *missile = new Missile();
-	missile->Init(mGo.GetTransform().GetPosition());
-	mMissiles.push_back(missile);
+	int curTime = timeGetTime();
+	if (curTime - mLastShotTime > mTimeBetweenShots * 1000)
+	{
+		mLastShotTime = curTime;
+		Missile *missile = new Missile();
+		missile->Init(mGo.GetTransform().GetPosition());
+		mMissiles.push_back(missile);
+	}
 }
 
 bool PlayerShip::RemoveMissile(Missile *missile)

@@ -200,6 +200,14 @@
           "Get": {},
           "Set": {}
         }
+      ],
+      "Methods": [
+        {
+          "Name": "Destroy",
+          "ParamTypes": [
+            "UnityEngine.Object"
+          ]
+        }
       ]
     },
     {

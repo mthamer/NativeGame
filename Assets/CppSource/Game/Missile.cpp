@@ -1,10 +1,15 @@
 #include "Missile.h"
 #include "Game.h"
 
+Missile::~Missile() 
+{ 
+	UnityEngine::Object::Destroy(mGo); 
+}
+
 int Missile::Init(const Vector3 &shipPos)
 {
-	Debug::Log(String("Missile Init"));
 	mSpeed = 0.0004f;
+//	Debug::Log(String("Missile Init"));
 	mDead = false;
 
 	// attach main game script to Game object
@@ -26,9 +31,9 @@ int Missile::Init(const Vector3 &shipPos)
 
 void Missile::Update(Single deltaTime)
 {
-	Debug::Log(String("Missile Update"));
+//	Debug::Log(String("Missile Update"));
 
-	Vector3 pos = mGo.GetTransform().GetPosition();
+	Vector3 &pos = mGo.GetTransform().GetPosition();
 	pos.y = pos.y + mSpeed * deltaTime;
 	mGo.GetTransform().SetPosition(pos);
 
@@ -36,7 +41,7 @@ void Missile::Update(Single deltaTime)
 	if (pos.y > maxY)
 	{	// off screen
 		mDead = true;
-		Debug::Log(String("Missile Dead"));
+//		Debug::Log(String("Missile Dead"));
 		Game::GetInstance()->GetPlayerShip().RemoveMissile(this);
 	}
 }

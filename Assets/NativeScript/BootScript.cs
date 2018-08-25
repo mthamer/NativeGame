@@ -30,8 +30,11 @@ namespace NativeScript
 		void Awake()
 		{
             Debug.Log("BootScript - Awake");
+
+            Screen.SetResolution(600, 1024, false);
+
 #if UNITY_EDITOR
-			lastAutoReloadPollTime = AutoReloadPollTime;
+            lastAutoReloadPollTime = AutoReloadPollTime;
 #endif
 			DontDestroyOnLoad(gameObject);
 			Bindings.Open(MemorySize);

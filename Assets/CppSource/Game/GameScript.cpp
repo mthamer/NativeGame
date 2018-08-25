@@ -26,16 +26,26 @@ namespace MyGame
 		float v = Input::GetAxis(vert);
 #endif
 
+		float deltaTime = Time::GetDeltaTime();
+		if (deltaTime > 500)
+		{
+			deltaTime = 100;
+		}
+		if (deltaTime < 0)
+		{
+			deltaTime = 10;
+		}
+
 		if (GetGameObject().CompareTag(Game::GetName()))
 		{
 			// Game is updating
-			Game::GetInstance()->Update(Time::GetDeltaTime());
+			Game::GetInstance()->Update(deltaTime);
 			return;
 		}
 		if (GetGameObject().CompareTag(PlayerShip::GetName()))
 		{
 			// Player ship is updating
-			Game::GetInstance()->GetPlayerShip().Update(Time::GetDeltaTime());
+			Game::GetInstance()->GetPlayerShip().Update(deltaTime);
 			return;
 		}
 	}

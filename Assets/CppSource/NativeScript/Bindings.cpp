@@ -66,6 +66,7 @@ namespace Plugin
 	UnityEngine::Vector3 (*UnboxVector3)(int32_t valHandle);
 	int32_t (*UnityEngineObjectPropertyGetName)(int32_t thisHandle);
 	void (*UnityEngineObjectPropertySetName)(int32_t thisHandle, int32_t valueHandle);
+	void (*UnityEngineObjectMethodDestroyUnityEngineObject)(int32_t objHandle);
 	int32_t (*UnityEngineComponentPropertyGetTransform)(int32_t thisHandle);
 	int32_t (*UnityEngineComponentPropertyGetGameObject)(int32_t thisHandle);
 	UnityEngine::Vector3 (*UnityEngineTransformPropertyGetPosition)(int32_t thisHandle);
@@ -4088,6 +4089,18 @@ namespace UnityEngine
 			delete ex;
 		}
 	}
+	
+	void UnityEngine::Object::Destroy(UnityEngine::Object& obj)
+	{
+		Plugin::UnityEngineObjectMethodDestroyUnityEngineObject(obj.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+	}
 }
 
 namespace UnityEngine
@@ -6730,6 +6743,8 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::UnityEngineObjectPropertyGetName);
 	Plugin::UnityEngineObjectPropertySetName = *(void (**)(int32_t thisHandle, int32_t valueHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineObjectPropertySetName);
+	Plugin::UnityEngineObjectMethodDestroyUnityEngineObject = *(void (**)(int32_t objHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineObjectMethodDestroyUnityEngineObject);
 	Plugin::UnityEngineComponentPropertyGetTransform = *(int32_t (**)(int32_t thisHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineComponentPropertyGetTransform);
 	Plugin::UnityEngineComponentPropertyGetGameObject = *(int32_t (**)(int32_t thisHandle))curMemory;
