@@ -31,7 +31,8 @@ namespace NativeScript
 		{
             Debug.Log("BootScript - Awake");
 
-            Screen.SetResolution(600, 1024, false);
+            Screen.SetResolution(600, 900, false);
+            Application.targetFrameRate = 60;
 
 #if UNITY_EDITOR
             lastAutoReloadPollTime = AutoReloadPollTime;

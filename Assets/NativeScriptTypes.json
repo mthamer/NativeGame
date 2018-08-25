@@ -260,6 +260,9 @@
       "Name": "System.Runtime.InteropServices._Exception"
     },
     {
+      "Name": "UnityEngine.Behaviour"
+    },
+    {
       "Name": "UnityEngine.GameObject",
       "Constructors": [
         {
@@ -298,6 +301,11 @@
               "Types": [
                 "UnityEngine.SpriteRenderer"
               ]
+            },
+            {
+              "Types": [
+                "UnityEngine.AudioSource"
+              ]
             }
           ]
         },
@@ -308,6 +316,11 @@
             {
               "Types": [
                 "UnityEngine.SpriteRenderer"
+              ]
+            },
+            {
+              "Types": [
+                "UnityEngine.AudioSource"
               ]
             }
           ]
@@ -333,6 +346,25 @@
           "Name": "Log",
           "ParamTypes": [
             "System.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "UnityEngine.AudioClip",
+      "Constructors": [
+        {
+          "ParamTypes": []
+        }
+      ]
+    },
+    {
+      "Name": "UnityEngine.AudioSource",
+      "Methods": [
+        {
+          "Name": "PlayOneShot",
+          "ParamTypes": [
+            "UnityEngine.AudioClip"
           ]
         }
       ]
@@ -373,13 +405,15 @@
               "Types": [
                 "UnityEngine.Sprite"
               ]
+            },
+            {
+              "Types": [
+                "UnityEngine.AudioClip"
+              ]
             }
           ]
         }
       ]
-    },
-    {
-      "Name": "UnityEngine.Behaviour"
     },
     {
       "Name": "UnityEngine.MonoBehaviour",
@@ -436,8 +470,7 @@
       "Properties": [
         {
           "Name": "deltaTime",
-          "Get": {},
-          "Set": {}
+          "Get": {}
         }
       ]
     },

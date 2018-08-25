@@ -369,6 +369,11 @@ namespace System
 
 namespace UnityEngine
 {
+	struct Behaviour;
+}
+
+namespace UnityEngine
+{
 	struct GameObject;
 }
 
@@ -379,17 +384,22 @@ namespace UnityEngine
 
 namespace UnityEngine
 {
+	struct AudioClip;
+}
+
+namespace UnityEngine
+{
+	struct AudioSource;
+}
+
+namespace UnityEngine
+{
 	struct Input;
 }
 
 namespace UnityEngine
 {
 	struct Resources;
-}
-
-namespace UnityEngine
-{
-	struct Behaviour;
 }
 
 namespace UnityEngine
@@ -1371,6 +1381,23 @@ namespace System
 
 namespace UnityEngine
 {
+	struct Behaviour : virtual UnityEngine::Component
+	{
+		Behaviour(decltype(nullptr));
+		Behaviour(Plugin::InternalUse, int32_t handle);
+		Behaviour(const Behaviour& other);
+		Behaviour(Behaviour&& other);
+		virtual ~Behaviour();
+		Behaviour& operator=(const Behaviour& other);
+		Behaviour& operator=(decltype(nullptr));
+		Behaviour& operator=(Behaviour&& other);
+		bool operator==(const Behaviour& other) const;
+		bool operator!=(const Behaviour& other) const;
+	};
+}
+
+namespace UnityEngine
+{
 	struct GameObject : virtual UnityEngine::Object
 	{
 		GameObject(decltype(nullptr));
@@ -1415,6 +1442,42 @@ namespace UnityEngine
 
 namespace UnityEngine
 {
+	struct AudioClip : virtual UnityEngine::Object
+	{
+		AudioClip(decltype(nullptr));
+		AudioClip(Plugin::InternalUse, int32_t handle);
+		AudioClip(const AudioClip& other);
+		AudioClip(AudioClip&& other);
+		virtual ~AudioClip();
+		AudioClip& operator=(const AudioClip& other);
+		AudioClip& operator=(decltype(nullptr));
+		AudioClip& operator=(AudioClip&& other);
+		bool operator==(const AudioClip& other) const;
+		bool operator!=(const AudioClip& other) const;
+		AudioClip();
+	};
+}
+
+namespace UnityEngine
+{
+	struct AudioSource : virtual UnityEngine::Behaviour
+	{
+		AudioSource(decltype(nullptr));
+		AudioSource(Plugin::InternalUse, int32_t handle);
+		AudioSource(const AudioSource& other);
+		AudioSource(AudioSource&& other);
+		virtual ~AudioSource();
+		AudioSource& operator=(const AudioSource& other);
+		AudioSource& operator=(decltype(nullptr));
+		AudioSource& operator=(AudioSource&& other);
+		bool operator==(const AudioSource& other) const;
+		bool operator!=(const AudioSource& other) const;
+		void PlayOneShot(UnityEngine::AudioClip& clip);
+	};
+}
+
+namespace UnityEngine
+{
 	struct Input : virtual System::Object
 	{
 		Input(decltype(nullptr));
@@ -1448,23 +1511,6 @@ namespace UnityEngine
 		bool operator==(const Resources& other) const;
 		bool operator!=(const Resources& other) const;
 		template<typename MT0> static MT0 Load(System::String& path);
-	};
-}
-
-namespace UnityEngine
-{
-	struct Behaviour : virtual UnityEngine::Component
-	{
-		Behaviour(decltype(nullptr));
-		Behaviour(Plugin::InternalUse, int32_t handle);
-		Behaviour(const Behaviour& other);
-		Behaviour(Behaviour&& other);
-		virtual ~Behaviour();
-		Behaviour& operator=(const Behaviour& other);
-		Behaviour& operator=(decltype(nullptr));
-		Behaviour& operator=(Behaviour&& other);
-		bool operator==(const Behaviour& other) const;
-		bool operator!=(const Behaviour& other) const;
 	};
 }
 

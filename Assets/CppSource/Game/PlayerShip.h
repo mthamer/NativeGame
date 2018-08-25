@@ -18,18 +18,15 @@ private:
 	float mSpeed;
 	float mTimeBetweenShots;
 	int mLastShotTime;	// in ms
-
-	// Path of sprites within the Unity Assets/Resources folder
-	String mSpriteLeftPath = { "spaceship_high_left" };
-	String mSpriteRightPath = { "spaceship_high_right" };
-	String mSpriteCenterPath = { "spaceship_high_center" };
-
+	
 	// player ship sprite
 	Sprite mSpriteLeft;		// for turning left
 	Sprite mSpriteRight;	// for turning right
 	Sprite mSpriteCenter;	// for going straight
 
 	std::vector<Missile*> mMissiles;
+	AudioClip mFireSound;
+
 	void FireMissile();
 	void UpdateMissiles(Single deltaTime);
 

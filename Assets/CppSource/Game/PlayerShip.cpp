@@ -4,28 +4,38 @@
 #include <assert.h>
 #include <windows.h>
 
+// for timeGetTime() usage
+#pragma comment(lib, "winmm.lib")
+
 //
 // load sprites
 // set up game object
 //
 int PlayerShip::Init()
 {
+	// Path of sprites within the Unity Assets/Resources folder
+	String spriteLeftPath = { "spaceship_high_left" };
+	String spriteRightPath = { "spaceship_high_right" };
+	String spriteCenterPath = { "spaceship_high_center" };
+	String fireSoundPath = { "Sounds\\fire" };
+
 	mSpeed = 0.0002f;
 	mTimeBetweenShots = 0.2f;	// 5 shots per sec
 	mLastShotTime = 0;
 
-	mSpriteLeft = Resources::Load<Sprite>(mSpriteLeftPath);
-	mSpriteRight = Resources::Load<Sprite>(mSpriteRightPath);
-	mSpriteCenter = Resources::Load<Sprite>(mSpriteCenterPath);
+	mSpriteLeft = Resources::Load<Sprite>(spriteLeftPath);
+	mSpriteRight = Resources::Load<Sprite>(spriteRightPath);
+	mSpriteCenter = Resources::Load<Sprite>(spriteCenterPath);
+	mFireSound = Resources::Load<AudioClip>(fireSoundPath);
 
 	mGo.SetName(GetName());
 	mGo.SetTag(GetName());
 	mGo.AddComponent<SpriteRenderer>();
 	mGo.GetComponent<SpriteRenderer>().SetSprite(mSpriteCenter);
 	mGo.AddComponent<MyGame::BaseGameScript>();
+	mGo.AddComponent<AudioSource>();
 
 	mGo.GetTransform().SetPosition(Vector3(0, -1.5, 0));	// start near the bottom
-
 	return 0;	// ok
 }
 
@@ -43,6 +53,7 @@ void PlayerShip::FireMissile()
 		Missile *missile = new Missile();
 		missile->Init(mGo.GetTransform().GetPosition());
 		mMissiles.push_back(missile);
+		mGo.GetComponent<AudioSource>().PlayOneShot(mFireSound);
 	}
 }
 

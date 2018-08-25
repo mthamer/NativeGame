@@ -27,15 +27,14 @@ namespace MyGame
 #endif
 
 		float deltaTime = Time::GetDeltaTime();
-		if (deltaTime > 500)
+		if (deltaTime > 200)
 		{
-			deltaTime = 100;
+			deltaTime = 200;
 		}
 		if (deltaTime < 0)
 		{
-			deltaTime = 10;
+			deltaTime = 16.667f;		// 60 fps
 		}
-
 		if (GetGameObject().CompareTag(Game::GetName()))
 		{
 			// Game is updating
