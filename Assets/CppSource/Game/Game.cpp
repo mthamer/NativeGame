@@ -54,7 +54,7 @@ bool Game::RemoveRock(Rock *rock)
 	return false;
 }
 
-void Game::UpdateRocks(Single deltaTime)
+void Game::UpdateRocks(float deltaTime)
 {
 	int i;
 	for (i = (int)mRocks.size() - 1; i >= 0; i--)
@@ -71,6 +71,9 @@ void Game::Update(float deltaTime)
 	mDeltaTime = ((curTime - mLastUpdateTime) / 1000.f);
 	mLastUpdateTime = curTime;
 
+	// update other game ents
+	mPlayerShip.Update(deltaTime);	// collisions checked here
+
 	if (curTime - mLastRockTime > timeBetweenRocks * 1000)
 	{
 		mLastRockTime = curTime;
@@ -81,9 +84,7 @@ void Game::Update(float deltaTime)
 		//Debug::Log(String("adding rock"));
 	}
 
-	// update other game ents
 	UpdateRocks(deltaTime);
-	mPlayerShip.Update(deltaTime);
 }
 
 // Called when the plugin is initialized

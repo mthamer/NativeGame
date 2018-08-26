@@ -30,6 +30,8 @@ int PlayerShip::Init()
 	String spriteRightPath = { "spaceship_high_right" };
 	String spriteCenterPath = { "spaceship_high_center" };
 	String fireSoundPath = { "Sounds\\fire" };
+	String playerExploSoundPath = { "Sounds\\explosion_player" };
+	String rockExploSoundPath = { "Sounds\\bangLarge" };
 
 	mSpeed = 1.5f;	// meters per sec
 	mTimeBetweenShots = 0.25f;	// 4 shots per sec
@@ -38,6 +40,8 @@ int PlayerShip::Init()
 	mSpriteLeft = Resources::Load<Sprite>(spriteLeftPath);
 	mSpriteRight = Resources::Load<Sprite>(spriteRightPath);
 	mSpriteCenter = Resources::Load<Sprite>(spriteCenterPath);
+	mPlayerExplosionSound= Resources::Load<AudioClip>(playerExploSoundPath);
+	mRockExplosionSound = Resources::Load<AudioClip>(rockExploSoundPath);
 	mFireSound = Resources::Load<AudioClip>(fireSoundPath);
 
 	mGo.AddComponent<SpriteRenderer>();
@@ -83,18 +87,14 @@ bool PlayerShip::RemoveMissile(Missile *missile)
 	return false;
 }
 
-
-void PlayerShip::UpdateMissiles(Single deltaTime)
+void PlayerShip::UpdateMissiles(float deltaTime)
 {
 	Game* game = Game::GetInstance();
 	int i;
 	for (i = (int)mMissiles.size() - 1; i >= 0; i--)
 	{
-		if (mMissiles[i]->Update(deltaTime) == true)
-			continue;	// missile was removed here
-
-		// check for collision with rocks
-//		MyGame::Rectangle<float> missileBounds = mMissiles[i]->GetBounds();
+		// check for missile collision with rocks
+		bool missileRemoved = false;
 		Bounds missileBounds = mMissiles[i]->GetBounds();
 		int j;
 		for (j = (int)game->GetRocks().size() - 1; j >= 0; j--)
@@ -104,8 +104,35 @@ void PlayerShip::UpdateMissiles(Single deltaTime)
 			{
 				game->RemoveRock(game->GetRocks()[j]);
 				RemoveMissile(mMissiles[i]);
+				mGo.GetComponent<AudioSource>().PlayOneShot(mRockExplosionSound);
+				missileRemoved = true;
 				break;
 			}
+		}
+
+		if (missileRemoved)
+			continue;
+
+		mMissiles[i]->Update(deltaTime);
+	}
+}
+
+//
+// check for ship hitting rock
+//
+void PlayerShip::CheckRockCollision()
+{
+	Game* game = Game::GetInstance();
+	Bounds shipBounds = GetBounds();
+	int j;
+	for (j = (int)game->GetRocks().size() - 1; j >= 0; j--)
+	{
+		Bounds rockBounds = game->GetRocks()[j]->GetBounds();
+		if (rockBounds.Intersects(shipBounds))
+		{
+			game->RemoveRock(game->GetRocks()[j]);			
+			mGo.GetComponent<AudioSource>().PlayOneShot(mPlayerExplosionSound);
+			break;
 		}
 	}
 }
@@ -118,6 +145,7 @@ void PlayerShip::Update(float deltaTime)
 	const float minY = -1.5f;
 
 	UpdateMissiles(deltaTime);
+	CheckRockCollision();
 
 	Vector3 pos = mGo.GetTransform().GetPosition();
 	bool dirty = false;

@@ -5,7 +5,6 @@ using namespace UnityEngine;
 
 #include "Missile.h"
 #include "Game.h"
-#include "Rect.h"
 
 // statics
 Sprite Missile::MissileSprite = nullptr;

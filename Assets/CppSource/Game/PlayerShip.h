@@ -23,9 +23,12 @@ private:
 
 	std::vector<Missile*> mMissiles;
 	AudioClip mFireSound;
+	AudioClip mPlayerExplosionSound;
+	AudioClip mRockExplosionSound;
 
 	void FireMissile();
-	void UpdateMissiles(Single deltaTime);
+	void UpdateMissiles(float deltaTime);
+	void CheckRockCollision();
 
 public:
 	static String GetName() { return String("PlayerShip"); }
@@ -39,8 +42,4 @@ public:
 	void SetSpeed(float s) { mSpeed = s; }
 	float GetSpeed() { return mSpeed; }
 	bool RemoveMissile(Missile *missile);
-
-	// TODO- get these from the actual sprite at runtime
-	virtual float GetWidth() { return 39; }
-	virtual float GetHeight() { return 43; }
 };

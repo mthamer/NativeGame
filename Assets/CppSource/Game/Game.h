@@ -24,7 +24,7 @@ private:
 	int mLastUpdateTime;
 	float mDeltaTime;
 
-	void UpdateRocks(Single deltaTime);
+	void UpdateRocks(float deltaTime);
 
 public:
 	// singleton

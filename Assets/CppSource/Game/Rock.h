@@ -25,9 +25,5 @@ public:
 
 	int Init();
 	void Update(float deltaTime);
-
-	// TODO- get these from the actual sprite at runtime
-	virtual float GetWidth() { return 64; }
-	virtual float GetHeight() { return 64; }
 };
 
