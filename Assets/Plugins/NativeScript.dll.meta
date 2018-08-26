@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 6d7bb1d2568a04d4fa918c2bfcc4cde8
-timeCreated: 1535242474
+guid: 54143e6af4dfe8a40bb42345b6e5036b
+timeCreated: 1535307311
 licenseType: Pro
 PluginImporter:
   externalObjects: {}
@@ -13,12 +13,12 @@ PluginImporter:
   - first:
       Any: 
     second:
-      enabled: 0
+      enabled: 1
       settings: {}
   - first:
       Editor: Editor
     second:
-      enabled: 1
+      enabled: 0
       settings:
         DefaultValueInitialized: true
   userData: 
