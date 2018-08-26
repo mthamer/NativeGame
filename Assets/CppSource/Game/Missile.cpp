@@ -5,6 +5,7 @@ using namespace UnityEngine;
 
 #include "Missile.h"
 #include "Game.h"
+#include "Rect.h"
 
 // statics
 Sprite Missile::MissileSprite = nullptr;
@@ -36,7 +37,8 @@ int Missile::Init(const Vector3 &shipPos)
 	return ret;
 }
 
-void Missile::Update(float deltaTime)
+// returns true if missile was removed
+bool Missile::Update(float deltaTime)
 {
 //	Debug::Log(String("Missile Update"));
 
@@ -49,5 +51,7 @@ void Missile::Update(float deltaTime)
 	{	// off screen
 //		Debug::Log(String("Missile Dead"));
 		Game::GetInstance()->GetPlayerShip().RemoveMissile(this);
+		return true;
 	}
+	return false;
 }

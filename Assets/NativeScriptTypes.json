@@ -263,6 +263,27 @@
       "Name": "UnityEngine.Behaviour"
     },
     {
+      "Name": "UnityEngine.Bounds",
+      "Properties": [
+        {
+          "Name": "max",
+          "Get": {}
+        },
+        {
+          "Name": "min",
+          "Get": {}
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "Intersects",
+          "ParamTypes": [
+            "UnityEngine.Bounds"
+          ]
+        }
+      ]
+    },
+    {
       "Name": "UnityEngine.GameObject",
       "Constructors": [
         {
@@ -465,6 +486,12 @@
         {
           "ParamTypes": []
         }
+      ],
+      "Properties": [
+        {
+          "Name": "bounds",
+          "Get": {}
+        }
       ]
     },
     {
@@ -474,6 +501,10 @@
           "Name": "sprite",
           "Get": {},
           "Set": {}
+        },
+        {
+          "Name": "bounds",
+          "Get": {}
         }
       ]
     },

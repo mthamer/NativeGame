@@ -486,6 +486,14 @@ namespace NativeScript
 		delegate void UnityEngineTransformPropertySetPositionDelegateType(int thisHandle, ref UnityEngine.Vector3 value);
 		delegate int SystemCollectionsIEnumeratorPropertyGetCurrentDelegateType(int thisHandle);
 		delegate bool SystemCollectionsIEnumeratorMethodMoveNextDelegateType(int thisHandle);
+		delegate void ReleaseUnityEngineBoundsDelegateType(int handle);
+		delegate UnityEngine.Vector3 UnityEngineBoundsPropertyGetMaxDelegateType(int thisHandle);
+		delegate void UnityEngineBoundsPropertySetMaxDelegateType(int thisHandle, ref UnityEngine.Vector3 value);
+		delegate UnityEngine.Vector3 UnityEngineBoundsPropertyGetMinDelegateType(int thisHandle);
+		delegate void UnityEngineBoundsPropertySetMinDelegateType(int thisHandle, ref UnityEngine.Vector3 value);
+		delegate bool UnityEngineBoundsMethodIntersectsUnityEngineBoundsDelegateType(int thisHandle, int boundsHandle);
+		delegate int BoxBoundsDelegateType(int valHandle);
+		delegate int UnboxBoundsDelegateType(int valHandle);
 		delegate int UnityEngineGameObjectConstructorDelegateType();
 		delegate int UnityEngineGameObjectConstructorSystemStringDelegateType(int nameHandle);
 		delegate int UnityEngineGameObjectPropertyGetTransformDelegateType(int thisHandle);
@@ -513,8 +521,10 @@ namespace NativeScript
 		delegate int BoxPrimitiveTypeDelegateType(UnityEngine.PrimitiveType val);
 		delegate UnityEngine.PrimitiveType UnboxPrimitiveTypeDelegateType(int valHandle);
 		delegate int UnityEngineSpriteConstructorDelegateType();
+		delegate int UnityEngineSpritePropertyGetBoundsDelegateType(int thisHandle);
 		delegate int UnityEngineSpriteRendererPropertyGetSpriteDelegateType(int thisHandle);
 		delegate void UnityEngineSpriteRendererPropertySetSpriteDelegateType(int thisHandle, int valueHandle);
+		delegate int UnityEngineSpriteRendererPropertyGetBoundsDelegateType(int thisHandle);
 		delegate float UnityEngineTimePropertyGetDeltaTimeDelegateType();
 		delegate void BaseGameScriptConstructorDelegateType(int cppHandle, ref int handle);
 		delegate void ReleaseBaseGameScriptDelegateType(int handle);
@@ -586,6 +596,14 @@ namespace NativeScript
 		static readonly UnityEngineTransformPropertySetPositionDelegateType UnityEngineTransformPropertySetPositionDelegate = new UnityEngineTransformPropertySetPositionDelegateType(UnityEngineTransformPropertySetPosition);
 		static readonly SystemCollectionsIEnumeratorPropertyGetCurrentDelegateType SystemCollectionsIEnumeratorPropertyGetCurrentDelegate = new SystemCollectionsIEnumeratorPropertyGetCurrentDelegateType(SystemCollectionsIEnumeratorPropertyGetCurrent);
 		static readonly SystemCollectionsIEnumeratorMethodMoveNextDelegateType SystemCollectionsIEnumeratorMethodMoveNextDelegate = new SystemCollectionsIEnumeratorMethodMoveNextDelegateType(SystemCollectionsIEnumeratorMethodMoveNext);
+		static readonly ReleaseUnityEngineBoundsDelegateType ReleaseUnityEngineBoundsDelegate = new ReleaseUnityEngineBoundsDelegateType(ReleaseUnityEngineBounds);
+		static readonly UnityEngineBoundsPropertyGetMaxDelegateType UnityEngineBoundsPropertyGetMaxDelegate = new UnityEngineBoundsPropertyGetMaxDelegateType(UnityEngineBoundsPropertyGetMax);
+		static readonly UnityEngineBoundsPropertySetMaxDelegateType UnityEngineBoundsPropertySetMaxDelegate = new UnityEngineBoundsPropertySetMaxDelegateType(UnityEngineBoundsPropertySetMax);
+		static readonly UnityEngineBoundsPropertyGetMinDelegateType UnityEngineBoundsPropertyGetMinDelegate = new UnityEngineBoundsPropertyGetMinDelegateType(UnityEngineBoundsPropertyGetMin);
+		static readonly UnityEngineBoundsPropertySetMinDelegateType UnityEngineBoundsPropertySetMinDelegate = new UnityEngineBoundsPropertySetMinDelegateType(UnityEngineBoundsPropertySetMin);
+		static readonly UnityEngineBoundsMethodIntersectsUnityEngineBoundsDelegateType UnityEngineBoundsMethodIntersectsUnityEngineBoundsDelegate = new UnityEngineBoundsMethodIntersectsUnityEngineBoundsDelegateType(UnityEngineBoundsMethodIntersectsUnityEngineBounds);
+		static readonly BoxBoundsDelegateType BoxBoundsDelegate = new BoxBoundsDelegateType(BoxBounds);
+		static readonly UnboxBoundsDelegateType UnboxBoundsDelegate = new UnboxBoundsDelegateType(UnboxBounds);
 		static readonly UnityEngineGameObjectConstructorDelegateType UnityEngineGameObjectConstructorDelegate = new UnityEngineGameObjectConstructorDelegateType(UnityEngineGameObjectConstructor);
 		static readonly UnityEngineGameObjectConstructorSystemStringDelegateType UnityEngineGameObjectConstructorSystemStringDelegate = new UnityEngineGameObjectConstructorSystemStringDelegateType(UnityEngineGameObjectConstructorSystemString);
 		static readonly UnityEngineGameObjectPropertyGetTransformDelegateType UnityEngineGameObjectPropertyGetTransformDelegate = new UnityEngineGameObjectPropertyGetTransformDelegateType(UnityEngineGameObjectPropertyGetTransform);
@@ -613,8 +631,10 @@ namespace NativeScript
 		static readonly BoxPrimitiveTypeDelegateType BoxPrimitiveTypeDelegate = new BoxPrimitiveTypeDelegateType(BoxPrimitiveType);
 		static readonly UnboxPrimitiveTypeDelegateType UnboxPrimitiveTypeDelegate = new UnboxPrimitiveTypeDelegateType(UnboxPrimitiveType);
 		static readonly UnityEngineSpriteConstructorDelegateType UnityEngineSpriteConstructorDelegate = new UnityEngineSpriteConstructorDelegateType(UnityEngineSpriteConstructor);
+		static readonly UnityEngineSpritePropertyGetBoundsDelegateType UnityEngineSpritePropertyGetBoundsDelegate = new UnityEngineSpritePropertyGetBoundsDelegateType(UnityEngineSpritePropertyGetBounds);
 		static readonly UnityEngineSpriteRendererPropertyGetSpriteDelegateType UnityEngineSpriteRendererPropertyGetSpriteDelegate = new UnityEngineSpriteRendererPropertyGetSpriteDelegateType(UnityEngineSpriteRendererPropertyGetSprite);
 		static readonly UnityEngineSpriteRendererPropertySetSpriteDelegateType UnityEngineSpriteRendererPropertySetSpriteDelegate = new UnityEngineSpriteRendererPropertySetSpriteDelegateType(UnityEngineSpriteRendererPropertySetSprite);
+		static readonly UnityEngineSpriteRendererPropertyGetBoundsDelegateType UnityEngineSpriteRendererPropertyGetBoundsDelegate = new UnityEngineSpriteRendererPropertyGetBoundsDelegateType(UnityEngineSpriteRendererPropertyGetBounds);
 		static readonly UnityEngineTimePropertyGetDeltaTimeDelegateType UnityEngineTimePropertyGetDeltaTimeDelegate = new UnityEngineTimePropertyGetDeltaTimeDelegateType(UnityEngineTimePropertyGetDeltaTime);
 		static readonly ReleaseBaseGameScriptDelegateType ReleaseBaseGameScriptDelegate = new ReleaseBaseGameScriptDelegateType(ReleaseBaseGameScript);
 		static readonly BaseGameScriptConstructorDelegateType BaseGameScriptConstructorDelegate = new BaseGameScriptConstructorDelegateType(BaseGameScriptConstructor);
@@ -656,6 +676,7 @@ namespace NativeScript
 			/*BEGIN STORE INIT CALLS*/
 			NativeScript.Bindings.ObjectStore.Init(1000);
 			NativeScript.Bindings.StructStore<System.Decimal>.Init(1000);
+			NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Init(1000);
 			/*END STORE INIT CALLS*/
 
 			// Allocate unmanaged memory
@@ -822,6 +843,22 @@ namespace NativeScript
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(SystemCollectionsIEnumeratorMethodMoveNextDelegate));
 			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(ReleaseUnityEngineBoundsDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineBoundsPropertyGetMaxDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineBoundsPropertySetMaxDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineBoundsPropertyGetMinDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineBoundsPropertySetMinDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineBoundsMethodIntersectsUnityEngineBoundsDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(BoxBoundsDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnboxBoundsDelegate));
+			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectConstructorDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineGameObjectConstructorSystemStringDelegate));
@@ -876,9 +913,13 @@ namespace NativeScript
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineSpriteConstructorDelegate));
 			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineSpritePropertyGetBoundsDelegate));
+			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineSpriteRendererPropertyGetSpriteDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineSpriteRendererPropertySetSpriteDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineSpriteRendererPropertyGetBoundsDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineTimePropertyGetDeltaTimeDelegate));
 			curMemory += IntPtr.Size;
@@ -1465,6 +1506,187 @@ namespace NativeScript
 				UnityEngine.Debug.LogException(ex);
 				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
 				return default(bool);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(ReleaseUnityEngineBoundsDelegateType))]
+		static void ReleaseUnityEngineBounds(int handle)
+		{
+			try
+			{
+				if (handle != 0)
+			{
+				NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Remove(handle);
+			}
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineBoundsPropertyGetMaxDelegateType))]
+		static UnityEngine.Vector3 UnityEngineBoundsPropertyGetMax(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.Bounds)NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Get(thisHandle);
+				var returnValue = thiz.max;
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(UnityEngine.Vector3);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(UnityEngine.Vector3);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineBoundsPropertySetMaxDelegateType))]
+		static void UnityEngineBoundsPropertySetMax(int thisHandle, ref UnityEngine.Vector3 value)
+		{
+			try
+			{
+				var thiz = (UnityEngine.Bounds)NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Get(thisHandle);
+				thiz.max = value;
+				NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Replace(thisHandle, ref thiz);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineBoundsPropertyGetMinDelegateType))]
+		static UnityEngine.Vector3 UnityEngineBoundsPropertyGetMin(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.Bounds)NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Get(thisHandle);
+				var returnValue = thiz.min;
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(UnityEngine.Vector3);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(UnityEngine.Vector3);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineBoundsPropertySetMinDelegateType))]
+		static void UnityEngineBoundsPropertySetMin(int thisHandle, ref UnityEngine.Vector3 value)
+		{
+			try
+			{
+				var thiz = (UnityEngine.Bounds)NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Get(thisHandle);
+				thiz.min = value;
+				NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Replace(thisHandle, ref thiz);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineBoundsMethodIntersectsUnityEngineBoundsDelegateType))]
+		static bool UnityEngineBoundsMethodIntersectsUnityEngineBounds(int thisHandle, int boundsHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.Bounds)NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Get(thisHandle);
+				var bounds = (UnityEngine.Bounds)NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Get(boundsHandle);
+				var returnValue = thiz.Intersects(bounds);
+				NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Replace(thisHandle, ref thiz);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(BoxBoundsDelegateType))]
+		static int BoxBounds(int valHandle)
+		{
+			try
+			{
+				var val = (UnityEngine.Bounds)NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Get(valHandle);
+				var returnValue = NativeScript.Bindings.ObjectStore.Store((object)val);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnboxBoundsDelegateType))]
+		static int UnboxBounds(int valHandle)
+		{
+			try
+			{
+				var val = NativeScript.Bindings.ObjectStore.Get(valHandle);
+				var returnValue = NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Store((UnityEngine.Bounds)val);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
 			}
 		}
 		
@@ -2078,6 +2300,29 @@ namespace NativeScript
 			}
 		}
 		
+		[MonoPInvokeCallback(typeof(UnityEngineSpritePropertyGetBoundsDelegateType))]
+		static int UnityEngineSpritePropertyGetBounds(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.Sprite)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var returnValue = thiz.bounds;
+				return NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Store(returnValue);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
 		[MonoPInvokeCallback(typeof(UnityEngineSpriteRendererPropertyGetSpriteDelegateType))]
 		static int UnityEngineSpriteRendererPropertyGetSprite(int thisHandle)
 		{
@@ -2119,6 +2364,29 @@ namespace NativeScript
 			{
 				UnityEngine.Debug.LogException(ex);
 				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineSpriteRendererPropertyGetBoundsDelegateType))]
+		static int UnityEngineSpriteRendererPropertyGetBounds(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.SpriteRenderer)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var returnValue = thiz.bounds;
+				return NativeScript.Bindings.StructStore<UnityEngine.Bounds>.Store(returnValue);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
 			}
 		}
 		

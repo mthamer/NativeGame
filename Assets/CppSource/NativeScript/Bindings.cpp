@@ -71,6 +71,14 @@ namespace Plugin
 	void (*UnityEngineTransformPropertySetPosition)(int32_t thisHandle, UnityEngine::Vector3& value);
 	int32_t (*SystemCollectionsIEnumeratorPropertyGetCurrent)(int32_t thisHandle);
 	int32_t (*SystemCollectionsIEnumeratorMethodMoveNext)(int32_t thisHandle);
+	void (*ReleaseUnityEngineBounds)(int32_t handle);
+	UnityEngine::Vector3 (*UnityEngineBoundsPropertyGetMax)(int32_t thisHandle);
+	void (*UnityEngineBoundsPropertySetMax)(int32_t thisHandle, UnityEngine::Vector3& value);
+	UnityEngine::Vector3 (*UnityEngineBoundsPropertyGetMin)(int32_t thisHandle);
+	void (*UnityEngineBoundsPropertySetMin)(int32_t thisHandle, UnityEngine::Vector3& value);
+	int32_t (*UnityEngineBoundsMethodIntersectsUnityEngineBounds)(int32_t thisHandle, int32_t boundsHandle);
+	int32_t (*BoxBounds)(int32_t valHandle);
+	int32_t (*UnboxBounds)(int32_t valHandle);
 	int32_t (*UnityEngineGameObjectConstructor)();
 	int32_t (*UnityEngineGameObjectConstructorSystemString)(int32_t nameHandle);
 	int32_t (*UnityEngineGameObjectPropertyGetTransform)(int32_t thisHandle);
@@ -98,8 +106,10 @@ namespace Plugin
 	int32_t (*BoxPrimitiveType)(UnityEngine::PrimitiveType val);
 	UnityEngine::PrimitiveType (*UnboxPrimitiveType)(int32_t valHandle);
 	int32_t (*UnityEngineSpriteConstructor)();
+	int32_t (*UnityEngineSpritePropertyGetBounds)(int32_t thisHandle);
 	int32_t (*UnityEngineSpriteRendererPropertyGetSprite)(int32_t thisHandle);
 	void (*UnityEngineSpriteRendererPropertySetSprite)(int32_t thisHandle, int32_t valueHandle);
+	int32_t (*UnityEngineSpriteRendererPropertyGetBounds)(int32_t thisHandle);
 	System::Single (*UnityEngineTimePropertyGetDeltaTime)();
 	void (*ReleaseBaseGameScript)(int32_t handle);
 	void (*BaseGameScriptConstructor)(int32_t cppHandle, int32_t* handle);
@@ -912,6 +922,31 @@ namespace Plugin
 			if (numRemain == 0)
 			{
 				ReleaseSystemDecimal(handle);
+			}
+		}
+	}
+	
+	int32_t RefCountsLenUnityEngineBounds;
+	int32_t* RefCountsUnityEngineBounds;
+	
+	void ReferenceManagedUnityEngineBounds(int32_t handle)
+	{
+		assert(handle >= 0 && handle < RefCountsLenUnityEngineBounds);
+		if (handle != 0)
+		{
+			RefCountsUnityEngineBounds[handle]++;
+		}
+	}
+	
+	void DereferenceManagedUnityEngineBounds(int32_t handle)
+	{
+		assert(handle >= 0 && handle < RefCountsLenUnityEngineBounds);
+		if (handle != 0)
+		{
+			int32_t numRemain = --RefCountsUnityEngineBounds[handle];
+			if (numRemain == 0)
+			{
+				ReleaseUnityEngineBounds(handle);
 			}
 		}
 	}
@@ -4700,6 +4735,202 @@ namespace UnityEngine
 
 namespace UnityEngine
 {
+	Bounds::Bounds(decltype(nullptr))
+	{
+	}
+	
+	Bounds::Bounds(Plugin::InternalUse, int32_t handle)
+	{
+		Handle = handle;
+		if (handle)
+		{
+			Plugin::ReferenceManagedUnityEngineBounds(Handle);
+		}
+	}
+	
+	Bounds::Bounds(const Bounds& other)
+		: Bounds(Plugin::InternalUse::Only, other.Handle)
+	{
+	}
+	
+	Bounds::Bounds(Bounds&& other)
+		: Bounds(Plugin::InternalUse::Only, other.Handle)
+	{
+		other.Handle = 0;
+	}
+	
+	Bounds::~Bounds()
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedUnityEngineBounds(Handle);
+			Handle = 0;
+		}
+	}
+	
+	Bounds& Bounds::operator=(const Bounds& other)
+	{
+		if (this->Handle)
+		{
+			Plugin::DereferenceManagedUnityEngineBounds(Handle);
+		}
+		this->Handle = other.Handle;
+		if (this->Handle)
+		{
+			Plugin::ReferenceManagedUnityEngineBounds(Handle);
+		}
+		return *this;
+	}
+	
+	Bounds& Bounds::operator=(decltype(nullptr))
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedUnityEngineBounds(Handle);
+			Handle = 0;
+		}
+		return *this;
+	}
+	
+	Bounds& Bounds::operator=(Bounds&& other)
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedUnityEngineBounds(Handle);
+		}
+		Handle = other.Handle;
+		other.Handle = 0;
+		return *this;
+	}
+	
+	bool Bounds::operator==(const Bounds& other) const
+	{
+		return Handle == other.Handle;
+	}
+	
+	bool Bounds::operator!=(const Bounds& other) const
+	{
+		return Handle != other.Handle;
+	}
+	
+	UnityEngine::Vector3 UnityEngine::Bounds::GetMax()
+	{
+		auto returnValue = Plugin::UnityEngineBoundsPropertyGetMax(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	void UnityEngine::Bounds::SetMax(UnityEngine::Vector3& value)
+	{
+		Plugin::UnityEngineBoundsPropertySetMax(Handle, value);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+	}
+	
+	UnityEngine::Vector3 UnityEngine::Bounds::GetMin()
+	{
+		auto returnValue = Plugin::UnityEngineBoundsPropertyGetMin(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	void UnityEngine::Bounds::SetMin(UnityEngine::Vector3& value)
+	{
+		Plugin::UnityEngineBoundsPropertySetMin(Handle, value);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+	}
+	
+	System::Boolean UnityEngine::Bounds::Intersects(UnityEngine::Bounds& bounds)
+	{
+		auto returnValue = Plugin::UnityEngineBoundsMethodIntersectsUnityEngineBounds(Handle, bounds.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	UnityEngine::Bounds::operator System::ValueType()
+	{
+		int32_t handle = Plugin::BoxBounds(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+			return System::ValueType(Plugin::InternalUse::Only, handle);
+		}
+		return nullptr;
+	}
+	
+	UnityEngine::Bounds::operator System::Object()
+	{
+		int32_t handle = Plugin::BoxBounds(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+			return System::Object(Plugin::InternalUse::Only, handle);
+		}
+		return nullptr;
+	}
+}
+
+namespace System
+{
+	System::Object::operator UnityEngine::Bounds()
+	{
+		UnityEngine::Bounds returnVal(Plugin::InternalUse::Only, Plugin::UnboxBounds(Handle));
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnVal;
+	}
+}
+
+namespace UnityEngine
+{
 	GameObject::GameObject(decltype(nullptr))
 		: UnityEngine::Object(nullptr)
 	{
@@ -6210,6 +6441,19 @@ namespace UnityEngine
 			Plugin::ReferenceManagedClass(returnValue);
 		}
 	}
+	
+	UnityEngine::Bounds UnityEngine::Sprite::GetBounds()
+	{
+		auto returnValue = Plugin::UnityEngineSpritePropertyGetBounds(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return UnityEngine::Bounds(Plugin::InternalUse::Only, returnValue);
+	}
 }
 
 namespace UnityEngine
@@ -6321,6 +6565,19 @@ namespace UnityEngine
 			ex->ThrowReferenceToThis();
 			delete ex;
 		}
+	}
+	
+	UnityEngine::Bounds UnityEngine::SpriteRenderer::GetBounds()
+	{
+		auto returnValue = Plugin::UnityEngineSpriteRendererPropertyGetBounds(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return UnityEngine::Bounds(Plugin::InternalUse::Only, returnValue);
 	}
 }
 
@@ -7027,6 +7284,22 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::SystemCollectionsIEnumeratorPropertyGetCurrent);
 	Plugin::SystemCollectionsIEnumeratorMethodMoveNext = *(int32_t (**)(int32_t thisHandle))curMemory;
 	curMemory += sizeof(Plugin::SystemCollectionsIEnumeratorMethodMoveNext);
+	Plugin::ReleaseUnityEngineBounds = *(void (**)(int32_t handle))curMemory;
+	curMemory += sizeof(Plugin::ReleaseUnityEngineBounds);
+	Plugin::UnityEngineBoundsPropertyGetMax = *(UnityEngine::Vector3 (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineBoundsPropertyGetMax);
+	Plugin::UnityEngineBoundsPropertySetMax = *(void (**)(int32_t thisHandle, UnityEngine::Vector3& value))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineBoundsPropertySetMax);
+	Plugin::UnityEngineBoundsPropertyGetMin = *(UnityEngine::Vector3 (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineBoundsPropertyGetMin);
+	Plugin::UnityEngineBoundsPropertySetMin = *(void (**)(int32_t thisHandle, UnityEngine::Vector3& value))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineBoundsPropertySetMin);
+	Plugin::UnityEngineBoundsMethodIntersectsUnityEngineBounds = *(int32_t (**)(int32_t thisHandle, int32_t boundsHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineBoundsMethodIntersectsUnityEngineBounds);
+	Plugin::BoxBounds = *(int32_t (**)(int32_t valHandle))curMemory;
+	curMemory += sizeof(Plugin::BoxBounds);
+	Plugin::UnboxBounds = *(int32_t (**)(int32_t valHandle))curMemory;
+	curMemory += sizeof(Plugin::UnboxBounds);
 	Plugin::UnityEngineGameObjectConstructor = *(int32_t (**)())curMemory;
 	curMemory += sizeof(Plugin::UnityEngineGameObjectConstructor);
 	Plugin::UnityEngineGameObjectConstructorSystemString = *(int32_t (**)(int32_t nameHandle))curMemory;
@@ -7081,10 +7354,14 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::UnboxPrimitiveType);
 	Plugin::UnityEngineSpriteConstructor = *(int32_t (**)())curMemory;
 	curMemory += sizeof(Plugin::UnityEngineSpriteConstructor);
+	Plugin::UnityEngineSpritePropertyGetBounds = *(int32_t (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineSpritePropertyGetBounds);
 	Plugin::UnityEngineSpriteRendererPropertyGetSprite = *(int32_t (**)(int32_t thisHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineSpriteRendererPropertyGetSprite);
 	Plugin::UnityEngineSpriteRendererPropertySetSprite = *(void (**)(int32_t thisHandle, int32_t valueHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineSpriteRendererPropertySetSprite);
+	Plugin::UnityEngineSpriteRendererPropertyGetBounds = *(int32_t (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineSpriteRendererPropertyGetBounds);
 	Plugin::UnityEngineTimePropertyGetDeltaTime = *(System::Single (**)())curMemory;
 	curMemory += sizeof(Plugin::UnityEngineTimePropertyGetDeltaTime);
 	Plugin::ReleaseBaseGameScript = *(void (**)(int32_t handle))curMemory;
@@ -7150,6 +7427,10 @@ DLLEXPORT void Init(
 	Plugin::RefCountsSystemDecimal = (int32_t*)curMemory;
 	curMemory += 1000 * sizeof(int32_t);
 	Plugin::RefCountsLenSystemDecimal = 1000;
+	
+	Plugin::RefCountsUnityEngineBounds = (int32_t*)curMemory;
+	curMemory += 1000 * sizeof(int32_t);
+	Plugin::RefCountsLenUnityEngineBounds = 1000;
 	
 	Plugin::BaseGameScriptFreeListSize = 1000;
 	Plugin::BaseGameScriptFreeList = (MyGame::BaseGameScript**)curMemory;

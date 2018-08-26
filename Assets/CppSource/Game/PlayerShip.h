@@ -39,4 +39,8 @@ public:
 	void SetSpeed(float s) { mSpeed = s; }
 	float GetSpeed() { return mSpeed; }
 	bool RemoveMissile(Missile *missile);
+
+	// TODO- get these from the actual sprite at runtime
+	virtual float GetWidth() { return 39; }
+	virtual float GetHeight() { return 43; }
 };

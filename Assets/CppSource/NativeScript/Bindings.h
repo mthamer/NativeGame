@@ -374,6 +374,11 @@ namespace UnityEngine
 
 namespace UnityEngine
 {
+	struct Bounds;
+}
+
+namespace UnityEngine
+{
 	struct GameObject;
 }
 
@@ -614,6 +619,7 @@ namespace System
 		/*BEGIN UNBOXING METHOD DECLARATIONS*/
 		explicit operator System::Decimal();
 		explicit operator UnityEngine::Vector3();
+		explicit operator UnityEngine::Bounds();
 		explicit operator UnityEngine::PrimitiveType();
 		explicit operator System::Boolean();
 		explicit operator System::SByte();
@@ -1398,6 +1404,30 @@ namespace UnityEngine
 
 namespace UnityEngine
 {
+	struct Bounds : Plugin::ManagedType
+	{
+		Bounds(decltype(nullptr));
+		Bounds(Plugin::InternalUse, int32_t handle);
+		Bounds(const Bounds& other);
+		Bounds(Bounds&& other);
+		virtual ~Bounds();
+		Bounds& operator=(const Bounds& other);
+		Bounds& operator=(decltype(nullptr));
+		Bounds& operator=(Bounds&& other);
+		bool operator==(const Bounds& other) const;
+		bool operator!=(const Bounds& other) const;
+		UnityEngine::Vector3 GetMax();
+		void SetMax(UnityEngine::Vector3& value);
+		UnityEngine::Vector3 GetMin();
+		void SetMin(UnityEngine::Vector3& value);
+		System::Boolean Intersects(UnityEngine::Bounds& bounds);
+		explicit operator System::ValueType();
+		explicit operator System::Object();
+	};
+}
+
+namespace UnityEngine
+{
 	struct GameObject : virtual UnityEngine::Object
 	{
 		GameObject(decltype(nullptr));
@@ -1642,6 +1672,7 @@ namespace UnityEngine
 		bool operator==(const Sprite& other) const;
 		bool operator!=(const Sprite& other) const;
 		Sprite();
+		UnityEngine::Bounds GetBounds();
 	};
 }
 
@@ -1661,6 +1692,7 @@ namespace UnityEngine
 		bool operator!=(const SpriteRenderer& other) const;
 		UnityEngine::Sprite GetSprite();
 		void SetSprite(UnityEngine::Sprite& value);
+		UnityEngine::Bounds GetBounds();
 	};
 }
 

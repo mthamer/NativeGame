@@ -6,6 +6,7 @@ using namespace UnityEngine;
 #include "PlayerShip.h"
 #include "Game.h"
 #include "Missile.h"
+#include "Rock.h"
 #include <assert.h>
 #include <windows.h>
 
@@ -19,7 +20,7 @@ using namespace UnityEngine;
 int PlayerShip::Init()
 {
 	int ret = GameEntity::Init(GetName());
-	if (ret<0)
+	if (ret < 0)
 	{
 		return ret;
 	}
@@ -85,10 +86,27 @@ bool PlayerShip::RemoveMissile(Missile *missile)
 
 void PlayerShip::UpdateMissiles(Single deltaTime)
 {
+	Game* game = Game::GetInstance();
 	int i;
-	for (i = (int)mMissiles.size()-1; i>=0; i--)
+	for (i = (int)mMissiles.size() - 1; i >= 0; i--)
 	{
-		mMissiles[i]->Update(deltaTime);
+		if (mMissiles[i]->Update(deltaTime) == true)
+			continue;	// missile was removed here
+
+		// check for collision with rocks
+//		MyGame::Rectangle<float> missileBounds = mMissiles[i]->GetBounds();
+		Bounds missileBounds = mMissiles[i]->GetBounds();
+		int j;
+		for (j = (int)game->GetRocks().size() - 1; j >= 0; j--)
+		{
+			Bounds rockBounds = game->GetRocks()[j]->GetBounds();
+			if (rockBounds.Intersects(missileBounds))
+			{
+				game->RemoveRock(game->GetRocks()[j]);
+				RemoveMissile(mMissiles[i]);
+				break;
+			}
+		}
 	}
 }
 
@@ -109,8 +127,8 @@ void PlayerShip::Update(float deltaTime)
 		FireMissile();
 	}
 
-	if ( (Input::GetKeyUp(String("left")) || Input::GetKeyUp(String("right"))) &&
-		! (Input::GetKey(String("left")) || Input::GetKey(String("right"))) )
+	if ((Input::GetKeyUp(String("left")) || Input::GetKeyUp(String("right"))) &&
+		!(Input::GetKey(String("left")) || Input::GetKey(String("right"))))
 	{
 		mGo.GetComponent<SpriteRenderer>().SetSprite(mSpriteCenter);
 	}
@@ -137,7 +155,7 @@ void PlayerShip::Update(float deltaTime)
 		pos.x = pos.x + mSpeed * deltaTime;
 		dirty = true;
 	}
-	
+
 	if (Input::GetKey(String("up")) && pos.y <= maxY)
 	{
 		// up

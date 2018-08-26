@@ -44,4 +44,5 @@ public:
 	void Update(float deltaTime);
 	bool RemoveRock(Rock *rock);
 	float GetDeltaTime() const { return mDeltaTime;  }
+	const std::vector<Rock *> &GetRocks() const { return mRocks; }
 };
