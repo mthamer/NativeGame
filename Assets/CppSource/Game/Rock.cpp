@@ -1,3 +1,8 @@
+
+#include"Bindings.h"
+using namespace System;
+using namespace UnityEngine;
+
 #include "Rock.h"
 #include "Game.h"
 #include <Windows.h>	// for timeGetTime()
@@ -6,20 +11,15 @@
 const int Rock::NumSprites;
 Sprite *Rock::RockSprites = nullptr;
 
-Rock::~Rock()
-{
-	UnityEngine::Object::Destroy(mGo);
-}
-
 int Rock::Init()
 {
-	mSpeed = Game::GetInstance()->GetPlayerShip().GetSpeed();
-	//	Debug::Log(String("Rock Init"));
+	int ret = GameEntity::Init(GetName());
+	if (ret<0)
+	{
+		return ret;
+	}
 
-	// attach main game script to Game object
-	mGo.SetName(GetName());
-	mGo.SetTag(GetName());
-	// mGo.AddComponent<MyGame::BaseGameScript>();	// doesn't need a per-frame update call
+	mSpeed = Game::GetInstance()->GetPlayerShip().GetSpeed();
 
 	// load Rock sprites
 	if (RockSprites == nullptr)
@@ -43,10 +43,10 @@ int Rock::Init()
 	const float yStart = 1.5f;
 	mGo.GetTransform().SetPosition(Vector3(xRand, yStart, 0));	
 
-	return 0;
+	return ret;
 }
 
-void Rock::Update(Single deltaTime)
+void Rock::Update(float deltaTime)
 {
 	//	Debug::Log(String("Rock Update"));
 

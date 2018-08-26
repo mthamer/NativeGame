@@ -5,23 +5,20 @@
 #pragma once
 
 #include "Bindings.h"
+#include "GameEntity.h"
 
-using namespace System;
-using namespace UnityEngine;
-
-class Missile
+class Missile : public GameEntity
 {
 private:
 	static Sprite MissileSprite;		// missile sprite
-	GameObject mGo;
 	float mSpeed;
 
 public:
 	static String GetName() { return String("Missile"); }
 
 	Missile() { }
-	~Missile();
+	virtual ~Missile() { }
 	int Init(const Vector3 &shipPos);
-	void Update(Single deltaTime);
+	void Update(float deltaTime);
 };
 

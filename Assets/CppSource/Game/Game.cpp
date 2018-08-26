@@ -1,27 +1,30 @@
-#include "Bindings.h"
+#include"Bindings.h"
+using namespace System;
+using namespace UnityEngine;
+
 #include "Game.h"
 #include "Rock.h"
 #include <Windows.h>	// for timeGetTime
 #include <assert.h>
 
-using namespace System;
-using namespace UnityEngine;
-
 int Game::Init()
 {
-	int ret = 0;	// ok
+	int ret = GameEntity::Init(GetName());
+	if (ret<0)
+	{
+		return ret;
+	}
 
 	mLastRockTime = 0;
 	mLastUpdateTime = 0;
 	mDeltaTime = 0;
 
 	// attach main game script to Game object
-	mGo.SetName(GetName());
-	mGo.SetTag(GetName());
 	mGo.AddComponent<MyGame::BaseGameScript>();
 	
-	// add bacvkground image
-	mBGSprite = Resources::Load<Sprite>(mBGSpritePath);
+	// add background image
+	String bgSpritePath = { "background600x1024" };
+	mBGSprite = Resources::Load<Sprite>(bgSpritePath);
 	mGo.AddComponent<SpriteRenderer>();
 	mGo.GetComponent<SpriteRenderer>().SetSprite(mBGSprite);
 	mGo.GetTransform().SetPosition(Vector3(0, 0, 5));	// move back in Z
@@ -60,7 +63,7 @@ void Game::UpdateRocks(Single deltaTime)
 	}
 }
 
-void Game::Update(Single deltaTime)
+void Game::Update(float deltaTime)
 {
 	const float timeBetweenRocks = 1.0f;
 
@@ -78,7 +81,9 @@ void Game::Update(Single deltaTime)
 		//Debug::Log(String("adding rock"));
 	}
 
+	// update other game ents
 	UpdateRocks(deltaTime);
+	mPlayerShip.Update(deltaTime);
 }
 
 // Called when the plugin is initialized
@@ -88,7 +93,7 @@ void PluginMain(
 	int32_t memorySize,
 	bool isFirstBoot)
 {
-	gameState = (GameState*)memory;		// shared between C# and Native
+	//gameState = (GameState*)memory;		// shared between C# and Native
 
 	if (isFirstBoot) 
 	{

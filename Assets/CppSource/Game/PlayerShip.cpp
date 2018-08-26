@@ -1,3 +1,8 @@
+
+#include"Bindings.h"
+using namespace System;
+using namespace UnityEngine;
+
 #include "PlayerShip.h"
 #include "Game.h"
 #include "Missile.h"
@@ -13,6 +18,12 @@
 //
 int PlayerShip::Init()
 {
+	int ret = GameEntity::Init(GetName());
+	if (ret<0)
+	{
+		return ret;
+	}
+
 	// Path of sprites within the Unity Assets/Resources folder
 	String spriteLeftPath = { "spaceship_high_left" };
 	String spriteRightPath = { "spaceship_high_right" };
@@ -28,15 +39,12 @@ int PlayerShip::Init()
 	mSpriteCenter = Resources::Load<Sprite>(spriteCenterPath);
 	mFireSound = Resources::Load<AudioClip>(fireSoundPath);
 
-	mGo.SetName(GetName());
-	mGo.SetTag(GetName());
 	mGo.AddComponent<SpriteRenderer>();
 	mGo.GetComponent<SpriteRenderer>().SetSprite(mSpriteCenter);
-	mGo.AddComponent<MyGame::BaseGameScript>();
 	mGo.AddComponent<AudioSource>();
 
 	mGo.GetTransform().SetPosition(Vector3(0, -1.5, 0));	// start near the bottom
-	return 0;	// ok
+	return ret;	// ok
 }
 
 void PlayerShip::SetPosition(Vector3 &pos)
@@ -84,7 +92,7 @@ void PlayerShip::UpdateMissiles(Single deltaTime)
 	}
 }
 
-void PlayerShip::Update(Single deltaTime)
+void PlayerShip::Update(float deltaTime)
 {
 	const float maxX = 1.1f;
 	const float minX = -1.1f;

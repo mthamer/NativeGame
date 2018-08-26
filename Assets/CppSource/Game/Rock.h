@@ -5,16 +5,14 @@
 //
 
 #include "Bindings.h"
+#include "GameEntity.h"
 
-using namespace System;
-using namespace UnityEngine;
-
-class Rock
+class Rock : public GameEntity
 {
 private:
 	static const int NumSprites = 16;
 	static Sprite *RockSprites;
-	GameObject mGo;
+
 	float mSpeed;
 	int mCurSprite;
 	int mLastSpriteTime;
@@ -23,8 +21,9 @@ public:
 	static String GetName() { return String("Rock"); }
 
 	Rock() { }
-	~Rock();
+	virtual ~Rock() {}
+
 	int Init();
-	void Update(Single deltaTime);
+	void Update(float deltaTime);
 };
 

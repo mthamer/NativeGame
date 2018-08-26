@@ -5,16 +5,13 @@
 //
 
 #include "Bindings.h"
+#include "GameEntity.h"
 #include <vector>
 
-using namespace System;
-using namespace UnityEngine;
-
 class Missile;
-class PlayerShip
+class PlayerShip : public GameEntity
 {
 private:
-	GameObject mGo;
 	float mSpeed;
 	float mTimeBetweenShots;
 	int mLastShotTime;	// in ms
@@ -34,10 +31,11 @@ public:
 	static String GetName() { return String("PlayerShip"); }
 
 	PlayerShip() {}
+	virtual ~PlayerShip() {}
 
 	int Init();
 	void SetPosition(Vector3 &pos);
-	void Update(Single deltaTime);
+	void Update(float deltaTime);
 	void SetSpeed(float s) { mSpeed = s; }
 	float GetSpeed() { return mSpeed; }
 	bool RemoveMissile(Missile *missile);

@@ -1,23 +1,23 @@
+
+#include"Bindings.h"
+using namespace System;
+using namespace UnityEngine;
+
 #include "Missile.h"
 #include "Game.h"
 
 // statics
 Sprite Missile::MissileSprite = nullptr;
 
-Missile::~Missile() 
-{ 
-	UnityEngine::Object::Destroy(mGo); 
-}
-
 int Missile::Init(const Vector3 &shipPos)
 {
-	mSpeed = Game::GetInstance()->GetPlayerShip().GetSpeed() * 2.0f;
-//	Debug::Log(String("Missile Init"));
+	int ret = GameEntity::Init(GetName());
+	if (ret<0)
+	{
+		return ret;
+	}
 
-	// attach main game script to Game object
-	mGo.SetName(GetName());
-	mGo.SetTag(GetName());
-	// mGo.AddComponent<MyGame::BaseGameScript>();		// doesn't need a perframe update call
+	mSpeed = Game::GetInstance()->GetPlayerShip().GetSpeed() * 2.0f;
 
 	// add missile image
 	if (MissileSprite == nullptr)
@@ -33,10 +33,10 @@ int Missile::Init(const Vector3 &shipPos)
 	const float shipXOffset = -.005f;
 	mGo.GetTransform().SetPosition(Vector3(shipPos.x + shipXOffset, shipPos.y + shipYOffset, shipPos.z));
 
-	return 0;
+	return ret;
 }
 
-void Missile::Update(Single deltaTime)
+void Missile::Update(float deltaTime)
 {
 //	Debug::Log(String("Missile Update"));
 

@@ -7,29 +7,17 @@
 #include "Bindings.h"
 #include "GameScript.h"
 #include "PlayerShip.h"
+#include "GameEntity.h"
 #include <vector>
-
-// unused
-namespace
-{
-	struct GameState
-	{
-		float data;
-	};
-
-	GameState* gameState;
-}
 
 //
 // main game class
 //
 class Rock;
-class Game
+class Game : public GameEntity
 {
 private:
-	GameObject mGo;
 	PlayerShip mPlayerShip;
-	String mBGSpritePath = { "background600x1024" };
 	Sprite mBGSprite;		// background sprite
 	std::vector<Rock *> mRocks;
 	int mLastRockTime;
@@ -49,9 +37,11 @@ public:
 	static String GetName() { return String("GameObject"); }
 
 	Game() {}
+	virtual ~Game() {}
+
 	int Init();
 	PlayerShip &GetPlayerShip() { return mPlayerShip;  }
-	void Update(Single deltaTime);
+	void Update(float deltaTime);
 	bool RemoveRock(Rock *rock);
 	float GetDeltaTime() const { return mDeltaTime;  }
 };
