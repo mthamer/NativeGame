@@ -19,8 +19,8 @@ int PlayerShip::Init()
 	String spriteCenterPath = { "spaceship_high_center" };
 	String fireSoundPath = { "Sounds\\fire" };
 
-	mSpeed = 0.0002f;
-	mTimeBetweenShots = 0.2f;	// 5 shots per sec
+	mSpeed = 1.5f;	// meters per sec
+	mTimeBetweenShots = 0.25f;	// 4 shots per sec
 	mLastShotTime = 0;
 
 	mSpriteLeft = Resources::Load<Sprite>(spriteLeftPath);

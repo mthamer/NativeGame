@@ -11,12 +11,10 @@ using namespace UnityEngine;
 
 class Missile
 {
-	//	friend struct MyGame::GameScript;
 private:
-	GameObject mGo;
 	static Sprite MissileSprite;		// missile sprite
+	GameObject mGo;
 	float mSpeed;
-	bool mDead;					// set true to remove this
 
 public:
 	static String GetName() { return String("Missile"); }

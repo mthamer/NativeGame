@@ -40,10 +40,12 @@ namespace NativeScript
 			DontDestroyOnLoad(gameObject);
 			Bindings.Open(MemorySize);
 		}
-		
+
 #if UNITY_EDITOR
 		void Update()
 		{
+//            Debug.Log("Utility deltaTime:" + Time.deltaTime);
+
             Bindings.Update();
 
 			if (AutoReload)
@@ -80,8 +82,8 @@ namespace NativeScript
 			}
 		}
 #endif
-		
-		void OnApplicationQuit()
+
+        void OnApplicationQuit()
 		{
             Debug.Log("BootScript - Quit");
 

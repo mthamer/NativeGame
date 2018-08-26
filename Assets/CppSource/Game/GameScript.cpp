@@ -12,29 +12,22 @@ namespace MyGame
 {
 	void GameScript::Update()
 	{
+		const float deltaTime = Game::GetInstance()->GetDeltaTime();
 #if 0
-		String name = GetName();
-		String message("GameScript::Update:");
-		Debug::Log(message);
-		Debug::Log(name);
-#endif
-
-#if 0	// not sure shy this crashes
-		String horiz("Horizontal");
-		String vert("Vertical");
-		float h = Input::GetAxis(horiz);
-		float v = Input::GetAxis(vert);
-#endif
-
+		char tmp[128];
+		sprintf_s(tmp, "delta=%f", deltaTime);
+		Debug::Log(String(tmp));
 		float deltaTime = Time::GetDeltaTime();
-		if (deltaTime > 200)
+
+		if (deltaTime > .2f)
 		{
-			deltaTime = 200;
+			deltaTime = .2f;
 		}
 		if (deltaTime < 0)
 		{
-			deltaTime = 16.667f;		// 60 fps
+			deltaTime = 0.016667f;		// 60 fps
 		}
+#endif
 		if (GetGameObject().CompareTag(Game::GetName()))
 		{
 			// Game is updating
