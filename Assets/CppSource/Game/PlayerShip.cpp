@@ -40,7 +40,7 @@ int PlayerShip::Init()
 	mSpriteLeft = Resources::Load<Sprite>(spriteLeftPath);
 	mSpriteRight = Resources::Load<Sprite>(spriteRightPath);
 	mSpriteCenter = Resources::Load<Sprite>(spriteCenterPath);
-	mPlayerExplosionSound= Resources::Load<AudioClip>(playerExploSoundPath);
+	mPlayerExplosionSound = Resources::Load<AudioClip>(playerExploSoundPath);
 	mRockExplosionSound = Resources::Load<AudioClip>(rockExploSoundPath);
 	mFireSound = Resources::Load<AudioClip>(fireSoundPath);
 
@@ -50,11 +50,6 @@ int PlayerShip::Init()
 
 	mGo.GetTransform().SetPosition(Vector3(0, -1.5, 0));	// start near the bottom
 	return ret;	// ok
-}
-
-void PlayerShip::SetPosition(Vector3 &pos)
-{
-	mGo.GetTransform().SetPosition(pos);
 }
 
 void PlayerShip::FireMissile()
@@ -102,6 +97,7 @@ void PlayerShip::UpdateMissiles(float deltaTime)
 			Bounds rockBounds = game->GetRocks()[j]->GetBounds();
 			if (rockBounds.Intersects(missileBounds))
 			{
+				game->AddExplosion(game->GetRocks()[j]->GetPosition());
 				game->RemoveRock(game->GetRocks()[j]);
 				RemoveMissile(mMissiles[i]);
 				mGo.GetComponent<AudioSource>().PlayOneShot(mRockExplosionSound);
@@ -130,7 +126,8 @@ void PlayerShip::CheckRockCollision()
 		Bounds rockBounds = game->GetRocks()[j]->GetBounds();
 		if (rockBounds.Intersects(shipBounds))
 		{
-			game->RemoveRock(game->GetRocks()[j]);			
+			game->AddExplosion(game->GetRocks()[j]->GetPosition());
+			game->RemoveRock(game->GetRocks()[j]);
 			mGo.GetComponent<AudioSource>().PlayOneShot(mPlayerExplosionSound);
 			break;
 		}

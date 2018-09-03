@@ -14,17 +14,20 @@
 // main game class
 //
 class Rock;
+class Explosion;
 class Game : public GameEntity
 {
 private:
 	PlayerShip mPlayerShip;
 	Sprite mBGSprite;		// background sprite
 	std::vector<Rock *> mRocks;
+	std::vector<Explosion *> mExplosions;
 	int mLastRockTime;
 	int mLastUpdateTime;
 	float mDeltaTime;
 
 	void UpdateRocks(float deltaTime);
+	void UpdateExplosions(float deltaTime);
 
 public:
 	// singleton
@@ -43,6 +46,9 @@ public:
 	PlayerShip &GetPlayerShip() { return mPlayerShip;  }
 	void Update(float deltaTime);
 	bool RemoveRock(Rock *rock);
+	bool RemoveExplosion(Explosion *explo);
+	int AddExplosion(Vector3 &pos);
 	float GetDeltaTime() const { return mDeltaTime;  }
 	const std::vector<Rock *> &GetRocks() const { return mRocks; }
+	const std::vector<Explosion *> &GetExplosions() const { return mExplosions; }
 };

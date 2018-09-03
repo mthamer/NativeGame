@@ -40,3 +40,15 @@ Bounds GameEntity::GetBounds()
 {
 	return mGo.GetComponent<SpriteRenderer>().GetBounds();
 }
+
+Vector3 GameEntity::GetPosition()
+{
+	return mGo.GetTransform().GetPosition();
+}
+
+
+void GameEntity::SetPosition(Vector3 &pos)
+{
+	mGo.GetTransform().SetPosition(pos);
+}
+

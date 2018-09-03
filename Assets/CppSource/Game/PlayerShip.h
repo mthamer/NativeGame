@@ -37,7 +37,6 @@ public:
 	virtual ~PlayerShip() {}
 
 	int Init();
-	void SetPosition(Vector3 &pos);
 	void Update(float deltaTime);
 	void SetSpeed(float s) { mSpeed = s; }
 	float GetSpeed() { return mSpeed; }

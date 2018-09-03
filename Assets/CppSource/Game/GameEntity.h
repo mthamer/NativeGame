@@ -17,4 +17,7 @@ public:
 
 	int Init(System::String &name);
 	Bounds GetBounds();
+
+	Vector3 GetPosition();
+	void SetPosition(Vector3 &pos);
 };

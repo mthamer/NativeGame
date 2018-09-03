@@ -10,7 +10,9 @@
 class Rock : public GameEntity
 {
 private:
-	static const int NumSprites = 16;
+	const int NumSprites = 16;
+	const float SpriteAnimTime = 0.1f;
+
 	static Sprite *RockSprites;
 
 	float mSpeed;

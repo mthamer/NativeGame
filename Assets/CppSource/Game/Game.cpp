@@ -4,6 +4,7 @@ using namespace UnityEngine;
 
 #include "Game.h"
 #include "Rock.h"
+#include "Explosion.h"
 #include <Windows.h>	// for timeGetTime
 #include <assert.h>
 
@@ -36,6 +37,17 @@ int Game::Init()
 	return ret;
 }
 
+//
+// Add an explosion into the scene at the given position
+//
+int Game::AddExplosion(Vector3 &pos)
+{
+	Explosion *explo = new Explosion();
+	int ret = explo->Init(pos);
+	mExplosions.push_back(explo);
+	return ret;
+}
+
 bool Game::RemoveRock(Rock *rock)
 {
 	int i;
@@ -63,6 +75,33 @@ void Game::UpdateRocks(float deltaTime)
 	}
 }
 
+bool Game::RemoveExplosion(Explosion *explo)
+{
+	int i;
+	for (i = 0; i < mExplosions.size(); i++)
+	{
+		if (mExplosions[i] == explo)
+		{
+			mExplosions.erase(mExplosions.begin() + i);
+			delete explo;
+			//Debug::Log(String("removing explo"));
+			return true;
+		}
+	}
+
+	assert(false);
+	return false;
+}
+
+void Game::UpdateExplosions(float deltaTime)
+{
+	int i;
+	for (i = (int)mExplosions.size() - 1; i >= 0; i--)
+	{
+		mExplosions[i]->Update(deltaTime);
+	}
+}
+
 void Game::Update(float deltaTime)
 {
 	const float timeBetweenRocks = 1.0f;
@@ -85,6 +124,7 @@ void Game::Update(float deltaTime)
 	}
 
 	UpdateRocks(deltaTime);
+	UpdateExplosions(deltaTime);
 }
 
 // Called when the plugin is initialized

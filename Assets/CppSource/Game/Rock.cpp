@@ -8,7 +8,6 @@ using namespace UnityEngine;
 #include <Windows.h>	// for timeGetTime()
 
 // statics
-const int Rock::NumSprites;
 Sprite *Rock::RockSprites = nullptr;
 
 int Rock::Init()
@@ -51,9 +50,8 @@ void Rock::Update(float deltaTime)
 	//	Debug::Log(String("Rock Update"));
 
 	// update sprite image
-	const float spriteAnimTime = 0.1f;
 	int curTime = timeGetTime();
-	if (curTime - mLastSpriteTime > spriteAnimTime * 1000)
+	if (curTime - mLastSpriteTime > SpriteAnimTime * 1000)
 	{
 		mLastSpriteTime = curTime;
 		mCurSprite++;
