@@ -474,7 +474,13 @@ namespace NativeScript
 		delegate int BoxDecimalDelegateType(int valHandle);
 		delegate int UnboxDecimalDelegateType(int valHandle);
 		delegate UnityEngine.Vector3 UnityEngineVector3ConstructorSystemSingle_SystemSingle_SystemSingleDelegateType(float x, float y, float z);
+		delegate float UnityEngineVector3PropertyGetMagnitudeDelegateType(ref UnityEngine.Vector3 thiz);
 		delegate UnityEngine.Vector3 UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3DelegateType(ref UnityEngine.Vector3 a, ref UnityEngine.Vector3 b);
+		delegate UnityEngine.Vector3 UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3DelegateType(ref UnityEngine.Vector3 a, ref UnityEngine.Vector3 b);
+		delegate UnityEngine.Vector3 UnityEngineVector3MethodNormalizeUnityEngineVector3DelegateType(ref UnityEngine.Vector3 value);
+		delegate float UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3DelegateType(ref UnityEngine.Vector3 lhs, ref UnityEngine.Vector3 rhs);
+		delegate UnityEngine.Vector3 UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3DelegateType(ref UnityEngine.Vector3 lhs, ref UnityEngine.Vector3 rhs);
+		delegate float UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3DelegateType(ref UnityEngine.Vector3 a, ref UnityEngine.Vector3 b);
 		delegate int BoxVector3DelegateType(ref UnityEngine.Vector3 val);
 		delegate UnityEngine.Vector3 UnboxVector3DelegateType(int valHandle);
 		delegate int UnityEngineObjectPropertyGetNameDelegateType(int thisHandle);
@@ -584,7 +590,13 @@ namespace NativeScript
 		static readonly BoxDecimalDelegateType BoxDecimalDelegate = new BoxDecimalDelegateType(BoxDecimal);
 		static readonly UnboxDecimalDelegateType UnboxDecimalDelegate = new UnboxDecimalDelegateType(UnboxDecimal);
 		static readonly UnityEngineVector3ConstructorSystemSingle_SystemSingle_SystemSingleDelegateType UnityEngineVector3ConstructorSystemSingle_SystemSingle_SystemSingleDelegate = new UnityEngineVector3ConstructorSystemSingle_SystemSingle_SystemSingleDelegateType(UnityEngineVector3ConstructorSystemSingle_SystemSingle_SystemSingle);
+		static readonly UnityEngineVector3PropertyGetMagnitudeDelegateType UnityEngineVector3PropertyGetMagnitudeDelegate = new UnityEngineVector3PropertyGetMagnitudeDelegateType(UnityEngineVector3PropertyGetMagnitude);
 		static readonly UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3DelegateType UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3Delegate = new UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3DelegateType(UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3);
+		static readonly UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3DelegateType UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3Delegate = new UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3DelegateType(UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3);
+		static readonly UnityEngineVector3MethodNormalizeUnityEngineVector3DelegateType UnityEngineVector3MethodNormalizeUnityEngineVector3Delegate = new UnityEngineVector3MethodNormalizeUnityEngineVector3DelegateType(UnityEngineVector3MethodNormalizeUnityEngineVector3);
+		static readonly UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3DelegateType UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3Delegate = new UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3DelegateType(UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3);
+		static readonly UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3DelegateType UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3Delegate = new UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3DelegateType(UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3);
+		static readonly UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3DelegateType UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3Delegate = new UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3DelegateType(UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3);
 		static readonly BoxVector3DelegateType BoxVector3Delegate = new BoxVector3DelegateType(BoxVector3);
 		static readonly UnboxVector3DelegateType UnboxVector3Delegate = new UnboxVector3DelegateType(UnboxVector3);
 		static readonly UnityEngineObjectPropertyGetNameDelegateType UnityEngineObjectPropertyGetNameDelegate = new UnityEngineObjectPropertyGetNameDelegateType(UnityEngineObjectPropertyGetName);
@@ -819,7 +831,19 @@ namespace NativeScript
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineVector3ConstructorSystemSingle_SystemSingle_SystemSingleDelegate));
 			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineVector3PropertyGetMagnitudeDelegate));
+			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3Delegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3Delegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineVector3MethodNormalizeUnityEngineVector3Delegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3Delegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3Delegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3Delegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(BoxVector3Delegate));
 			curMemory += IntPtr.Size;
@@ -1243,6 +1267,28 @@ namespace NativeScript
 			}
 		}
 		
+		[MonoPInvokeCallback(typeof(UnityEngineVector3PropertyGetMagnitudeDelegateType))]
+		static float UnityEngineVector3PropertyGetMagnitude(ref UnityEngine.Vector3 thiz)
+		{
+			try
+			{
+				var returnValue = thiz.magnitude;
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(float);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(float);
+			}
+		}
+		
 		[MonoPInvokeCallback(typeof(UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3DelegateType))]
 		static UnityEngine.Vector3 UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3(ref UnityEngine.Vector3 a, ref UnityEngine.Vector3 b)
 		{
@@ -1262,6 +1308,116 @@ namespace NativeScript
 				UnityEngine.Debug.LogException(ex);
 				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
 				return default(UnityEngine.Vector3);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3DelegateType))]
+		static UnityEngine.Vector3 UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3(ref UnityEngine.Vector3 a, ref UnityEngine.Vector3 b)
+		{
+			try
+			{
+				var returnValue = a - b;
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(UnityEngine.Vector3);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(UnityEngine.Vector3);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineVector3MethodNormalizeUnityEngineVector3DelegateType))]
+		static UnityEngine.Vector3 UnityEngineVector3MethodNormalizeUnityEngineVector3(ref UnityEngine.Vector3 value)
+		{
+			try
+			{
+				var returnValue = UnityEngine.Vector3.Normalize(value);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(UnityEngine.Vector3);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(UnityEngine.Vector3);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3DelegateType))]
+		static float UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3(ref UnityEngine.Vector3 lhs, ref UnityEngine.Vector3 rhs)
+		{
+			try
+			{
+				var returnValue = UnityEngine.Vector3.Dot(lhs, rhs);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(float);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(float);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3DelegateType))]
+		static UnityEngine.Vector3 UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3(ref UnityEngine.Vector3 lhs, ref UnityEngine.Vector3 rhs)
+		{
+			try
+			{
+				var returnValue = UnityEngine.Vector3.Cross(lhs, rhs);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(UnityEngine.Vector3);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(UnityEngine.Vector3);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3DelegateType))]
+		static float UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3(ref UnityEngine.Vector3 a, ref UnityEngine.Vector3 b)
+		{
+			try
+			{
+				var returnValue = UnityEngine.Vector3.Distance(a, b);
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(float);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(float);
 			}
 		}
 		

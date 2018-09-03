@@ -55,7 +55,13 @@ namespace Plugin
 	int32_t (*BoxDecimal)(int32_t valHandle);
 	int32_t (*UnboxDecimal)(int32_t valHandle);
 	UnityEngine::Vector3 (*UnityEngineVector3ConstructorSystemSingle_SystemSingle_SystemSingle)(float x, float y, float z);
+	System::Single (*UnityEngineVector3PropertyGetMagnitude)(UnityEngine::Vector3* thiz);
 	UnityEngine::Vector3 (*UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3)(UnityEngine::Vector3& a, UnityEngine::Vector3& b);
+	UnityEngine::Vector3 (*UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3)(UnityEngine::Vector3& a, UnityEngine::Vector3& b);
+	UnityEngine::Vector3 (*UnityEngineVector3MethodNormalizeUnityEngineVector3)(UnityEngine::Vector3& value);
+	System::Single (*UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3)(UnityEngine::Vector3& lhs, UnityEngine::Vector3& rhs);
+	UnityEngine::Vector3 (*UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3)(UnityEngine::Vector3& lhs, UnityEngine::Vector3& rhs);
+	System::Single (*UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3)(UnityEngine::Vector3& a, UnityEngine::Vector3& b);
 	int32_t (*BoxVector3)(UnityEngine::Vector3& val);
 	UnityEngine::Vector3 (*UnboxVector3)(int32_t valHandle);
 	int32_t (*UnityEngineObjectPropertyGetName)(int32_t thisHandle);
@@ -3955,9 +3961,87 @@ namespace UnityEngine
 		*this = returnValue;
 	}
 	
+	System::Single UnityEngine::Vector3::GetMagnitude()
+	{
+		auto returnValue = Plugin::UnityEngineVector3PropertyGetMagnitude(this);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
 	UnityEngine::Vector3 UnityEngine::Vector3::operator+(UnityEngine::Vector3& a)
 	{
 		auto returnValue = Plugin::UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3(*this, a);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	UnityEngine::Vector3 UnityEngine::Vector3::operator-(UnityEngine::Vector3& a)
+	{
+		auto returnValue = Plugin::UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3(*this, a);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	UnityEngine::Vector3 UnityEngine::Vector3::Normalize(UnityEngine::Vector3& value)
+	{
+		auto returnValue = Plugin::UnityEngineVector3MethodNormalizeUnityEngineVector3(value);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	System::Single UnityEngine::Vector3::Dot(UnityEngine::Vector3& lhs, UnityEngine::Vector3& rhs)
+	{
+		auto returnValue = Plugin::UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3(lhs, rhs);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	UnityEngine::Vector3 UnityEngine::Vector3::Cross(UnityEngine::Vector3& lhs, UnityEngine::Vector3& rhs)
+	{
+		auto returnValue = Plugin::UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3(lhs, rhs);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	System::Single UnityEngine::Vector3::Distance(UnityEngine::Vector3& a, UnityEngine::Vector3& b)
+	{
+		auto returnValue = Plugin::UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3(a, b);
 		if (Plugin::unhandledCsharpException)
 		{
 			System::Exception* ex = Plugin::unhandledCsharpException;
@@ -7256,8 +7340,20 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::UnboxDecimal);
 	Plugin::UnityEngineVector3ConstructorSystemSingle_SystemSingle_SystemSingle = *(UnityEngine::Vector3 (**)(float x, float y, float z))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineVector3ConstructorSystemSingle_SystemSingle_SystemSingle);
+	Plugin::UnityEngineVector3PropertyGetMagnitude = *(System::Single (**)(UnityEngine::Vector3* thiz))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineVector3PropertyGetMagnitude);
 	Plugin::UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3 = *(UnityEngine::Vector3 (**)(UnityEngine::Vector3& a, UnityEngine::Vector3& b))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineVector3Methodop_AdditionUnityEngineVector3_UnityEngineVector3);
+	Plugin::UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3 = *(UnityEngine::Vector3 (**)(UnityEngine::Vector3& a, UnityEngine::Vector3& b))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineVector3Methodop_SubtractionUnityEngineVector3_UnityEngineVector3);
+	Plugin::UnityEngineVector3MethodNormalizeUnityEngineVector3 = *(UnityEngine::Vector3 (**)(UnityEngine::Vector3& value))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineVector3MethodNormalizeUnityEngineVector3);
+	Plugin::UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3 = *(System::Single (**)(UnityEngine::Vector3& lhs, UnityEngine::Vector3& rhs))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineVector3MethodDotUnityEngineVector3_UnityEngineVector3);
+	Plugin::UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3 = *(UnityEngine::Vector3 (**)(UnityEngine::Vector3& lhs, UnityEngine::Vector3& rhs))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineVector3MethodCrossUnityEngineVector3_UnityEngineVector3);
+	Plugin::UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3 = *(System::Single (**)(UnityEngine::Vector3& a, UnityEngine::Vector3& b))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineVector3MethodDistanceUnityEngineVector3_UnityEngineVector3);
 	Plugin::BoxVector3 = *(int32_t (**)(UnityEngine::Vector3& val))curMemory;
 	curMemory += sizeof(Plugin::BoxVector3);
 	Plugin::UnboxVector3 = *(UnityEngine::Vector3 (**)(int32_t valHandle))curMemory;

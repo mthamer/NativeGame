@@ -20,4 +20,5 @@ public:
 
 	Vector3 GetPosition();
 	void SetPosition(Vector3 &pos);
+	static void ScaleBounds(Bounds &bounds, float scaleFactor);
 };

@@ -20,18 +20,11 @@ int GameEntity::Init(System::String &name)
 	return 0;
 }
 
-#if 0
-//
-// return bounding rect
-//
-MyGame::Rectangle<float> GameEntity::GetBounds()
+// bindings code has a bug when generating this, so I made my own
+Vector3 operator*(Vector3 v, float d)
 {
-	Vector3 &pos = mGo.GetTransform().GetPosition();
-	MyGame::Point<float> topLeft(pos.x - GetWidth() / 2.0f, pos.y + GetHeight() / 2.0f);
-	MyGame::Point<float> bottomRight(pos.x + GetWidth() / 2.0f, pos.y - GetHeight() / 2.0f);
-	return MyGame::Rectangle<float>(topLeft, bottomRight);
+	return Vector3(v.x*d, v.y*d, v.z*d);
 }
-#endif
 
 // 
 // return unity sprite bounds
@@ -39,6 +32,21 @@ MyGame::Rectangle<float> GameEntity::GetBounds()
 Bounds GameEntity::GetBounds()
 {
 	return mGo.GetComponent<SpriteRenderer>().GetBounds();
+}
+
+//
+// static helper
+//
+void GameEntity::ScaleBounds(Bounds &bounds, float scaleFactor)
+{
+	Vector3 &max = bounds.GetMax();
+	Vector3 &min = bounds.GetMin();
+	Vector3 ctr = (min + max) * 0.5f;
+	Vector3 ctrToMax = max - ctr;
+	Vector3 ctrToMin = min - ctr;
+
+	bounds.SetMax(ctr + ctrToMax * scaleFactor);
+	bounds.SetMin(ctr + ctrToMin * scaleFactor);
 }
 
 Vector3 GameEntity::GetPosition()

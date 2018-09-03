@@ -95,6 +95,7 @@ void PlayerShip::UpdateMissiles(float deltaTime)
 		for (j = (int)game->GetRocks().size() - 1; j >= 0; j--)
 		{
 			Bounds rockBounds = game->GetRocks()[j]->GetBounds();
+			ScaleBounds(rockBounds, 0.9f);
 			if (rockBounds.Intersects(missileBounds))
 			{
 				game->AddExplosion(game->GetRocks()[j]->GetPosition());
@@ -120,10 +121,12 @@ void PlayerShip::CheckRockCollision()
 {
 	Game* game = Game::GetInstance();
 	Bounds shipBounds = GetBounds();
+	ScaleBounds(shipBounds, 0.5f);
 	int j;
 	for (j = (int)game->GetRocks().size() - 1; j >= 0; j--)
 	{
 		Bounds rockBounds = game->GetRocks()[j]->GetBounds();
+		ScaleBounds(rockBounds, 0.9f);
 		if (rockBounds.Intersects(shipBounds))
 		{
 			game->AddExplosion(game->GetRocks()[j]->GetPosition());

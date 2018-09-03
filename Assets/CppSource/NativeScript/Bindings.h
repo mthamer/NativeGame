@@ -1250,10 +1250,16 @@ namespace UnityEngine
 	{
 		Vector3();
 		Vector3(System::Single x, System::Single y, System::Single z);
+		System::Single GetMagnitude();
 		System::Single x;
 		System::Single y;
 		System::Single z;
 		UnityEngine::Vector3 operator+(UnityEngine::Vector3& a);
+		UnityEngine::Vector3 operator-(UnityEngine::Vector3& a);
+		static UnityEngine::Vector3 Normalize(UnityEngine::Vector3& value);
+		static System::Single Dot(UnityEngine::Vector3& lhs, UnityEngine::Vector3& rhs);
+		static UnityEngine::Vector3 Cross(UnityEngine::Vector3& lhs, UnityEngine::Vector3& rhs);
+		static System::Single Distance(UnityEngine::Vector3& a, UnityEngine::Vector3& b);
 		explicit operator System::ValueType();
 		explicit operator System::Object();
 	};

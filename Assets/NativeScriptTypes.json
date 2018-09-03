@@ -182,6 +182,12 @@
           ]
         }
       ],
+      "Properties": [
+        {
+          "Name": "magnitude",
+          "Get": {}
+        }
+      ],
       "Methods": [
         {
           "Name": "x+y",
@@ -189,7 +195,42 @@
             "UnityEngine.Vector3",
             "UnityEngine.Vector3"
           ]
+        },
+        {
+          "Name": "x-y",
+          "ParamTypes": [
+            "UnityEngine.Vector3",
+            "UnityEngine.Vector3"
+          ]
+        },
+        {
+          "Name": "Normalize",
+          "ParamTypes": [
+            "UnityEngine.Vector3"
+          ]
+        },
+        {
+          "Name": "Dot",
+          "ParamTypes": [
+            "UnityEngine.Vector3",
+            "UnityEngine.Vector3"
+          ]
+        },
+        {
+          "Name": "Cross",
+          "ParamTypes": [
+            "UnityEngine.Vector3",
+            "UnityEngine.Vector3"
+          ]
+        },
+        {
+          "Name": "Distance",
+          "ParamTypes": [
+            "UnityEngine.Vector3",
+            "UnityEngine.Vector3"
+          ]
         }
+
       ]
     },
     {
@@ -267,11 +308,13 @@
       "Properties": [
         {
           "Name": "max",
-          "Get": {}
+          "Get": {},
+          "Set": {}
         },
         {
           "Name": "min",
-          "Get": {}
+          "Get": {},
+          "Set": {}
         }
       ],
       "Methods": [
