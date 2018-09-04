@@ -1508,7 +1508,13 @@ namespace UnityEngine
 		AudioSource& operator=(AudioSource&& other);
 		bool operator==(const AudioSource& other) const;
 		bool operator!=(const AudioSource& other) const;
+		System::Boolean GetLoop();
+		void SetLoop(System::Boolean value);
+		UnityEngine::AudioClip GetClip();
+		void SetClip(UnityEngine::AudioClip& value);
 		void PlayOneShot(UnityEngine::AudioClip& clip);
+		void Play();
+		void Stop();
 	};
 }
 

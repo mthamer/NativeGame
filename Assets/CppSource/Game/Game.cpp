@@ -5,6 +5,7 @@ using namespace UnityEngine;
 #include "Game.h"
 #include "Rock.h"
 #include "Explosion.h"
+#include "Alien.h"
 #include <Windows.h>	// for timeGetTime
 #include <assert.h>
 
@@ -16,9 +17,12 @@ int Game::Init()
 		return ret;
 	}
 
-	mLastRockTime = 0;
-	mLastUpdateTime = 0;
+	int curTime = timeGetTime();
+	mLastRockTime = curTime;
+	mLastUpdateTime = curTime;
+	mLastAlienTime = curTime;
 	mDeltaTime = 0;
+	mAlien = nullptr;
 
 	// attach main game script to Game object
 	mGo.AddComponent<MyGame::BaseGameScript>();
@@ -35,6 +39,48 @@ int Game::Init()
 		return ret;
 
 	return ret;
+}
+
+//
+// every 3 secs, if there is no alien roll die to add an alien
+//
+void Game::CheckToAddAlien()
+{
+	const float timeBetweenAliens = 3.0f;
+
+	int curTime = timeGetTime();
+
+	// if already showing an alien, then don't do anything
+	if (mAlien != nullptr)
+	{
+		mLastAlienTime = curTime;
+		return;
+	}
+
+	if (curTime - mLastAlienTime > timeBetweenAliens * 1000)
+	{
+		mLastAlienTime = curTime;
+
+		if ((rand() % 2) == 1)
+		{
+//			Debug::Log(String("Adding Alien"));
+			AddAlien();
+		}
+		//else
+		//{
+		//	Debug::Log(String("Not Adding Alien"));
+		//}
+	}
+}
+
+//
+// Add an alien into the scene
+//
+int Game::AddAlien()
+{
+	delete mAlien;
+	mAlien = new Alien();
+	return mAlien->Init();
 }
 
 //
@@ -64,6 +110,20 @@ bool Game::RemoveRock(Rock *rock)
 
 	assert(false);
 	return false;
+}
+
+void Game::RemoveAlien()
+{
+	delete mAlien;
+	mAlien = nullptr;
+}
+
+void Game::UpdateAlien(float deltaTime)
+{
+	if (mAlien)
+	{
+		mAlien->Update(deltaTime);
+	}
 }
 
 void Game::UpdateRocks(float deltaTime)
@@ -125,6 +185,8 @@ void Game::Update(float deltaTime)
 
 	UpdateRocks(deltaTime);
 	UpdateExplosions(deltaTime);
+	UpdateAlien(deltaTime);
+	CheckToAddAlien();
 }
 
 // Called when the plugin is initialized

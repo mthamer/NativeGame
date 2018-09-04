@@ -7,6 +7,7 @@ using namespace UnityEngine;
 #include "Game.h"
 #include "Missile.h"
 #include "Rock.h"
+#include "Alien.h"
 #include <assert.h>
 #include <windows.h>
 
@@ -85,6 +86,11 @@ bool PlayerShip::RemoveMissile(Missile *missile)
 void PlayerShip::UpdateMissiles(float deltaTime)
 {
 	Game* game = Game::GetInstance();
+
+	Bounds alienBounds = Bounds(nullptr);
+	if (game->GetAlien())
+		alienBounds = game->GetAlien()->GetBounds();
+
 	int i;
 	for (i = (int)mMissiles.size() - 1; i >= 0; i--)
 	{
@@ -109,6 +115,15 @@ void PlayerShip::UpdateMissiles(float deltaTime)
 
 		if (missileRemoved)
 			continue;
+
+		if (game->GetAlien() && alienBounds.Intersects(missileBounds))
+		{
+			game->AddExplosion(game->GetAlien()->GetPosition());
+			game->RemoveAlien();
+			RemoveMissile(mMissiles[i]);
+			mGo.GetComponent<AudioSource>().PlayOneShot(mRockExplosionSound);
+			continue;
+		}
 
 		mMissiles[i]->Update(deltaTime);
 	}
@@ -139,8 +154,8 @@ void PlayerShip::CheckRockCollision()
 
 void PlayerShip::Update(float deltaTime)
 {
-	const float maxX = 1.1f;
-	const float minX = -1.1f;
+	const float maxX = 0.9f;
+	const float minX = -0.9f;
 	const float maxY = 0.f;
 	const float minY = -1.5f;
 

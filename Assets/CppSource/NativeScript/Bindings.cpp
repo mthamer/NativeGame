@@ -95,7 +95,13 @@ namespace Plugin
 	int32_t (*UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType)(UnityEngine::PrimitiveType type);
 	void (*UnityEngineDebugMethodLogSystemObject)(int32_t messageHandle);
 	int32_t (*UnityEngineAudioClipConstructor)();
+	int32_t (*UnityEngineAudioSourcePropertyGetLoop)(int32_t thisHandle);
+	void (*UnityEngineAudioSourcePropertySetLoop)(int32_t thisHandle, uint32_t value);
+	int32_t (*UnityEngineAudioSourcePropertyGetClip)(int32_t thisHandle);
+	void (*UnityEngineAudioSourcePropertySetClip)(int32_t thisHandle, int32_t valueHandle);
 	void (*UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClip)(int32_t thisHandle, int32_t clipHandle);
+	void (*UnityEngineAudioSourceMethodPlay)(int32_t thisHandle);
+	void (*UnityEngineAudioSourceMethodStop)(int32_t thisHandle);
 	System::Single (*UnityEngineInputMethodGetAxisSystemString)(int32_t axisNameHandle);
 	System::Single (*UnityEngineInputMethodGetAxisRawSystemString)(int32_t axisNameHandle);
 	int32_t (*UnityEngineInputMethodGetKeySystemString)(int32_t nameHandle);
@@ -5537,9 +5543,83 @@ namespace UnityEngine
 		return Handle != other.Handle;
 	}
 	
+	System::Boolean UnityEngine::AudioSource::GetLoop()
+	{
+		auto returnValue = Plugin::UnityEngineAudioSourcePropertyGetLoop(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return returnValue;
+	}
+	
+	void UnityEngine::AudioSource::SetLoop(System::Boolean value)
+	{
+		Plugin::UnityEngineAudioSourcePropertySetLoop(Handle, value);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+	}
+	
+	UnityEngine::AudioClip UnityEngine::AudioSource::GetClip()
+	{
+		auto returnValue = Plugin::UnityEngineAudioSourcePropertyGetClip(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		return UnityEngine::AudioClip(Plugin::InternalUse::Only, returnValue);
+	}
+	
+	void UnityEngine::AudioSource::SetClip(UnityEngine::AudioClip& value)
+	{
+		Plugin::UnityEngineAudioSourcePropertySetClip(Handle, value.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+	}
+	
 	void UnityEngine::AudioSource::PlayOneShot(UnityEngine::AudioClip& clip)
 	{
 		Plugin::UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClip(Handle, clip.Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+	}
+	
+	void UnityEngine::AudioSource::Play()
+	{
+		Plugin::UnityEngineAudioSourceMethodPlay(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+	}
+	
+	void UnityEngine::AudioSource::Stop()
+	{
+		Plugin::UnityEngineAudioSourceMethodStop(Handle);
 		if (Plugin::unhandledCsharpException)
 		{
 			System::Exception* ex = Plugin::unhandledCsharpException;
@@ -7420,8 +7500,20 @@ DLLEXPORT void Init(
 	curMemory += sizeof(Plugin::UnityEngineDebugMethodLogSystemObject);
 	Plugin::UnityEngineAudioClipConstructor = *(int32_t (**)())curMemory;
 	curMemory += sizeof(Plugin::UnityEngineAudioClipConstructor);
+	Plugin::UnityEngineAudioSourcePropertyGetLoop = *(int32_t (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineAudioSourcePropertyGetLoop);
+	Plugin::UnityEngineAudioSourcePropertySetLoop = *(void (**)(int32_t thisHandle, uint32_t value))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineAudioSourcePropertySetLoop);
+	Plugin::UnityEngineAudioSourcePropertyGetClip = *(int32_t (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineAudioSourcePropertyGetClip);
+	Plugin::UnityEngineAudioSourcePropertySetClip = *(void (**)(int32_t thisHandle, int32_t valueHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineAudioSourcePropertySetClip);
 	Plugin::UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClip = *(void (**)(int32_t thisHandle, int32_t clipHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClip);
+	Plugin::UnityEngineAudioSourceMethodPlay = *(void (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineAudioSourceMethodPlay);
+	Plugin::UnityEngineAudioSourceMethodStop = *(void (**)(int32_t thisHandle))curMemory;
+	curMemory += sizeof(Plugin::UnityEngineAudioSourceMethodStop);
 	Plugin::UnityEngineInputMethodGetAxisSystemString = *(System::Single (**)(int32_t axisNameHandle))curMemory;
 	curMemory += sizeof(Plugin::UnityEngineInputMethodGetAxisSystemString);
 	Plugin::UnityEngineInputMethodGetAxisRawSystemString = *(System::Single (**)(int32_t axisNameHandle))curMemory;

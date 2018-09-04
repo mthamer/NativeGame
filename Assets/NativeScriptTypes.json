@@ -424,12 +424,32 @@
     },
     {
       "Name": "UnityEngine.AudioSource",
+      "Properties": [
+        {
+          "Name": "loop",
+          "Get": {},
+          "Set": {}
+        },
+        {
+          "Name": "clip",
+          "Get": {},
+          "Set": {}
+        }
+      ],
       "Methods": [
         {
           "Name": "PlayOneShot",
           "ParamTypes": [
             "UnityEngine.AudioClip"
           ]
+        },
+        {
+          "Name": "Play",
+          "ParamTypes": []
+        },
+        {
+          "Name": "Stop",
+          "ParamTypes": []
         }
       ]
     },

@@ -514,7 +514,13 @@ namespace NativeScript
 		delegate int UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType(UnityEngine.PrimitiveType type);
 		delegate void UnityEngineDebugMethodLogSystemObjectDelegateType(int messageHandle);
 		delegate int UnityEngineAudioClipConstructorDelegateType();
+		delegate bool UnityEngineAudioSourcePropertyGetLoopDelegateType(int thisHandle);
+		delegate void UnityEngineAudioSourcePropertySetLoopDelegateType(int thisHandle, bool value);
+		delegate int UnityEngineAudioSourcePropertyGetClipDelegateType(int thisHandle);
+		delegate void UnityEngineAudioSourcePropertySetClipDelegateType(int thisHandle, int valueHandle);
 		delegate void UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClipDelegateType(int thisHandle, int clipHandle);
+		delegate void UnityEngineAudioSourceMethodPlayDelegateType(int thisHandle);
+		delegate void UnityEngineAudioSourceMethodStopDelegateType(int thisHandle);
 		delegate float UnityEngineInputMethodGetAxisSystemStringDelegateType(int axisNameHandle);
 		delegate float UnityEngineInputMethodGetAxisRawSystemStringDelegateType(int axisNameHandle);
 		delegate bool UnityEngineInputMethodGetKeySystemStringDelegateType(int nameHandle);
@@ -630,7 +636,13 @@ namespace NativeScript
 		static readonly UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegate = new UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveTypeDelegateType(UnityEngineGameObjectMethodCreatePrimitiveUnityEnginePrimitiveType);
 		static readonly UnityEngineDebugMethodLogSystemObjectDelegateType UnityEngineDebugMethodLogSystemObjectDelegate = new UnityEngineDebugMethodLogSystemObjectDelegateType(UnityEngineDebugMethodLogSystemObject);
 		static readonly UnityEngineAudioClipConstructorDelegateType UnityEngineAudioClipConstructorDelegate = new UnityEngineAudioClipConstructorDelegateType(UnityEngineAudioClipConstructor);
+		static readonly UnityEngineAudioSourcePropertyGetLoopDelegateType UnityEngineAudioSourcePropertyGetLoopDelegate = new UnityEngineAudioSourcePropertyGetLoopDelegateType(UnityEngineAudioSourcePropertyGetLoop);
+		static readonly UnityEngineAudioSourcePropertySetLoopDelegateType UnityEngineAudioSourcePropertySetLoopDelegate = new UnityEngineAudioSourcePropertySetLoopDelegateType(UnityEngineAudioSourcePropertySetLoop);
+		static readonly UnityEngineAudioSourcePropertyGetClipDelegateType UnityEngineAudioSourcePropertyGetClipDelegate = new UnityEngineAudioSourcePropertyGetClipDelegateType(UnityEngineAudioSourcePropertyGetClip);
+		static readonly UnityEngineAudioSourcePropertySetClipDelegateType UnityEngineAudioSourcePropertySetClipDelegate = new UnityEngineAudioSourcePropertySetClipDelegateType(UnityEngineAudioSourcePropertySetClip);
 		static readonly UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClipDelegateType UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClipDelegate = new UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClipDelegateType(UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClip);
+		static readonly UnityEngineAudioSourceMethodPlayDelegateType UnityEngineAudioSourceMethodPlayDelegate = new UnityEngineAudioSourceMethodPlayDelegateType(UnityEngineAudioSourceMethodPlay);
+		static readonly UnityEngineAudioSourceMethodStopDelegateType UnityEngineAudioSourceMethodStopDelegate = new UnityEngineAudioSourceMethodStopDelegateType(UnityEngineAudioSourceMethodStop);
 		static readonly UnityEngineInputMethodGetAxisSystemStringDelegateType UnityEngineInputMethodGetAxisSystemStringDelegate = new UnityEngineInputMethodGetAxisSystemStringDelegateType(UnityEngineInputMethodGetAxisSystemString);
 		static readonly UnityEngineInputMethodGetAxisRawSystemStringDelegateType UnityEngineInputMethodGetAxisRawSystemStringDelegate = new UnityEngineInputMethodGetAxisRawSystemStringDelegateType(UnityEngineInputMethodGetAxisRawSystemString);
 		static readonly UnityEngineInputMethodGetKeySystemStringDelegateType UnityEngineInputMethodGetKeySystemStringDelegate = new UnityEngineInputMethodGetKeySystemStringDelegateType(UnityEngineInputMethodGetKeySystemString);
@@ -911,7 +923,19 @@ namespace NativeScript
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineAudioClipConstructorDelegate));
 			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineAudioSourcePropertyGetLoopDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineAudioSourcePropertySetLoopDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineAudioSourcePropertyGetClipDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineAudioSourcePropertySetClipDelegate));
+			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClipDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineAudioSourceMethodPlayDelegate));
+			curMemory += IntPtr.Size;
+			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineAudioSourceMethodStopDelegate));
 			curMemory += IntPtr.Size;
 			Marshal.WriteIntPtr(memory, curMemory, Marshal.GetFunctionPointerForDelegate(UnityEngineInputMethodGetAxisSystemStringDelegate));
 			curMemory += IntPtr.Size;
@@ -2161,6 +2185,93 @@ namespace NativeScript
 			}
 		}
 		
+		[MonoPInvokeCallback(typeof(UnityEngineAudioSourcePropertyGetLoopDelegateType))]
+		static bool UnityEngineAudioSourcePropertyGetLoop(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.AudioSource)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var returnValue = thiz.loop;
+				return returnValue;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(bool);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineAudioSourcePropertySetLoopDelegateType))]
+		static void UnityEngineAudioSourcePropertySetLoop(int thisHandle, bool value)
+		{
+			try
+			{
+				var thiz = (UnityEngine.AudioSource)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				thiz.loop = value;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineAudioSourcePropertyGetClipDelegateType))]
+		static int UnityEngineAudioSourcePropertyGetClip(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.AudioSource)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var returnValue = thiz.clip;
+				return NativeScript.Bindings.ObjectStore.GetHandle(returnValue);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+				return default(int);
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineAudioSourcePropertySetClipDelegateType))]
+		static void UnityEngineAudioSourcePropertySetClip(int thisHandle, int valueHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.AudioSource)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				var value = (UnityEngine.AudioClip)NativeScript.Bindings.ObjectStore.Get(valueHandle);
+				thiz.clip = value;
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
 		[MonoPInvokeCallback(typeof(UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClipDelegateType))]
 		static void UnityEngineAudioSourceMethodPlayOneShotUnityEngineAudioClip(int thisHandle, int clipHandle)
 		{
@@ -2169,6 +2280,46 @@ namespace NativeScript
 				var thiz = (UnityEngine.AudioSource)NativeScript.Bindings.ObjectStore.Get(thisHandle);
 				var clip = (UnityEngine.AudioClip)NativeScript.Bindings.ObjectStore.Get(clipHandle);
 				thiz.PlayOneShot(clip);
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineAudioSourceMethodPlayDelegateType))]
+		static void UnityEngineAudioSourceMethodPlay(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.AudioSource)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				thiz.Play();
+			}
+			catch (System.NullReferenceException ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpExceptionSystemNullReferenceException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+			catch (System.Exception ex)
+			{
+				UnityEngine.Debug.LogException(ex);
+				NativeScript.Bindings.SetCsharpException(NativeScript.Bindings.ObjectStore.Store(ex));
+			}
+		}
+		
+		[MonoPInvokeCallback(typeof(UnityEngineAudioSourceMethodStopDelegateType))]
+		static void UnityEngineAudioSourceMethodStop(int thisHandle)
+		{
+			try
+			{
+				var thiz = (UnityEngine.AudioSource)NativeScript.Bindings.ObjectStore.Get(thisHandle);
+				thiz.Stop();
 			}
 			catch (System.NullReferenceException ex)
 			{

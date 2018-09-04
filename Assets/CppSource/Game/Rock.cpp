@@ -60,9 +60,9 @@ void Rock::Update(float deltaTime)
 		mGo.GetComponent<SpriteRenderer>().SetSprite(RockSprites[mCurSprite]);
 	}
 
-	Vector3 &pos = mGo.GetTransform().GetPosition();
+	Vector3 &pos = GetPosition();
 	pos.y = pos.y - mSpeed * deltaTime;
-	mGo.GetTransform().SetPosition(pos);
+	SetPosition(pos);
 
 	const float minY = -2.2f;
 	if (pos.y < minY)
