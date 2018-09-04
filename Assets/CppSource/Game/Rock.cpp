@@ -18,8 +18,6 @@ int Rock::Init()
 		return ret;
 	}
 
-	mSpeed = Game::GetInstance()->GetPlayerShip().GetSpeed();
-
 	// load Rock sprites
 	if (RockSprites == nullptr)
 	{
@@ -33,6 +31,9 @@ int Rock::Init()
 			RockSprites[i] = Resources::Load<Sprite>(spritePath);
 		}
 	}
+
+	mSpeed = Game::GetInstance()->GetPlayerShip().GetSpeed();
+	mLastSpriteTime = timeGetTime();
 
 	mGo.AddComponent<SpriteRenderer>();
 	mCurSprite = rand() % NumSprites;

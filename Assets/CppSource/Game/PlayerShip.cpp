@@ -154,8 +154,8 @@ void PlayerShip::CheckRockCollision()
 
 void PlayerShip::Update(float deltaTime)
 {
-	const float maxX = 0.9f;
-	const float minX = -0.9f;
+	const float maxX = 1.0f;
+	const float minX = -1.0f;
 	const float maxY = 0.f;
 	const float minY = -1.5f;
 
